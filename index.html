@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HaWake Alarm — Smart Alarm for Home Assistant</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --surface: #f5f5f7;
+      --border: #d2d2d7;
+      --text: #1d1d1f;
+      --secondary: #6e6e73;
+      --accent: #0071e3;
+      --accent-dark: #2997ff;
+      --green: #1d8348;
+      --green-bg: #eafaf1;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #000000;
+        --surface: #1c1c1e;
+        --border: #38383a;
+        --text: #f5f5f7;
+        --secondary: #98989d;
+        --accent: #2997ff;
+        --green: #30d158;
+        --green-bg: #0d2614;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* ── Nav ── */
+    .site-nav {
+      position: sticky; top: 0; z-index: 50;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 24px;
+      padding: 0 32px; height: 52px;
+    }
+    .site-nav .nav-home {
+      display: flex; align-items: center; gap: 10px; margin-right: auto;
+      text-decoration: none;
+    }
+    .site-nav .nav-home img { width: 28px; height: 28px; border-radius: 6px; }
+    .site-nav .nav-home .icon-light { display: block; }
+    .site-nav .nav-home .icon-dark  { display: none;  }
+    @media (prefers-color-scheme: dark) {
+      .site-nav .nav-home .icon-light { display: none;  }
+      .site-nav .nav-home .icon-dark  { display: block; }
+    }
+    .site-nav .nav-home span { font-size: 16px; font-weight: 700; color: var(--text); }
+    .site-nav a { font-size: 14px; color: var(--secondary); text-decoration: none; }
+    .site-nav a:hover { color: var(--accent); }
+    .site-nav .nav-active { color: var(--accent) !important; font-weight: 600; }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      padding: 80px 24px 64px;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    .hero .icon-wrap {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 28px;
+    }
+    .hero .icon-wrap img {
+      width: 120px;
+      height: 120px;
+      border-radius: 27px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    }
+    .hero .icon-wrap .icon-light { display: block; }
+    .hero .icon-wrap .icon-dark  { display: none;  }
+    @media (prefers-color-scheme: dark) {
+      .hero .icon-wrap .icon-light { display: none;  }
+      .hero .icon-wrap .icon-dark  { display: block; }
+    }
+    .hero h1 {
+      font-size: 44px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+    .hero .tagline {
+      font-size: 19px;
+      color: var(--secondary);
+      margin-bottom: 32px;
+      line-height: 1.5;
+    }
+    .hero .cta-group {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 22px;
+      border-radius: 980px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: opacity 0.15s;
+    }
+    .btn:hover { opacity: 0.85; }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-secondary {
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn svg { flex-shrink: 0; }
+
+    /* ── Sections ── */
+    .section { padding: 64px 24px; }
+    .section-inner { max-width: 900px; margin: 0 auto; }
+    .section-label {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+    .section h2 {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 16px;
+    }
+    .section .lead {
+      font-size: 17px;
+      color: var(--secondary);
+      max-width: 560px;
+      margin-bottom: 40px;
+    }
+    .alt-bg { background: var(--surface); }
+
+    /* ── Feature grid ── */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .feature-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+    }
+    .alt-bg .feature-card { background: var(--bg); }
+    .feature-card .f-icon {
+      font-size: 28px;
+      margin-bottom: 12px;
+      display: block;
+    }
+    .feature-card h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .feature-card p {
+      font-size: 14px;
+      color: var(--secondary);
+      line-height: 1.55;
+    }
+
+    /* ── Pages grid ── */
+    .pages-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .page-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      text-decoration: none;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .page-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 4px 20px rgba(0,113,227,0.1);
+    }
+    .page-card .pc-icon { font-size: 32px; }
+    .page-card h3 { font-size: 18px; font-weight: 700; }
+    .page-card p { font-size: 14px; color: var(--secondary); line-height: 1.55; flex: 1; }
+    .page-card .pc-link {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* ── Privacy badge ── */
+    .privacy-strip {
+      background: var(--green-bg);
+      border: 1px solid var(--green);
+      border-radius: 12px;
+      padding: 20px 24px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      margin-top: 40px;
+    }
+    .privacy-strip .ps-icon { font-size: 22px; flex-shrink: 0; }
+    .privacy-strip .ps-body { font-size: 14px; color: var(--text); }
+    .privacy-strip .ps-body strong { color: var(--green); }
+    .privacy-strip a { color: var(--accent); }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--secondary);
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+    footer .footer-links { display: flex; gap: 20px; justify-content: center; margin-bottom: 12px; flex-wrap: wrap; }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 32px; }
+      .hero .tagline { font-size: 16px; }
+      .site-nav { padding: 0 16px; gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="site-nav">
+  <a href="index.html" class="nav-home">
+    <img src="app-icon.png" class="icon-light" alt="HaWake" />
+    <img src="app-icon-dark.png" class="icon-dark" alt="HaWake" />
+    <span>HaWake</span>
+  </a>
+  <a href="index.html" class="nav-active">About</a>
+  <a href="privacy.html">Privacy</a>
+  <a href="mqtt-builder.html">MQTT Builder</a>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="icon-wrap">
+    <img src="app-icon.png" class="icon-light" alt="HaWake Alarm" />
+    <img src="app-icon-dark.png" class="icon-dark" alt="HaWake Alarm" />
+  </div>
+  <h1>Wake up smarter.</h1>
+  <p class="tagline">
+    HaWake Alarm is a reliable, privacy-first alarm app for iPhone with deep
+    Home Assistant integration — so your home wakes up with you.
+  </p>
+  <div class="cta-group">
+    <a href="#" class="btn btn-primary">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M11.182 3.236C10.256 2.178 8.954 1.5 8 1.5c-.954 0-2.256.678-3.182 1.736C3.9 4.27 3.5 5.13 3.5 6c0 .465.07.916.198 1.348C2.67 7.86 2 8.97 2 10.25 2 12.32 3.567 14 5.5 14c.617 0 1.198-.175 1.7-.482L8 13l.8.518c.502.307 1.083.482 1.7.482C12.433 14 14 12.32 14 10.25c0-1.28-.67-2.39-1.698-2.902C12.43 6.916 12.5 6.465 12.5 6c0-.87-.4-1.73-1.318-2.764z"/></svg>
+      Download on the App Store
+    </a>
+    <a href="mqtt-builder.html" class="btn btn-secondary">MQTT Builder →</a>
+  </div>
+</section>
+
+<!-- Features -->
+<section class="section alt-bg">
+  <div class="section-inner">
+    <div class="section-label">Features</div>
+    <h2>Everything your alarm should be.</h2>
+    <p class="lead">Built for people who are serious about waking up — and smart home enthusiasts who want their alarm integrated with everything else.</p>
+
+    <div class="features">
+      <div class="feature-card">
+        <span class="f-icon">⏰</span>
+        <h3>Reliable Alarms</h3>
+        <p>Powered by AlarmKit for system-level reliability. Alarms fire even when the app is closed, with customisable sounds, fade-in, and vibration.</p>
+      </div>
+      <div class="feature-card">
+        <span class="f-icon">🏠</span>
+        <h3>Home Assistant Integration</h3>
+        <p>Connect via MQTT to your Home Assistant instance. Trigger automations when your alarm fires, snoozes, or is dismissed — and send commands back.</p>
+      </div>
+      <div class="feature-card">
+        <span class="f-icon">🌙</span>
+        <h3>Sleep Sounds</h3>
+        <p>Fall asleep to rain, ocean waves, white noise, and more. Lock screen controls, AirPlay and CarPlay support, and optional sleep timers.</p>
+      </div>
+      <div class="feature-card">
+        <span class="f-icon">🧩</span>
+        <h3>Wake-Up Missions</h3>
+        <p>Dismiss your alarm by solving a math problem, shaking your phone, or triggering a Home Assistant action — no more oversleeping.</p>
+      </div>
+      <div class="feature-card">
+        <span class="f-icon">🌤</span>
+        <h3>Morning Weather</h3>
+        <p>Get a weather briefing the moment you wake up, powered by Apple WeatherKit — no account required.</p>
+      </div>
+      <div class="feature-card">
+        <span class="f-icon">🎨</span>
+        <h3>Themes & Wallpapers</h3>
+        <p>Personalise your alarm screen with custom wallpapers, glass effects, and colour schemes. Light and dark mode supported throughout.</p>
+      </div>
+      <div class="feature-card">
+        <span class="f-icon">📊</span>
+        <h3>Sleep Statistics</h3>
+        <p>Track your wake-up times and snooze habits over time using on-device motion and charging signals — no cloud, no account.</p>
+      </div>
+      <div class="feature-card">
+        <span class="f-icon">🔒</span>
+        <h3>Privacy First</h3>
+        <p>No analytics, no ads, no account required. All data stays on your device. MQTT credentials are stored in the iOS Keychain.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pages / Tools -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-label">Resources</div>
+    <h2>Everything in one place.</h2>
+    <p class="lead">Documentation, tools, and policies for HaWake Alarm.</p>
+
+    <div class="pages-grid">
+      <a href="privacy.html" class="page-card">
+        <div class="pc-icon">🔒</div>
+        <h3>Privacy Policy</h3>
+        <p>Full details on what data the app accesses, how it's used, and what we never collect.</p>
+        <span class="pc-link">Read policy →</span>
+      </a>
+      <a href="mqtt-builder.html" class="page-card">
+        <div class="pc-icon">🛠</div>
+        <h3>MQTT Payload Builder</h3>
+        <p>Interactive tool for building and testing MQTT payloads for the HaWake Home Assistant integration.</p>
+        <span class="pc-link">Open builder →</span>
+      </a>
+    </div>
+
+    <div class="privacy-strip">
+      <span class="ps-icon">✅</span>
+      <div class="ps-body">
+        <strong>No data collected.</strong> HaWake Alarm is a local-first app. Your alarms, settings, and sleep data never leave your device. The only external communication is with Apple's native services (WeatherKit, the App Store) and — if you configure it — your own self-hosted Home Assistant MQTT broker.
+        <a href="privacy.html">Read the full privacy policy →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-links">
+    <a href="index.html">About</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="mqtt-builder.html">MQTT Builder</a>
+    <a href="mailto:privacy@domoretech.net">Contact</a>
+  </div>
+  <p>HaWake Alarm &copy; 2026 Domore Technology. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
