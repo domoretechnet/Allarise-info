@@ -73,12 +73,16 @@
     }
     /* Site nav */
     .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
-      gap: 20px;
-      padding: 0 0 32px;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 40px;
+      gap: 24px;
+      padding: 0 32px;
+      height: 52px;
     }
     .site-nav a {
       font-size: 14px;
@@ -93,13 +97,13 @@
       margin-right: auto;
     }
     .site-nav .nav-home img {
-      width: 24px;
-      height: 24px;
-      border-radius: 5px;
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
     }
     .site-nav .nav-home span {
-      font-size: 15px;
-      font-weight: 600;
+      font-size: 16px;
+      font-weight: 700;
       color: var(--text);
     }
     .nav-active { color: var(--accent) !important; font-weight: 600; }
@@ -228,18 +232,18 @@
   </style>
 </head>
 <body>
-<div class="wrapper">
 
-  <!-- Site Nav -->
-  <nav class="site-nav">
-    <a href="index.html" class="nav-home">
-      <img src="app-icon.png" alt="HaWake" />
-      <span>HaWake</span>
-    </a>
-    <a href="index.html">About</a>
-    <a href="privacy.html" class="nav-active">Privacy</a>
-    <a href="mqtt-builder.html">MQTT Builder</a>
-  </nav>
+<nav class="site-nav">
+  <a href="index.html" class="nav-home">
+    <img src="app-icon.png" alt="HaWake" />
+    <span>HaWake</span>
+  </a>
+  <a href="index.html">About</a>
+  <a href="privacy.html" class="nav-active">Privacy</a>
+  <a href="mqtt-builder.html">MQTT Builder</a>
+</nav>
+
+<div class="wrapper">
 
   <!-- Hero -->
   <div class="hero">
