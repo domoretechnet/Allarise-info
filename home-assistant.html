@@ -109,8 +109,14 @@
       border: 1px solid var(--border);
       border-radius: 16px;
       padding: 24px 28px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
     }
-    .toc-inner p {
+    @media (max-width: 600px) {
+      .toc-inner { grid-template-columns: 1fr; }
+    }
+    .toc-group p {
       font-size: 13px;
       font-weight: 600;
       text-transform: uppercase;
@@ -118,13 +124,13 @@
       color: var(--secondary);
       margin-bottom: 12px;
     }
-    .toc-inner ol {
+    .toc-group ol, .toc-group ul {
       list-style: none;
       display: flex;
       flex-direction: column;
       gap: 6px;
     }
-    .toc-inner ol li a {
+    .toc-group ol li a, .toc-group ul li a {
       font-size: 15px;
       color: var(--accent);
       text-decoration: none;
@@ -132,8 +138,8 @@
       align-items: center;
       gap: 8px;
     }
-    .toc-inner ol li a:hover { text-decoration: underline; }
-    .toc-inner ol li .step-num {
+    .toc-group ol li a:hover, .toc-group ul li a:hover { text-decoration: underline; }
+    .toc-group ol li .step-num {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -197,6 +203,72 @@
       margin-top: 12px;
     }
     .step-body strong { font-weight: 600; }
+
+    /* ── Reference sections ── */
+    .ref-sections { max-width: 760px; margin: 0 auto; padding: 0 24px 80px; }
+    .ref-block { margin-bottom: 48px; }
+    .ref-block:last-child { margin-bottom: 0; }
+    .ref-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .ref-header .ref-icon {
+      font-size: 22px;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .ref-header h2 {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+    .ref-body {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+    }
+    .ref-body p { font-size: 15px; color: var(--text); line-height: 1.65; }
+    .ref-body p + p { margin-top: 12px; }
+    .ref-body h3 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-top: 24px;
+      margin-bottom: 10px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+    .ref-body h3:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+    .ref-body strong { font-weight: 600; }
+
+    /* ── Section label divider ── */
+    .section-label-divider {
+      max-width: 760px;
+      margin: 0 auto 40px;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .section-label-divider .sld-label {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--secondary);
+      white-space: nowrap;
+    }
+    .section-label-divider hr {
+      flex: 1;
+      border: none;
+      border-top: 1px solid var(--border);
+    }
 
     /* ── Code blocks ── */
     .code-wrap {
@@ -317,17 +389,6 @@
     .wyg-card h3 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
     .wyg-card p { font-size: 13px; color: var(--secondary); line-height: 1.5; }
 
-    /* ── Section divider ── */
-    .section-divider {
-      max-width: 760px;
-      margin: 0 auto 48px;
-      padding: 0 24px;
-    }
-    .section-divider hr {
-      border: none;
-      border-top: 1px solid var(--border);
-    }
-
     /* ── Inline code ── */
     code {
       background: var(--surface);
@@ -354,6 +415,7 @@
       .page-header p { font-size: 16px; }
       .site-nav { padding: 0 16px; gap: 16px; }
       .step-body { padding: 20px; }
+      .ref-body { padding: 20px; }
     }
   </style>
 </head>
@@ -382,14 +444,25 @@
 <!-- TOC -->
 <div class="toc">
   <div class="toc-inner">
-    <p>Setup steps</p>
-    <ol>
-      <li><a href="#step-install"><span class="step-num">1</span> Install the HACS integration</a></li>
-      <li><a href="#step-mqtt"><span class="step-num">2</span> Set up your MQTT broker</a></li>
-      <li><a href="#step-connect"><span class="step-num">3</span> Connect the HaWake app</a></li>
-      <li><a href="#step-configure"><span class="step-num">4</span> Add the integration in Home Assistant</a></li>
-      <li><a href="#step-entities"><span class="step-num">5</span> What you get</a></li>
-    </ol>
+    <div class="toc-group">
+      <p>Setup</p>
+      <ol>
+        <li><a href="#step-install"><span class="step-num">1</span> Install the HACS integration</a></li>
+        <li><a href="#step-mqtt"><span class="step-num">2</span> Set up your MQTT broker</a></li>
+        <li><a href="#step-connect"><span class="step-num">3</span> Connect the HaWake app</a></li>
+        <li><a href="#step-configure"><span class="step-num">4</span> Add the integration in Home Assistant</a></li>
+        <li><a href="#step-entities"><span class="step-num">5</span> What you get</a></li>
+      </ol>
+    </div>
+    <div class="toc-group">
+      <p>Reference</p>
+      <ul>
+        <li><a href="#ref-entities">↗ Entities &amp; devices</a></li>
+        <li><a href="#ref-services">↗ Services</a></li>
+        <li><a href="#ref-automations">↗ Example automations</a></li>
+        <li><a href="#ref-topics">↗ MQTT topic structure</a></li>
+      </ul>
+    </div>
   </div>
 </div>
 
@@ -592,7 +665,331 @@ topic readwrite hawake/#</pre>
 
       <div class="callout callout-tip" style="margin-top:24px;">
         <span class="callout-icon">📖</span>
-        <span>For the full list of MQTT topics, payload formats, and service definitions, see the <a href="mqtt-builder.html">MQTT Builder</a>.</span>
+        <span>See the reference sections below for the full entity list, services, example automations, and MQTT topic details.</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Reference section divider -->
+<div class="section-label-divider">
+  <span class="sld-label">Reference</span>
+  <hr>
+</div>
+
+<!-- Reference sections -->
+<div class="ref-sections">
+
+  <!-- Entities -->
+  <div class="ref-block" id="ref-entities">
+    <div class="ref-header">
+      <div class="ref-icon">📊</div>
+      <h2>Entities &amp; devices</h2>
+    </div>
+    <div class="ref-body">
+
+      <h3>Dashboard sensors</h3>
+      <p>These sensors appear on the main HaWake dashboard device in Home Assistant.</p>
+      <table class="data-table">
+        <thead><tr><th>Sensor</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>Alarm State</td><td><code>idle</code> / <code>ringing</code> / <code>snoozed</code> / <code>dismissed</code></td></tr>
+          <tr><td>Alarm Name</td><td>Name of the currently ringing or next upcoming alarm</td></tr>
+          <tr><td>Alarm Mission</td><td>Mission type required to dismiss (<code>shake</code>, <code>math</code>, <code>ha</code>, <code>none</code>)</td></tr>
+          <tr><td>Alarm Fire Time</td><td>Scheduled fire time of the active or next alarm</td></tr>
+          <tr><td>Alarm Snooze Fire Time</td><td>When a snoozed alarm will re-fire</td></tr>
+          <tr><td>Alarm Sound</td><td>Sound ID playing for the active alarm</td></tr>
+          <tr><td>Alarm Volume</td><td>Volume % for the active alarm</td></tr>
+          <tr><td>Alarm Vibrate</td><td>Whether vibration is enabled</td></tr>
+          <tr><td>Alarm Fade In</td><td>Whether fade-in is active</td></tr>
+          <tr><td>Alarm Notes</td><td>Notes attached to the active alarm</td></tr>
+          <tr><td>Alarm ID</td><td>MQTT index of the active alarm</td></tr>
+          <tr><td>Alarm Snooze Count</td><td>Number of times the current alarm has been snoozed</td></tr>
+          <tr><td>Snoozes Remaining</td><td>Snoozes left before alarm is force-dismissed</td></tr>
+          <tr><td>Alarm Count</td><td>Number of active (enabled) alarms</td></tr>
+          <tr><td>App Version</td><td>HaWake app version string</td></tr>
+          <tr><td>Broker Connection</td><td>MQTT connection state reported by the app</td></tr>
+          <tr><td>Alert Volume</td><td>Volume used for HA-triggered alert alarms (%)</td></tr>
+          <tr><td>Alert Sound</td><td>Default sound for HA alert alarms</td></tr>
+          <tr><td>Alert Vibrate</td><td>Whether HA alert alarms vibrate</td></tr>
+          <tr><td>Alert Loop Media</td><td>Whether media audio loops during HA alerts</td></tr>
+          <tr><td>Alert Loop Delay</td><td>Seconds between media audio loops</td></tr>
+          <tr><td>Quick Alarm</td><td>Active quick alarm state</td></tr>
+          <tr><td>Quick Alarm Fire Time</td><td>When the quick alarm fires</td></tr>
+          <tr><td>Quick Alarm Label</td><td>Label of the quick alarm</td></tr>
+          <tr><td>Quick Alarm Count</td><td>Number of active quick alarms</td></tr>
+          <tr><td>Sleep Sound Volume</td><td>Current sleep sounds volume (%)</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Binary sensor</h3>
+      <table class="data-table">
+        <thead><tr><th>Sensor</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>App Online</td><td><code>on</code> when the iOS app is connected to the broker</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Per-alarm sensors</h3>
+      <p>For each alarm you create in the app, a dedicated HA device is created containing:</p>
+      <p style="margin-top:8px; font-size:14px; color:var(--secondary);">
+        <code>Name</code> · <code>Enabled</code> · <code>State</code> · <code>Fire Time</code> · <code>Snooze Fire Time</code> · <code>Days</code> · <code>Mission</code> · <code>Sound</code> · <code>Snoozes</code> · <code>Volume</code> · <code>Vibrate</code> · <code>Fade In</code> · <code>Notes</code> · <code>Sort Order</code> · <code>Commands</code> · <code>Swipe Left/Right Commands</code>
+      </p>
+
+      <h3>Buttons</h3>
+      <p><strong>Dashboard buttons</strong> act on the currently active alarm:</p>
+      <table class="data-table">
+        <thead><tr><th>Button</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr><td>Dismiss Alarm</td><td>Dismiss the ringing or snoozed alarm</td></tr>
+          <tr><td>Snooze Alarm</td><td>Snooze the ringing alarm</td></tr>
+          <tr><td>Skip Alarm</td><td>Skip the next upcoming fire for the active alarm</td></tr>
+          <tr><td>Unskip Alarm</td><td>Remove the skip flag from the next alarm</td></tr>
+          <tr><td>Delete Next Alarm</td><td>Delete the next alarm in the queue</td></tr>
+          <tr><td>Kill Snoozed Alarm</td><td>Immediately end a snoozed alarm session</td></tr>
+          <tr><td>Sleep Sound Stop / Pause / Resume</td><td>Control sleep sounds playback</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:12px;"><strong>Per-alarm buttons</strong> appear on each alarm's device: <code>Dismiss</code> · <code>Snooze</code> · <code>Skip</code> · <code>Unskip</code> · <code>Kill Snoozed</code> · <code>Delete</code></p>
+
+      <h3>Switches</h3>
+      <table class="data-table">
+        <thead><tr><th>Switch</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>Arm</td><td>Master arm/disarm toggle (HA is source of truth)</td></tr>
+          <tr><td>Alarm N — Enabled</td><td>Enable or disable a specific alarm</td></tr>
+          <tr><td>Alert Vibrate</td><td>Toggle vibration for HA alert alarms</td></tr>
+          <tr><td>Alert Loop Media</td><td>Toggle media looping for HA alert alarms</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Media player</h3>
+      <p>Exposes a media player entity for playing audio or TTS to the phone. Supports <code>play_media</code>, <code>media_announce</code>, and <code>volume_set</code>.</p>
+      <div class="code-wrap">
+        <div class="code-label">
+          <span>Play TTS via media player</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre>service: media_player.play_media
+target:
+  entity_id: media_player.hawake_iphone
+data:
+  media_content_id: media-source://tts/cloud?message=Good+morning
+  media_content_type: music</pre>
+      </div>
+
+      <h3>Notify</h3>
+      <p>Send a full-screen alert to the phone using the standard HA notify service:</p>
+      <div class="code-wrap">
+        <div class="code-label">
+          <span>Send a full-screen alert</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre>service: notify.hawake_iphone
+data:
+  title: "Door Alert"
+  message: "Front door opened"
+  data:
+    sound: "Perimeter_Breach"
+    volume: 0.8
+    media_url: "http://your-ha.local:8123/local/doorbell.mp3"</pre>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Services -->
+  <div class="ref-block" id="ref-services">
+    <div class="ref-header">
+      <div class="ref-icon">⚙️</div>
+      <h2>Services</h2>
+    </div>
+    <div class="ref-body">
+
+      <h3>hawake.update_alarm</h3>
+      <p>Modify an alarm by index or name. All fields except <code>device_name</code> are optional — only the fields you include will be changed.</p>
+      <div class="code-wrap">
+        <div class="code-label">
+          <span>hawake.update_alarm</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre>service: hawake.update_alarm
+data:
+  device_name: iPhone        # optional if only one device
+  name: "Work Alarm"         # target by name (or use index)
+  time: "07:30"
+  enabled: true
+  days: [1, 2, 3, 4, 5]     # 0=Sunday … 6=Saturday
+  sound: "Alarm_Clock"
+  volume: 0.8
+  snooze_duration: 9
+  max_snooze_count: 3
+  notes: "Team meeting at 9am"</pre>
+      </div>
+
+      <h3>hawake.trigger_alert</h3>
+      <p>Show a full-screen alert alarm on the phone.</p>
+      <div class="code-wrap">
+        <div class="code-label">
+          <span>hawake.trigger_alert</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre>service: hawake.trigger_alert
+data:
+  device_name: iPhone
+  title: "Motion Detected"
+  message: "Front camera triggered"
+  sound: "Perimeter_Breach"
+  volume: 0.9
+  media_url: "http://ha.local:8123/local/alert.mp3"</pre>
+      </div>
+
+      <h3>hawake.dismiss</h3>
+      <p>Dismiss the currently ringing or snoozed alarm.</p>
+      <div class="code-wrap">
+        <div class="code-label">
+          <span>hawake.dismiss</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre>service: hawake.dismiss
+data:
+  device_name: iPhone</pre>
+      </div>
+
+      <h3>hawake.snooze</h3>
+      <p>Snooze the currently ringing alarm.</p>
+      <div class="code-wrap">
+        <div class="code-label">
+          <span>hawake.snooze</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre>service: hawake.snooze
+data:
+  device_name: iPhone</pre>
+      </div>
+
+      <h3>hawake.skip</h3>
+      <p>Skip the next fire of the next upcoming alarm.</p>
+      <div class="code-wrap">
+        <div class="code-label">
+          <span>hawake.skip</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre>service: hawake.skip
+data:
+  device_name: iPhone</pre>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Example Automations -->
+  <div class="ref-block" id="ref-automations">
+    <div class="ref-header">
+      <div class="ref-icon">🤖</div>
+      <h2>Example automations</h2>
+    </div>
+    <div class="ref-body">
+
+      <h3>Re-enable a work alarm on Sunday evening</h3>
+      <div class="code-wrap">
+        <div class="code-label">
+          <span>automation.yaml</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre>automation:
+  alias: "Re-enable work alarm on Sunday"
+  trigger:
+    - platform: time
+      at: "20:00:00"
+  condition:
+    - condition: time
+      weekday: [sun]
+  action:
+    - service: hawake.update_alarm
+      data:
+        name: "Work Alarm"
+        enabled: true</pre>
+      </div>
+
+      <h3>Alert phone when front door opens at night</h3>
+      <div class="code-wrap">
+        <div class="code-label">
+          <span>automation.yaml</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre>automation:
+  alias: "Front door night alert"
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.front_door
+      to: "on"
+  condition:
+    - condition: time
+      after: "22:00:00"
+      before: "06:00:00"
+  action:
+    - service: hawake.trigger_alert
+      data:
+        title: "Front Door"
+        message: "Front door opened"
+        sound: "Perimeter_Breach"
+        volume: 1.0</pre>
+      </div>
+
+      <h3>Auto-snooze when leaving the bedroom</h3>
+      <div class="code-wrap">
+        <div class="code-label">
+          <span>automation.yaml</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre>automation:
+  alias: "Auto snooze when leaving bedroom"
+  trigger:
+    - platform: state
+      entity_id: sensor.hawake_iphone_alarm_state
+      to: "ringing"
+  action:
+    - delay: "00:00:30"
+    - condition: state
+      entity_id: binary_sensor.bedroom_presence
+      state: "off"
+    - service: hawake.snooze
+      data:
+        device_name: iPhone</pre>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MQTT Topic Structure -->
+  <div class="ref-block" id="ref-topics">
+    <div class="ref-header">
+      <div class="ref-icon">📡</div>
+      <h2>MQTT topic structure</h2>
+    </div>
+    <div class="ref-body">
+      <p>All topics follow the pattern <code>{prefix}/{device}/…</code>. With default settings, <code>prefix</code> is <code>hawake</code> and <code>device</code> is <code>iphone</code>.</p>
+
+      <table class="data-table">
+        <thead>
+          <tr><th>Direction</th><th>Topic pattern</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>App → HA</td><td><code>hawake/iphone/sensor/{key}</code></td><td>Dashboard sensor values</td></tr>
+          <tr><td>App → HA</td><td><code>hawake/iphone/alarm/{n}/{key}</code></td><td>Per-alarm sensor values</td></tr>
+          <tr><td>App → HA</td><td><code>hawake/iphone/availability</code></td><td>App online/offline</td></tr>
+          <tr><td>App → HA</td><td><code>hawake/iphone/arm/state</code></td><td>Arm state</td></tr>
+          <tr><td>HA → App</td><td><code>hawake/iphone/command/{cmd}</code></td><td>Dashboard commands</td></tr>
+          <tr><td>HA → App</td><td><code>hawake/iphone/alarm/{n}/command/{cmd}</code></td><td>Per-alarm commands</td></tr>
+          <tr><td>HA → App</td><td><code>hawake/iphone/arm/command</code></td><td>Arm command</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-tip" style="margin-top:16px;">
+        <span class="callout-icon">🛠</span>
+        <span>Use the <a href="mqtt-builder.html">MQTT Payload Builder</a> to interactively construct and copy payloads for any of these topics.</span>
       </div>
     </div>
   </div>
@@ -606,9 +1003,9 @@ topic readwrite hawake/#</pre>
     <a href="home-assistant.html">Home Assistant</a>
     <a href="mqtt-builder.html">MQTT Builder</a>
     <a href="privacy.html">Privacy</a>
-    <a href="https://github.com/hawake/hawake-hacs/issues" target="_blank">Report an Issue</a>
+    <a href="https://github.com/domoretechnet/hawake-hacs/issues" target="_blank">Report an Issue</a>
   </div>
-  <div>© 2025 HaWake Alarm · <a href="privacy.html">Privacy Policy</a></div>
+  <div>© 2026 HaWake Alarm · <a href="privacy.html">Privacy Policy</a></div>
 </footer>
 
 <script>
