@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="app-icon.png">
+  <link rel="apple-touch-icon" href="app-icon.png">
+  <title>HaWake — Home Assistant Setup</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --surface: #f5f5f7;
+      --border: #d2d2d7;
+      --text: #1d1d1f;
+      --secondary: #6e6e73;
+      --accent: #0071e3;
+      --ha-color: #18bcf2;
+      --ha-bg: #eaf7fd;
+      --green: #1d8348;
+      --green-bg: #eafaf1;
+      --warn-bg: #fff8ec;
+      --warn-border: #f0a500;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #000000;
+        --surface: #1c1c1e;
+        --border: #38383a;
+        --text: #f5f5f7;
+        --secondary: #98989d;
+        --accent: #2997ff;
+        --ha-color: #18bcf2;
+        --ha-bg: #041e2a;
+        --green: #30d158;
+        --green-bg: #0d2614;
+        --warn-bg: #1f1600;
+        --warn-border: #c97f00;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* ── Nav ── */
+    .site-nav {
+      position: sticky; top: 0; z-index: 50;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 24px;
+      padding: 0 32px; height: 52px;
+    }
+    .site-nav .nav-home {
+      display: flex; align-items: center; gap: 10px; margin-right: auto;
+      text-decoration: none;
+    }
+    .site-nav .nav-home img { width: 28px; height: 28px; border-radius: 6px; }
+    .site-nav .nav-home .icon-light { display: block; }
+    .site-nav .nav-home .icon-dark  { display: none;  }
+    @media (prefers-color-scheme: dark) {
+      .site-nav .nav-home .icon-light { display: none;  }
+      .site-nav .nav-home .icon-dark  { display: block; }
+    }
+    .site-nav .nav-home span { font-size: 16px; font-weight: 700; color: var(--text); }
+    .site-nav a { font-size: 14px; color: var(--secondary); text-decoration: none; }
+    .site-nav a:hover { color: var(--accent); }
+    .site-nav .nav-active { color: var(--accent) !important; font-weight: 600; }
+
+    /* ── Page header ── */
+    .page-header {
+      padding: 64px 24px 48px;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .page-header .ph-label {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .page-header h1 {
+      font-size: 40px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+    .page-header p {
+      font-size: 18px;
+      color: var(--secondary);
+      line-height: 1.6;
+      max-width: 600px;
+    }
+
+    /* ── TOC ── */
+    .toc {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 24px 48px;
+    }
+    .toc-inner {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px 28px;
+    }
+    .toc-inner p {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--secondary);
+      margin-bottom: 12px;
+    }
+    .toc-inner ol {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .toc-inner ol li a {
+      font-size: 15px;
+      color: var(--accent);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .toc-inner ol li a:hover { text-decoration: underline; }
+    .toc-inner ol li .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* ── Steps ── */
+    .steps { max-width: 760px; margin: 0 auto; padding: 0 24px 80px; }
+    .step-block {
+      margin-bottom: 48px;
+    }
+    .step-block:last-child { margin-bottom: 0; }
+    .step-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .step-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+    .step-header h2 {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+    .step-body {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+    }
+    .step-body p, .step-body li {
+      font-size: 15px;
+      color: var(--text);
+      line-height: 1.65;
+    }
+    .step-body p + p { margin-top: 12px; }
+    .step-body ol, .step-body ul {
+      padding-left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .step-body strong { font-weight: 600; }
+
+    /* ── Code blocks ── */
+    .code-wrap {
+      margin-top: 16px;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .code-label {
+      background: var(--border);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      color: var(--secondary);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .copy-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+      padding: 0;
+      letter-spacing: 0.04em;
+    }
+    .copy-btn:hover { opacity: 0.7; }
+    pre {
+      background: #0d1117;
+      color: #e6edf3;
+      font-family: "SF Mono", ui-monospace, Menlo, monospace;
+      font-size: 13px;
+      line-height: 1.7;
+      padding: 16px;
+      overflow-x: auto;
+      margin: 0;
+    }
+    @media (prefers-color-scheme: light) {
+      pre { background: #1b1f24; }
+    }
+
+    /* ── Data table ── */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+      font-size: 14px;
+    }
+    .data-table th {
+      text-align: left;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--secondary);
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .data-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      color: var(--text);
+    }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table code {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1px 6px;
+      font-family: "SF Mono", ui-monospace, Menlo, monospace;
+      font-size: 12px;
+    }
+
+    /* ── Callout boxes ── */
+    .callout {
+      display: flex;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 10px;
+      margin-top: 16px;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+    .callout-icon { font-size: 18px; flex-shrink: 0; line-height: 1.4; }
+    .callout-tip {
+      background: var(--ha-bg);
+      border: 1px solid var(--ha-color);
+    }
+    .callout-note {
+      background: var(--surface);
+      border: 1px solid var(--border);
+    }
+    .callout-warn {
+      background: var(--warn-bg);
+      border: 1px solid var(--warn-border);
+    }
+    .callout a { color: var(--accent); }
+
+    /* ── What you get grid ── */
+    .wyg-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 14px;
+      margin-top: 16px;
+    }
+    .wyg-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 16px;
+    }
+    .wyg-card .wyg-icon { font-size: 24px; margin-bottom: 8px; display: block; }
+    .wyg-card h3 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+    .wyg-card p { font-size: 13px; color: var(--secondary); line-height: 1.5; }
+
+    /* ── Section divider ── */
+    .section-divider {
+      max-width: 760px;
+      margin: 0 auto 48px;
+      padding: 0 24px;
+    }
+    .section-divider hr {
+      border: none;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── Inline code ── */
+    code {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1px 6px;
+      font-family: "SF Mono", ui-monospace, Menlo, monospace;
+      font-size: 0.875em;
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--secondary);
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+    footer .footer-links { display: flex; gap: 20px; justify-content: center; margin-bottom: 12px; flex-wrap: wrap; }
+
+    @media (max-width: 600px) {
+      .page-header h1 { font-size: 28px; }
+      .page-header p { font-size: 16px; }
+      .site-nav { padding: 0 16px; gap: 16px; }
+      .step-body { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="site-nav">
+  <a href="index.html" class="nav-home">
+    <img src="app-icon.png" class="icon-light" alt="HaWake" />
+    <img src="app-icon-dark.png" class="icon-dark" alt="HaWake" />
+    <span>HaWake</span>
+  </a>
+  <a href="index.html">About</a>
+  <a href="home-assistant.html" class="nav-active">Home Assistant</a>
+  <a href="mqtt-builder.html">MQTT Builder</a>
+  <a href="privacy.html">Privacy</a>
+</nav>
+
+<!-- Page header -->
+<div class="page-header">
+  <div class="ph-label">Home Assistant Integration</div>
+  <h1>Connect HaWake to Home Assistant.</h1>
+  <p>Control and monitor your alarms from Home Assistant — dismiss, snooze, trigger full-screen alerts, and automate your morning routine. All over MQTT.</p>
+</div>
+
+<!-- TOC -->
+<div class="toc">
+  <div class="toc-inner">
+    <p>Setup steps</p>
+    <ol>
+      <li><a href="#step-install"><span class="step-num">1</span> Install the HACS integration</a></li>
+      <li><a href="#step-mqtt"><span class="step-num">2</span> Set up your MQTT broker</a></li>
+      <li><a href="#step-connect"><span class="step-num">3</span> Connect the HaWake app</a></li>
+      <li><a href="#step-configure"><span class="step-num">4</span> Add the integration in Home Assistant</a></li>
+      <li><a href="#step-entities"><span class="step-num">5</span> What you get</a></li>
+    </ol>
+  </div>
+</div>
+
+<!-- Steps -->
+<div class="steps">
+
+  <!-- Step 1 -->
+  <div class="step-block" id="step-install">
+    <div class="step-header">
+      <div class="step-badge">1</div>
+      <h2>Install the HACS integration</h2>
+    </div>
+    <div class="step-body">
+      <p><strong>Via HACS (recommended)</strong></p>
+      <ol>
+        <li>In Home Assistant, go to <strong>HACS → Integrations → ⋮ → Custom repositories</strong></li>
+        <li>Add the HaWake repository URL and select <strong>Integration</strong> as the category</li>
+        <li>Find <strong>HaWake Alarm</strong> in the HACS store and click <strong>Download</strong></li>
+        <li>Restart Home Assistant</li>
+      </ol>
+
+      <p style="margin-top:20px;"><strong>Manual install</strong></p>
+      <ol>
+        <li>Copy <code>custom_components/hawake/</code> into your HA <code>config/custom_components/</code> directory</li>
+        <li>Restart Home Assistant</li>
+      </ol>
+
+      <div class="callout callout-note">
+        <span class="callout-icon">ℹ️</span>
+        <span>HACS must be installed in your Home Assistant instance. If you haven't set it up yet, visit <a href="https://hacs.xyz" target="_blank">hacs.xyz</a> for installation instructions.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 2 -->
+  <div class="step-block" id="step-mqtt">
+    <div class="step-header">
+      <div class="step-badge">2</div>
+      <h2>Set up your MQTT broker</h2>
+    </div>
+    <div class="step-body">
+      <p>Create a dedicated MQTT user for the HaWake app and restrict it to only the topics it needs. This keeps the app isolated from the rest of your broker.</p>
+
+      <p style="margin-top:20px;"><strong>Step 2a — Create a dedicated user</strong></p>
+      <p>Open <strong>Settings → Add-ons → Mosquitto broker → Configuration</strong> and add a login under the <code>logins</code> key:</p>
+
+      <div class="code-wrap">
+        <div class="code-label">
+          <span>Mosquitto broker config</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre>logins:
+  - username: hawake
+    password: "your_secure_password"
+customize:
+  active: true
+  folder: mosquitto</pre>
+      </div>
+
+      <p style="margin-top:4px; font-size:14px; color:var(--secondary);">Save and <strong style="color:var(--text)">restart the Mosquitto add-on</strong> after making this change.</p>
+
+      <p style="margin-top:20px;"><strong>Step 2b — Create the ACL file</strong></p>
+      <p>With <code>customize.active: true</code> set above, Mosquitto loads any <code>.conf</code> files in <code>/share/mosquitto/</code>. Create <code>/share/mosquitto/hawake_acl.conf</code> using the File Editor add-on or SSH:</p>
+
+      <div class="code-wrap">
+        <div class="code-label">
+          <span>/share/mosquitto/hawake_acl.conf</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre># HaWake iOS app — restrict to HaWake topics only
+
+user hawake
+topic readwrite hawake/#</pre>
+      </div>
+
+      <p style="margin-top:12px; font-size:14px; color:var(--secondary);">This grants the <code>hawake</code> user read/write access to every topic under <code>hawake/</code>. <strong style="color:var(--text)">Restart the Mosquitto add-on</strong> again to apply the ACL.</p>
+
+      <table class="data-table" style="margin-top:20px;">
+        <thead>
+          <tr>
+            <th>Direction</th>
+            <th>Topics covered</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>App → Broker (publish)</td>
+            <td><code>hawake/{device}/sensor/…</code> · <code>hawake/{device}/alarm/…</code> · <code>hawake/{device}/availability</code> · <code>hawake/{device}/arm/state</code></td>
+          </tr>
+          <tr>
+            <td>App ← Broker (subscribe)</td>
+            <td><code>hawake/{device}/command/…</code> · <code>hawake/{device}/alarm/…/command/…</code> · <code>hawake/{device}/arm/command</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">💡</span>
+        <span><strong>Custom prefix?</strong> If you use a different topic prefix in the app (e.g. <code>myhome</code>), replace <code>hawake/#</code> with <code>myhome/#</code> in the ACL file.</span>
+      </div>
+
+      <div class="callout callout-note">
+        <span class="callout-icon">ℹ️</span>
+        <span>The HA MQTT integration uses a separate system account with broader broker access. You only need to configure credentials for the iOS app user.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 3 -->
+  <div class="step-block" id="step-connect">
+    <div class="step-header">
+      <div class="step-badge">3</div>
+      <h2>Connect the HaWake app</h2>
+    </div>
+    <div class="step-body">
+      <p>In the HaWake iOS app, go to <strong>Settings → MQTT Settings</strong> and enter your broker details:</p>
+
+      <table class="data-table">
+        <thead>
+          <tr><th>Field</th><th>Value</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Host</td><td>Your Home Assistant IP address or hostname</td></tr>
+          <tr><td>Port</td><td><code>1883</code> (plain) or <code>8883</code> (TLS)</td></tr>
+          <tr><td>Username</td><td><code>hawake</code></td></tr>
+          <tr><td>Password</td><td>The password you set in Step 2a</td></tr>
+          <tr><td>Topic Prefix</td><td><code>hawake</code> (default)</td></tr>
+          <tr><td>Device Name</td><td><code>iPhone</code> (default — change to identify multiple phones)</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">🛠</span>
+        <span>Use the <a href="mqtt-builder.html">MQTT Payload Builder</a> to generate and test payloads for any command before wiring up automations.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 4 -->
+  <div class="step-block" id="step-configure">
+    <div class="step-header">
+      <div class="step-badge">4</div>
+      <h2>Add the integration in Home Assistant</h2>
+    </div>
+    <div class="step-body">
+      <ol>
+        <li>Go to <strong>Settings → Devices &amp; Services → Add Integration</strong></li>
+        <li>Search for <strong>HaWake Alarm</strong> and select it</li>
+        <li>Enter the <strong>Device Name</strong> and <strong>MQTT Topic Prefix</strong> — these must exactly match what is set in the HaWake app</li>
+      </ol>
+
+      <div class="callout callout-note">
+        <span class="callout-icon">ℹ️</span>
+        <span><strong>Defaults:</strong> Device Name = <code>iPhone</code> · Topic Prefix = <code>hawake</code>. You can add multiple devices by adding one integration entry per phone.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 5 -->
+  <div class="step-block" id="step-entities">
+    <div class="step-header">
+      <div class="step-badge">5</div>
+      <h2>What you get</h2>
+    </div>
+    <div class="step-body">
+      <p>Once connected, the integration creates a main dashboard device and one sub-device per alarm — each packed with entities you can use in automations, dashboards, and scripts.</p>
+
+      <div class="wyg-grid">
+        <div class="wyg-card">
+          <span class="wyg-icon">📊</span>
+          <h3>Sensors</h3>
+          <p>Alarm state, name, fire time, snooze count, app version, sleep sound volume, and more.</p>
+        </div>
+        <div class="wyg-card">
+          <span class="wyg-icon">🔘</span>
+          <h3>Buttons</h3>
+          <p>Dismiss, snooze, skip, unskip, kill snoozed — on the dashboard device and per-alarm.</p>
+        </div>
+        <div class="wyg-card">
+          <span class="wyg-icon">🔁</span>
+          <h3>Switches</h3>
+          <p>Master arm toggle, per-alarm enable/disable, alert vibrate, and alert media loop.</p>
+        </div>
+        <div class="wyg-card">
+          <span class="wyg-icon">🔊</span>
+          <h3>Media Player</h3>
+          <p>Play audio or TTS directly to the phone via <code>play_media</code> and <code>media_announce</code>.</p>
+        </div>
+        <div class="wyg-card">
+          <span class="wyg-icon">🚨</span>
+          <h3>Notify</h3>
+          <p>Send a full-screen alert to the phone from any HA automation using the notify service.</p>
+        </div>
+        <div class="wyg-card">
+          <span class="wyg-icon">⏰</span>
+          <h3>Per-Alarm Devices</h3>
+          <p>Each alarm gets its own HA device with full control — time, days, sound, snooze, and more.</p>
+        </div>
+      </div>
+
+      <div class="callout callout-tip" style="margin-top:24px;">
+        <span class="callout-icon">📖</span>
+        <span>For the full list of MQTT topics, payload formats, and service definitions, see the <a href="mqtt-builder.html">MQTT Builder</a> or the <a href="https://hawake.app/docs/hass-api" target="_blank">MQTT Reference</a>.</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-links">
+    <a href="index.html">About</a>
+    <a href="home-assistant.html">Home Assistant</a>
+    <a href="mqtt-builder.html">MQTT Builder</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="https://github.com/hawake/hawake-hacs/issues" target="_blank">Report an Issue</a>
+  </div>
+  <div>© 2025 HaWake Alarm · <a href="privacy.html">Privacy Policy</a></div>
+</footer>
+
+<script>
+  function copyCode(btn) {
+    const pre = btn.closest('.code-wrap').querySelector('pre');
+    navigator.clipboard.writeText(pre.innerText).then(() => {
+      const orig = btn.textContent;
+      btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = orig, 1800);
+    });
+  }
+</script>
+
+</body>
+</html>
