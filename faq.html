@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="app-icon.png">
+  <link rel="apple-touch-icon" href="app-icon.png">
+  <title>HaWake Alarm — FAQ</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --surface: #f5f5f7;
+      --border: #d2d2d7;
+      --text: #1d1d1f;
+      --secondary: #6e6e73;
+      --accent: #0071e3;
+      --accent-dark: #2997ff;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #000000;
+        --surface: #1c1c1e;
+        --border: #38383a;
+        --text: #f5f5f7;
+        --secondary: #98989d;
+        --accent: #2997ff;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* ── Nav ── */
+    .site-nav {
+      position: sticky; top: 0; z-index: 50;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 24px;
+      padding: 0 32px; height: 52px;
+    }
+    .site-nav .nav-home {
+      display: flex; align-items: center; gap: 10px; margin-right: auto;
+      text-decoration: none;
+    }
+    .site-nav .nav-home img { width: 28px; height: 28px; border-radius: 6px; }
+    .site-nav .nav-home .icon-light { display: block; }
+    .site-nav .nav-home .icon-dark  { display: none;  }
+    @media (prefers-color-scheme: dark) {
+      .site-nav .nav-home .icon-light { display: none;  }
+      .site-nav .nav-home .icon-dark  { display: block; }
+    }
+    .site-nav .nav-home span { font-size: 16px; font-weight: 700; color: var(--text); }
+    .site-nav a { font-size: 14px; color: var(--secondary); text-decoration: none; }
+    .site-nav a:hover { color: var(--accent); }
+    .nav-active { color: var(--accent) !important; font-weight: 600; }
+
+    /* ── Wrapper ── */
+    .wrapper {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 56px 24px 96px;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+    .hero .app-icon {
+      width: 80px; height: 80px;
+      border-radius: 18px;
+      overflow: hidden;
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+    .hero .app-icon img { width: 80px; height: 80px; display: block; }
+    .hero .app-icon .icon-light { display: block; }
+    .hero .app-icon .icon-dark  { display: none;  }
+    @media (prefers-color-scheme: dark) {
+      .hero .app-icon .icon-light { display: none;  }
+      .hero .app-icon .icon-dark  { display: block; }
+    }
+    .hero h1 { font-size: 32px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 8px; }
+    .hero .subtitle { font-size: 16px; color: var(--secondary); }
+
+    /* ── Category label ── */
+    .category-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 40px 0 12px;
+    }
+    .category-label:first-of-type { margin-top: 0; }
+
+    /* ── FAQ items ── */
+    .faq-item {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      margin-bottom: 10px;
+      overflow: hidden;
+      background: var(--bg);
+    }
+    .faq-question {
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: none;
+      padding: 18px 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.4;
+    }
+    .faq-question:hover { background: var(--surface); }
+    .faq-chevron {
+      flex-shrink: 0;
+      width: 20px; height: 20px;
+      color: var(--secondary);
+      transition: transform 0.2s ease;
+    }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); }
+    .faq-answer {
+      display: none;
+      padding: 0 20px 18px;
+      font-size: 15px;
+      color: var(--secondary);
+      line-height: 1.65;
+      border-top: 1px solid var(--border);
+    }
+    .faq-item.open .faq-answer { display: block; }
+    .faq-answer p + p { margin-top: 10px; }
+    .faq-answer a { color: var(--accent); text-decoration: none; }
+    .faq-answer a:hover { text-decoration: underline; }
+    .faq-answer code {
+      font-family: "SF Mono", ui-monospace, monospace;
+      font-size: 13px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 1px 5px;
+      color: var(--text);
+    }
+
+    /* ── Contact strip ── */
+    .contact-strip {
+      margin-top: 56px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 24px;
+      text-align: center;
+    }
+    .contact-strip h2 { font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+    .contact-strip p { font-size: 14px; color: var(--secondary); }
+    .contact-strip a { color: var(--accent); text-decoration: none; }
+    .contact-strip a:hover { text-decoration: underline; }
+
+    @media (max-width: 600px) {
+      .site-nav { padding: 0 16px; gap: 16px; }
+      .wrapper { padding: 40px 16px 72px; }
+      .hero h1 { font-size: 26px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="index.html" class="nav-home">
+    <img class="icon-light" src="app-icon.png" alt="HaWake">
+    <img class="icon-dark"  src="app-icon-dark.png" alt="HaWake">
+    <span>HaWake Alarm</span>
+  </a>
+  <a href="index.html">About</a>
+  <a href="home-assistant.html">Home Assistant</a>
+  <a href="mqtt-builder.html">MQTT Builder</a>
+  <a href="faq.html" class="nav-active">FAQ</a>
+  <a href="privacy.html">Privacy</a>
+</nav>
+
+<div class="wrapper">
+
+  <div class="hero">
+    <div class="app-icon">
+      <img class="icon-light" src="app-icon.png" alt="HaWake Alarm icon">
+      <img class="icon-dark"  src="app-icon-dark.png" alt="HaWake Alarm icon">
+    </div>
+    <h1>Frequently Asked Questions</h1>
+    <p class="subtitle">Answers to common questions about HaWake Alarm.</p>
+  </div>
+
+  <!-- General -->
+  <p class="category-label">General</p>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggle(this)">
+      Do you have an Android app?
+      <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"/>
+      </svg>
+    </button>
+    <div class="faq-answer">
+      <p>HaWake Alarm is currently iOS only. We may consider expanding to Android in the future.</p>
+    </div>
+  </div>
+
+  <!-- Pricing & Pro -->
+  <p class="category-label">Pricing &amp; Pro</p>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggle(this)">
+      What does Pro include?
+      <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"/>
+      </svg>
+    </button>
+    <div class="faq-answer">
+      <p>Pro unlocks sleep sounds, the Morning Weather card, wallpaper presets, Home Assistant / MQTT integration, and more. You can try Pro free for 7 days.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggle(this)">
+      What are the Pro pricing options?
+      <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"/>
+      </svg>
+    </button>
+    <div class="faq-answer">
+      <p>Pro is available as a monthly subscription ($0.99/month, with a 7-day free trial) or a one-time lifetime purchase ($6.99). Both options are managed through the App Store.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggle(this)">
+      How do I restore a previous purchase?
+      <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"/>
+      </svg>
+    </button>
+    <div class="faq-answer">
+      <p>Open the app, go to <strong>Settings</strong>, and tap <strong>Restore Purchases</strong>. Make sure you are signed in to the same Apple ID used for the original purchase.</p>
+    </div>
+  </div>
+
+  <!-- Alarms -->
+  <p class="category-label">Alarms</p>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggle(this)">
+      Will the alarm fire if my phone is on silent / Do Not Not Disturb?
+      <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"/>
+      </svg>
+    </button>
+    <div class="faq-answer">
+      <p>Yes. HaWake plays audio through the media/playback channel, which is independent of your ringer switch and mute mode. The volume you set in the app is what you will hear regardless of the ringer position.</p>
+      <p>Note: iOS Focus modes (e.g. Do Not Disturb with "Allow from nobody") can still suppress notifications. We recommend allowing HaWake as a notification exception in any Focus modes you use overnight.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggle(this)">
+      Will the alarm fire if the app is closed or the phone is restarted?
+      <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"/>
+      </svg>
+    </button>
+    <div class="faq-answer">
+      <p>HaWake automatically registers a system-level backup alarm via iOS notifications. If the app is closed or the phone restarts, this backup will still fire — though it plays at your ringer volume rather than the app's custom volume.</p>
+      <p>For the full alarm experience (custom volume, missions, MQTT triggers), keep the app running in the background.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggle(this)">
+      What are missions?
+      <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"/>
+      </svg>
+    </button>
+    <div class="faq-answer">
+      <p>Missions are tasks you must complete before the alarm can be dismissed — so you can't just tap snooze half-awake and go back to sleep. Options include math problems, a phone shake challenge, and Home Assistant actions.</p>
+    </div>
+  </div>
+
+  <!-- Home Assistant & MQTT -->
+  <p class="category-label">Home Assistant &amp; MQTT</p>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggle(this)">
+      Do I need Home Assistant to use HaWake?
+      <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"/>
+      </svg>
+    </button>
+    <div class="faq-answer">
+      <p>No. Home Assistant and MQTT are completely optional. HaWake works as a standalone alarm app without any smart home setup.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggle(this)">
+      What MQTT broker does HaWake work with?
+      <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"/>
+      </svg>
+    </button>
+    <div class="faq-answer">
+      <p>HaWake connects to any standard MQTT broker over TCP or TLS. Most users run the <strong>Mosquitto</strong> add-on inside Home Assistant. See the <a href="home-assistant.html">Home Assistant setup guide</a> for step-by-step instructions.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggle(this)">
+      Can I control multiple phones from one Home Assistant instance?
+      <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"/>
+      </svg>
+    </button>
+    <div class="faq-answer">
+      <p>Yes. Each phone uses a unique <strong>Device Name</strong> as part of its MQTT topic, so they don't interfere with each other. Add one integration entry in Home Assistant per device.</p>
+    </div>
+  </div>
+
+  <!-- Sleep Sounds -->
+  <p class="category-label">Sleep Sounds</p>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggle(this)">
+      Will sleep sounds keep playing with the screen off?
+      <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"/>
+      </svg>
+    </button>
+    <div class="faq-answer">
+      <p>Yes. Sleep sounds use the iOS media playback channel and will continue playing when the screen locks. You can control playback from the lock screen or Control Center just like any other audio app.</p>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-question" onclick="toggle(this)">
+      Can I set sleep sounds to turn off automatically?
+      <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"/>
+      </svg>
+    </button>
+    <div class="faq-answer">
+      <p>Yes. When setting up sleep sounds you can choose a stop time — either a fixed time or a duration. The sounds will fade out and stop automatically.</p>
+    </div>
+  </div>
+
+  <div class="contact-strip">
+    <h2>Still have a question?</h2>
+    <p>Reach out and we'll be happy to help.<br>
+    <a href="mailto:support@domoretech.net">support@domoretech.net</a></p>
+  </div>
+
+</div>
+
+<script>
+  function toggle(btn) {
+    const item = btn.closest('.faq-item');
+    item.classList.toggle('open');
+  }
+</script>
+
+</body>
+</html>
