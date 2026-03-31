@@ -550,10 +550,11 @@ user homeassistant
 topic readwrite #
 
 user hawake
-topic readwrite hawake/#</pre>
+topic readwrite hawake/#
+topic read homeassistant/status</pre>
       </div>
 
-      <p style="margin-top:12px; font-size:14px; color:var(--secondary);">The <code>addons</code> and <code>homeassistant</code> entries are required by Home Assistant — omitting them breaks the broker. The <code>hawake</code> user is restricted to only <code>hawake/#</code> topics. <strong style="color:var(--text)">Restart the Mosquitto add-on</strong> to apply the ACL.</p>
+      <p style="margin-top:12px; font-size:14px; color:var(--secondary);">The <code>addons</code> and <code>homeassistant</code> entries are required by Home Assistant — omitting them breaks the broker. The <code>hawake</code> user gets read/write on all <code>hawake/#</code> topics, plus read access to <code>homeassistant/status</code> so the app can detect when HA restarts and republish its state. <strong style="color:var(--text)">Restart the Mosquitto add-on</strong> to apply the ACL.</p>
       <p style="margin-top:8px; font-size:14px; color:var(--secondary);">The <code>/share</code> folder is accessible via SMB or on the host filesystem at <code>/usr/share/hassio/share</code>.</p>
 
       <table class="data-table" style="margin-top:20px;">
