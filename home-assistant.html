@@ -524,21 +524,36 @@ customize:
 
       <p style="margin-top:4px; font-size:14px; color:var(--secondary);">Save and <strong style="color:var(--text)">restart the Mosquitto add-on</strong> after making this change.</p>
 
-      <p style="margin-top:20px;"><strong>Step 2b — Create the ACL file</strong></p>
-      <p>With <code>customize.active: true</code> set above, Mosquitto loads any <code>.conf</code> files in <code>/share/mosquitto/</code>. Create <code>/share/mosquitto/hawake_acl.conf</code> using the File Editor add-on or SSH:</p>
+      <p style="margin-top:20px;"><strong>Step 2b — Create the ACL files</strong></p>
+      <p>With <code>customize.active: true</code> set above, Mosquitto loads <code>.conf</code> files from <code>/share/mosquitto/</code>. You need two files. Create them using the File Editor add-on or SSH:</p>
 
+      <p style="margin-top:12px;"><strong>File 1</strong> — tells Mosquitto where the ACL list lives:</p>
       <div class="code-wrap">
         <div class="code-label">
-          <span>/share/mosquitto/hawake_acl.conf</span>
+          <span>/share/mosquitto/acl.conf</span>
           <button class="copy-btn" onclick="copyCode(this)">Copy</button>
         </div>
-        <pre># HaWake iOS app — restrict to HaWake topics only
+        <pre>acl_file /share/mosquitto/accesscontrollist</pre>
+      </div>
+
+      <p style="margin-top:12px;"><strong>File 2</strong> — the actual access control list. Home Assistant requires the <code>addons</code> and <code>homeassistant</code> users to have unrestricted access, or the broker will malfunction:</p>
+      <div class="code-wrap">
+        <div class="code-label">
+          <span>/share/mosquitto/accesscontrollist</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre>user addons
+topic readwrite #
+
+user homeassistant
+topic readwrite #
 
 user hawake
 topic readwrite hawake/#</pre>
       </div>
 
-      <p style="margin-top:12px; font-size:14px; color:var(--secondary);">This grants the <code>hawake</code> user read/write access to every topic under <code>hawake/</code>. <strong style="color:var(--text)">Restart the Mosquitto add-on</strong> again to apply the ACL.</p>
+      <p style="margin-top:12px; font-size:14px; color:var(--secondary);">The <code>addons</code> and <code>homeassistant</code> entries are required by Home Assistant — omitting them breaks the broker. The <code>hawake</code> user is restricted to only <code>hawake/#</code> topics. <strong style="color:var(--text)">Restart the Mosquitto add-on</strong> to apply the ACL.</p>
+      <p style="margin-top:8px; font-size:14px; color:var(--secondary);">The <code>/share</code> folder is accessible via SMB or on the host filesystem at <code>/usr/share/hassio/share</code>.</p>
 
       <table class="data-table" style="margin-top:20px;">
         <thead>
@@ -825,7 +840,8 @@ data:
   volume: 0.8
   snooze_duration: 9
   max_snooze_count: 3
-  notes: "Team meeting at 9am"</pre>
+  notes: "Team meeting at 9am"
+  morning_weather: true      # show Morning Weather card after dismissing</pre>
       </div>
 
       <h3>hawake.trigger_alert</h3>

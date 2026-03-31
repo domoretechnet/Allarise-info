@@ -475,6 +475,10 @@
             <input type="text" id="ca-wallpaper" placeholder="coastal-waters" oninput="updateCreateAlarm()">
           </div>
           <div class="toggle-row">
+            <input type="checkbox" id="ca-morning-weather" onchange="updateCreateAlarm()">
+            <label for="ca-morning-weather">Morning Weather (show weather card after dismissing)</label>
+          </div>
+          <div class="toggle-row">
             <input type="checkbox" id="ca-ephemeral" onchange="updateCreateAlarm()">
             <label for="ca-ephemeral">Ephemeral (auto-delete after firing)</label>
           </div>
@@ -764,6 +768,14 @@
               <label>Wallpaper Preset ID</label>
               <input type="text" id="ua-wallpaper" oninput="updateUpdateAlarm()">
             </div>
+            <div class="toggle-row">
+              <select id="ua-morning-weather" onchange="updateUpdateAlarm()">
+                <option value="">— no change —</option>
+                <option value="true">On</option>
+                <option value="false">Off</option>
+              </select>
+              <label for="ua-morning-weather">Morning Weather</label>
+            </div>
           </div>
         </div>
 
@@ -1031,6 +1043,14 @@
             <div class="field-group">
               <label>Wallpaper Preset ID</label>
               <input type="text" id="ubn-wallpaper" oninput="updateByName()">
+            </div>
+            <div class="toggle-row">
+              <select id="ubn-morning-weather" onchange="updateByName()">
+                <option value="">— no change —</option>
+                <option value="true">On</option>
+                <option value="false">Off</option>
+              </select>
+              <label for="ubn-morning-weather">Morning Weather</label>
             </div>
           </div>
         </div>
@@ -1736,6 +1756,7 @@ function updateCreateAlarm() {
   const sl = v('ca-swipe-left'); if (sl) p.swipe_left_command = sl;
   const sr = v('ca-swipe-right'); if (sr) p.swipe_right_command = sr;
   const wp = v('ca-wallpaper'); if (wp) p.wallpaper_preset_id = wp;
+  if (vCheck('ca-morning-weather')) p.morning_weather = true;
   if (vCheck('ca-ephemeral')) p.ephemeral = true;
   const mid = v('ca-mqtt-id'); if (mid) p.mqtt_id = mid;
   setPreview('ca-preview', 'ca-yaml', 'create_alarm', p);
@@ -1767,6 +1788,7 @@ function updateUpdateAlarm() {
   const sl = v('ua-swipe-left'); if (sl) p.swipe_left_command = sl;
   const sr = v('ua-swipe-right'); if (sr) p.swipe_right_command = sr;
   const wp = v('ua-wallpaper'); if (wp) p.wallpaper_preset_id = wp;
+  const uaMW = v('ua-morning-weather'); if (uaMW !== '') p.morning_weather = uaMW === 'true';
   setPreview('ua-preview', 'ua-yaml', 'update_alarm', p);
 }
 
@@ -1797,6 +1819,7 @@ function updateByName() {
   const sl = v('ubn-swipe-left'); if (sl) p.swipe_left_command = sl;
   const sr = v('ubn-swipe-right'); if (sr) p.swipe_right_command = sr;
   const wp = v('ubn-wallpaper'); if (wp) p.wallpaper_preset_id = wp;
+  const ubnMW = v('ubn-morning-weather'); if (ubnMW !== '') p.morning_weather = ubnMW === 'true';
   setPreview('ubn-preview', 'ubn-yaml', 'update_alarm', p);
 }
 
