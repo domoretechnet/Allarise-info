@@ -678,6 +678,21 @@ topic read homeassistant/status</pre>
           <h3>Per-Alarm Devices</h3>
           <p>Each alarm gets its own HA device with full control — time, days, sound, snooze, and more.</p>
         </div>
+        <div class="wyg-card">
+          <span class="wyg-icon">🌙</span>
+          <h3>Sleep Sounds</h3>
+          <p>Start, stop, pause, or change white noise and ambient sounds on the phone remotely from any automation.</p>
+        </div>
+        <div class="wyg-card">
+          <span class="wyg-icon">🔐</span>
+          <h3>Arm Widget</h3>
+          <p>A switch entity that syncs with the app's arm toggle — use it to tell Home Assistant when your home security is armed. HA is the source of truth.</p>
+        </div>
+        <div class="wyg-card">
+          <span class="wyg-icon">⚡</span>
+          <h3>Commands</h3>
+          <p>Fire named commands from the app's alarm screen to trigger HA automations — dismiss, snooze, swipe actions, and custom widget buttons.</p>
+        </div>
       </div>
 
       <div class="callout callout-tip" style="margin-top:24px;">
@@ -782,7 +797,7 @@ topic read homeassistant/status</pre>
       </table>
 
       <h3>Media player</h3>
-      <p>Exposes a media player entity for playing audio or TTS to the phone. Supports <code>play_media</code>, <code>media_announce</code>, and <code>volume_set</code>.</p>
+      <p>Exposes a media player entity for playing audio or TTS to the phone. Supports <code>play_media</code>, <code>media_announce</code>, <code>volume_set</code>, and a <strong>Loop Media</strong> switch and <strong>Alert Volume</strong> number entity.</p>
       <div class="code-wrap">
         <div class="code-label">
           <span>Play TTS via media player</span>
@@ -794,6 +809,26 @@ target:
 data:
   media_content_id: media-source://tts/cloud?message=Good+morning
   media_content_type: music</pre>
+      </div>
+      <div class="code-wrap">
+        <div class="code-label">
+          <span>Set alert volume (0–100)</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre>service: number.set_value
+target:
+  entity_id: number.allarise_iphone_alert_volume
+data:
+  value: 80</pre>
+      </div>
+      <div class="code-wrap">
+        <div class="code-label">
+          <span>Enable media looping for alert alarms</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre>service: switch.turn_on
+target:
+  entity_id: switch.allarise_iphone_alert_loop_media</pre>
       </div>
 
       <h3>Notify</h3>
@@ -811,6 +846,97 @@ data:
     sound: "Perimeter_Breach"
     volume: 0.8
     media_url: "http://your-ha.local:8123/local/doorbell.mp3"</pre>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Sleep Sound Controls -->
+  <div class="ref-block" id="ref-sleep-sounds">
+    <div class="ref-header">
+      <div class="ref-icon">🌙</div>
+      <h2>Sleep sound controls</h2>
+    </div>
+    <div class="ref-body">
+
+      <p>Sleep sounds (white noise, rain, fan, etc.) can be started, stopped, paused, resumed, and adjusted remotely from any Home Assistant automation or script. The current sound name and volume are published as sensors on the dashboard device and are also surfaced in the HA Dashboard so you can see what's playing at a glance.</p>
+
+      <h3>Dashboard sensors</h3>
+      <table class="data-table">
+        <thead><tr><th>Sensor</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>Sleep Sound</td><td>Name of the currently playing sound, or <code>none</code></td></tr>
+          <tr><td>Sleep Sound Volume</td><td>Current playback volume as a percentage</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Dashboard buttons</h3>
+      <p>Three buttons appear on the main dashboard device for quick control:</p>
+      <table class="data-table">
+        <thead><tr><th>Button</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr><td>Sleep Sound Stop</td><td>Fully stop playback and release the audio session</td></tr>
+          <tr><td>Sleep Sound Pause</td><td>Mute audio while keeping the session alive (lock screen controls remain visible)</td></tr>
+          <tr><td>Sleep Sound Resume</td><td>Unmute and resume from where it was paused</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Commands</h3>
+      <p>All sleep sound commands are sent via MQTT to the app's command topic. Available sounds: <code>Brown_Noise</code>, <code>white_noise</code>, <code>Fan</code>, <code>Light_Rain</code>, <code>Summer_Rain</code>, <code>Sea_Waves</code>, <code>Mountain_Stream</code>, <code>Rainforest_Birds</code>.</p>
+
+      <div class="code-wrap">
+        <div class="code-label">
+          <span>Start a sleep sound</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre>topic: allarise/iphone/command/sleep_sound_start
+payload: |
+  {
+    "sound": "Brown_Noise",
+    "volume": 60,
+    "duration_minutes": 30,
+    "fade_out_minutes": 5
+  }</pre>
+      </div>
+      <p style="font-size:13px; color:var(--secondary); margin-top:8px; margin-bottom:16px;">
+        Payload keys (all optional except the command itself):<br>
+        <code>sound</code> — sound name (defaults to first available if omitted)<br>
+        <code>volume</code> — 0–100 (defaults to 50)<br>
+        <code>duration_minutes</code> — play for N minutes, max 720; omit for indefinite<br>
+        <code>until_next_alarm</code> — <code>true</code> to stop automatically when the next alarm fires<br>
+        <code>fade_out_minutes</code> / <code>fade_out_seconds</code> — fade-out duration before stopping
+      </p>
+
+      <div class="code-wrap">
+        <div class="code-label">
+          <span>Change sound without stopping</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre>topic: allarise/iphone/command/sleep_sound_change
+payload: {"sound": "Sea_Waves"}</pre>
+      </div>
+
+      <div class="code-wrap">
+        <div class="code-label">
+          <span>Adjust volume while playing</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre>topic: allarise/iphone/command/sleep_sound_set_volume
+payload: {"volume": 40}</pre>
+      </div>
+
+      <div class="code-wrap">
+        <div class="code-label">
+          <span>Stop playback</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        </div>
+        <pre>topic: allarise/iphone/command/sleep_sound_stop
+payload: {}</pre>
+      </div>
+
+      <div class="callout callout-tip" style="margin-top:16px;">
+        <span class="callout-icon">💡</span>
+        <span>Use <code>until_next_alarm: true</code> in <code>sleep_sound_start</code> to automatically stop white noise the moment the morning alarm fires — no separate automation needed.</span>
       </div>
 
     </div>

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/png" href="app-icon.png">
   <link rel="apple-touch-icon" href="app-icon.png">
-  <title>Allarise — Smart Alarm for Home Assistant</title>
+  <title>Allarise</title>
   <style>
     :root {
       --bg: #ffffff;
@@ -214,6 +214,34 @@
       gap: 4px;
     }
 
+    /* ── Pro / Free badges ── */
+    .pro-badge {
+      display: inline-block;
+      background: #bf5af2;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 20px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+    .free-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 20px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+
     /* ── Privacy badge ── */
     .privacy-strip {
       background: var(--green-bg);
@@ -284,27 +312,6 @@
   </div>
 </section>
 
-<!-- Pricing -->
-<section class="section">
-  <div class="section-inner">
-    <div class="section-label">Pricing</div>
-    <h2>Support Allarise.</h2>
-    <p class="lead">Subscribe monthly or purchase outright — no forced subscription required.</p>
-    <div class="features" style="max-width:560px;">
-      <div class="feature-card">
-        <span class="f-icon">📅</span>
-        <h3>Monthly — $0.99 / mo</h3>
-        <p>Includes a 7-day free trial. To cancel: open <strong>Settings</strong> → tap your name at the top → <strong>Subscriptions</strong> → tap Allarise → <strong>Cancel Subscription</strong>.</p>
-      </div>
-      <div class="feature-card">
-        <span class="f-icon">♾️</span>
-        <h3>Lifetime — $6.99</h3>
-        <p>One-time purchase. Pay once, no recurring charges.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- Features -->
 <section class="section alt-bg">
   <div class="section-inner">
@@ -316,17 +323,17 @@
       <div class="feature-card">
         <span class="f-icon">⏰</span>
         <h3>Alarm Engine</h3>
-        <p>Alarms that mean business. Allarise's alarm engine plays at the volume you set, independent of your ringer and mute switch — so a low ringer volume won't ruin your morning. A system-level backup is also registered automatically as a failsafe if the app is ever closed, though it uses iOS AlarmKit alarms at ringer volume.</p>
+        <p>Alarms that mean business. Allarise plays at the volume you set, independent of your ringer and mute switch. Free includes 2 alarms. <span class="pro-badge">Pro</span> unlocks unlimited alarms.</p>
       </div>
       <div class="feature-card">
         <span class="f-icon">🏠</span>
         <h3>Home Assistant Integration</h3>
-        <p>Connect via MQTT to your Home Assistant instance. Trigger automations before your alarm goes off, when it fires, when it's snoozed, and when it's dismissed. Two-way commands let you send custom sensors and actions back to Home Assistant directly from the app. This level of alarm integration is virtually unheard of on iOS. Allarise turns your alarm into the central trigger for your entire smart home.</p>
+        <p>Connect via MQTT to your Home Assistant instance. Trigger automations when your alarm fires, snoozed, or dismissed. Two-way commands let Home Assistant talk back. This level of alarm integration is virtually unheard of on iOS.</p>
       </div>
       <div class="feature-card">
         <span class="f-icon">🌙</span>
-        <h3>Sleep Sounds</h3>
-        <p>Fall asleep to rain, ocean waves, white noise, and more. Lock screen controls, sleep timers, and plays on any speaker.</p>
+        <h3>Sleep Sounds <span class="pro-badge">Pro</span></h3>
+        <p>Fall asleep to rain, ocean waves, white noise, and more. Lock screen controls, sleep timers, and can be controlled remotely from Home Assistant.</p>
       </div>
       <div class="feature-card">
         <span class="f-icon">🧩</span>
@@ -335,7 +342,7 @@
       </div>
       <div class="feature-card">
         <span class="f-icon">🎨</span>
-        <h3>Wallpaper Packs</h3>
+        <h3>Wallpaper Packs <span class="pro-badge">Pro</span></h3>
         <p>Choose from curated wallpaper packs that transform your home and alarm screens. Each pack includes light and dark variants designed to look great out of the box.</p>
       </div>
       <div class="feature-card">
@@ -371,7 +378,7 @@
     <div class="privacy-strip">
       <span class="ps-icon">✅</span>
       <div class="ps-body">
-        <strong>No data collected.</strong> Allarise is built local-first. Your alarms, settings, and sleep data never leave your device. The app only communicates with Apple's native services such as WeatherKit and the App Store, and with your own self-hosted Home Assistant MQTT broker if you enable integration.<br><br>
+        <strong>No data collected.</strong> Allarise is built local-first. Your alarms and settings never leave your device. The app only communicates with Apple's native services such as WeatherKit and the App Store, and with your own self-hosted Home Assistant MQTT broker if you enable integration.<br><br>
         If you choose to contact support, you may optionally share a debug log directly from the app. Logs are generated locally, are not encrypted, and can be fully reviewed by you before sending.
         <a href="privacy.html">Read the full privacy policy →</a>
       </div>
