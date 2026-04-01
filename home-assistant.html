@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/png" href="app-icon.png">
   <link rel="apple-touch-icon" href="app-icon.png">
-  <title>HaWake — Home Assistant Setup</title>
+  <title>Allarise — Home Assistant Setup</title>
   <style>
     :root {
       --bg: #ffffff;
@@ -424,9 +424,9 @@
 <!-- Nav -->
 <nav class="site-nav">
   <a href="index.html" class="nav-home">
-    <img src="app-icon.png" class="icon-light" alt="HaWake" />
-    <img src="app-icon-dark.png" class="icon-dark" alt="HaWake" />
-    <span>HaWake</span>
+    <img src="app-icon.png" class="icon-light" alt="Allarise" />
+    <img src="app-icon-dark.png" class="icon-dark" alt="Allarise" />
+    <span>Allarise</span>
   </a>
   <a href="index.html">About</a>
   <a href="home-assistant.html" class="nav-active">Home Assistant</a>
@@ -438,7 +438,7 @@
 <!-- Page header -->
 <div class="page-header">
   <div class="ph-label">Home Assistant Integration</div>
-  <h1>Connect HaWake to Home Assistant.</h1>
+  <h1>Connect Allarise to Home Assistant.</h1>
   <p>Control and monitor your alarms from Home Assistant — dismiss, snooze, trigger full-screen alerts, and automate your morning routine. All over MQTT.</p>
 </div>
 
@@ -450,7 +450,7 @@
       <ol>
         <li><a href="#step-install"><span class="step-num">1</span> Install the HACS integration</a></li>
         <li><a href="#step-mqtt"><span class="step-num">2</span> Set up your MQTT broker</a></li>
-        <li><a href="#step-connect"><span class="step-num">3</span> Connect the HaWake app</a></li>
+        <li><a href="#step-connect"><span class="step-num">3</span> Connect the Allarise app</a></li>
         <li><a href="#step-configure"><span class="step-num">4</span> Add the integration in Home Assistant</a></li>
         <li><a href="#step-entities"><span class="step-num">5</span> What you get</a></li>
       </ol>
@@ -480,14 +480,14 @@
       <p><strong>Via HACS (recommended)</strong></p>
       <ol>
         <li>In Home Assistant, go to <strong>HACS → Integrations → ⋮ → Custom repositories</strong></li>
-        <li>Add <code>https://github.com/domoretechnet/hawake-hacs</code> and select <strong>Integration</strong> as the category</li>
-        <li>Find <strong>HaWake Alarm</strong> in the HACS store and click <strong>Download</strong></li>
+        <li>Add <code>https://github.com/domoretechnet/allarise-hacs</code> and select <strong>Integration</strong> as the category</li>
+        <li>Find <strong>Allarise</strong> in the HACS store and click <strong>Download</strong></li>
         <li>Restart Home Assistant</li>
       </ol>
 
       <p style="margin-top:20px;"><strong>Manual install</strong></p>
       <ol>
-        <li>Copy <code>custom_components/hawake/</code> into your HA <code>config/custom_components/</code> directory</li>
+        <li>Copy <code>custom_components/allarise/</code> into your HA <code>config/custom_components/</code> directory</li>
         <li>Restart Home Assistant</li>
       </ol>
 
@@ -505,7 +505,7 @@
       <h2>Set up your MQTT broker</h2>
     </div>
     <div class="step-body">
-      <p>Create a dedicated MQTT user for the HaWake app and restrict it to only the topics it needs. This keeps the app isolated from the rest of your broker.</p>
+      <p>Create a dedicated MQTT user for the Allarise app and restrict it to only the topics it needs. This keeps the app isolated from the rest of your broker.</p>
 
       <p style="margin-top:20px;"><strong>Step 2a — Create a dedicated user</strong></p>
       <p>Open <strong>Settings → Add-ons → Mosquitto broker → Configuration</strong> and add a login under the <code>logins</code> key:</p>
@@ -516,7 +516,7 @@
           <button class="copy-btn" onclick="copyCode(this)">Copy</button>
         </div>
         <pre>logins:
-  - username: hawake
+  - username: allarise
     password: "your_secure_password"
 customize:
   active: true
@@ -550,11 +550,11 @@ user homeassistant
 topic readwrite #
 
 user YOUR_MQTT_USER
-topic readwrite hawake/#
+topic readwrite allarise/#
 topic read homeassistant/status</pre>
       </div>
 
-      <p style="margin-top:12px; font-size:14px; color:var(--secondary);">The <code>addons</code> and <code>homeassistant</code> entries are required by Home Assistant — omitting them breaks the broker and prevents the dashboard from updating. Replace <code>YOUR_MQTT_USER</code> with the exact username you set in the Mosquitto <code>logins</code> config and in the HaWake app settings. The username is case-sensitive. <strong style="color:var(--text)">Restart the Mosquitto add-on</strong> to apply the ACL.</p>
+      <p style="margin-top:12px; font-size:14px; color:var(--secondary);">The <code>addons</code> and <code>homeassistant</code> entries are required by Home Assistant — omitting them breaks the broker and prevents the dashboard from updating. Replace <code>YOUR_MQTT_USER</code> with the exact username you set in the Mosquitto <code>logins</code> config and in the Allarise app settings. The username is case-sensitive. <strong style="color:var(--text)">Restart the Mosquitto add-on</strong> to apply the ACL.</p>
       <p style="margin-top:8px; font-size:14px; color:var(--secondary);">The <code>/share</code> folder is accessible via SMB or on the host filesystem at <code>/usr/share/hassio/share</code>.</p>
 
       <table class="data-table" style="margin-top:20px;">
@@ -567,18 +567,18 @@ topic read homeassistant/status</pre>
         <tbody>
           <tr>
             <td>App → Broker (publish)</td>
-            <td><code>hawake/{device}/sensor/…</code> · <code>hawake/{device}/alarm/…</code> · <code>hawake/{device}/availability</code> · <code>hawake/{device}/arm/state</code></td>
+            <td><code>allarise/{device}/sensor/…</code> · <code>allarise/{device}/alarm/…</code> · <code>allarise/{device}/availability</code> · <code>allarise/{device}/arm/state</code></td>
           </tr>
           <tr>
             <td>App ← Broker (subscribe)</td>
-            <td><code>hawake/{device}/command/…</code> · <code>hawake/{device}/alarm/…/command/…</code> · <code>hawake/{device}/arm/command</code></td>
+            <td><code>allarise/{device}/command/…</code> · <code>allarise/{device}/alarm/…/command/…</code> · <code>allarise/{device}/arm/command</code></td>
           </tr>
         </tbody>
       </table>
 
       <div class="callout callout-tip">
         <span class="callout-icon">💡</span>
-        <span><strong>Custom prefix?</strong> If you use a different topic prefix in the app (e.g. <code>myhome</code>), replace <code>hawake/#</code> with <code>myhome/#</code> in the ACL file.</span>
+        <span><strong>Custom prefix?</strong> If you use a different topic prefix in the app (e.g. <code>myhome</code>), replace <code>allarise/#</code> with <code>myhome/#</code> in the ACL file.</span>
       </div>
 
       <div class="callout callout-note">
@@ -592,10 +592,10 @@ topic read homeassistant/status</pre>
   <div class="step-block" id="step-connect">
     <div class="step-header">
       <div class="step-badge">3</div>
-      <h2>Connect the HaWake app</h2>
+      <h2>Connect the Allarise app</h2>
     </div>
     <div class="step-body">
-      <p>In the HaWake iOS app, go to <strong>Settings → MQTT Settings</strong> and enter your broker details:</p>
+      <p>In the Allarise iOS app, go to <strong>Settings → MQTT Settings</strong> and enter your broker details:</p>
 
       <table class="data-table">
         <thead>
@@ -604,9 +604,9 @@ topic read homeassistant/status</pre>
         <tbody>
           <tr><td>Host</td><td>Your Home Assistant IP address or hostname</td></tr>
           <tr><td>Port</td><td><code>1883</code> (plain) or <code>8883</code> (TLS)</td></tr>
-          <tr><td>Username</td><td><code>hawake</code></td></tr>
+          <tr><td>Username</td><td><code>allarise</code></td></tr>
           <tr><td>Password</td><td>The password you set in Step 2a</td></tr>
-          <tr><td>Topic Prefix</td><td><code>hawake</code> (default)</td></tr>
+          <tr><td>Topic Prefix</td><td><code>allarise</code> (default)</td></tr>
           <tr><td>Device Name</td><td><code>iPhone</code> (default — change to identify multiple phones)</td></tr>
         </tbody>
       </table>
@@ -627,13 +627,13 @@ topic read homeassistant/status</pre>
     <div class="step-body">
       <ol>
         <li>Go to <strong>Settings → Devices &amp; Services → Add Integration</strong></li>
-        <li>Search for <strong>HaWake Alarm</strong> and select it</li>
-        <li>Enter the <strong>Device Name</strong> and <strong>MQTT Topic Prefix</strong> — these must exactly match what is set in the HaWake app</li>
+        <li>Search for <strong>Allarise</strong> and select it</li>
+        <li>Enter the <strong>Device Name</strong> and <strong>MQTT Topic Prefix</strong> — these must exactly match what is set in the Allarise app</li>
       </ol>
 
       <div class="callout callout-note">
         <span class="callout-icon">ℹ️</span>
-        <span><strong>Defaults:</strong> Device Name = <code>iPhone</code> · Topic Prefix = <code>hawake</code>. You can add multiple devices by adding one integration entry per phone.</span>
+        <span><strong>Defaults:</strong> Device Name = <code>iPhone</code> · Topic Prefix = <code>allarise</code>. You can add multiple devices by adding one integration entry per phone.</span>
       </div>
     </div>
   </div>
@@ -707,7 +707,7 @@ topic read homeassistant/status</pre>
     <div class="ref-body">
 
       <h3>Dashboard sensors</h3>
-      <p>These sensors appear on the main HaWake dashboard device in Home Assistant.</p>
+      <p>These sensors appear on the main Allarise dashboard device in Home Assistant.</p>
       <table class="data-table">
         <thead><tr><th>Sensor</th><th>Description</th></tr></thead>
         <tbody>
@@ -725,7 +725,7 @@ topic read homeassistant/status</pre>
           <tr><td>Alarm Snooze Count</td><td>Number of times the current alarm has been snoozed</td></tr>
           <tr><td>Snoozes Remaining</td><td>Snoozes left before alarm is force-dismissed</td></tr>
           <tr><td>Alarm Count</td><td>Number of active (enabled) alarms</td></tr>
-          <tr><td>App Version</td><td>HaWake app version string</td></tr>
+          <tr><td>App Version</td><td>Allarise app version string</td></tr>
           <tr><td>Broker Connection</td><td>MQTT connection state reported by the app</td></tr>
           <tr><td>Alert Volume</td><td>Volume used for HA-triggered alert alarms (%)</td></tr>
           <tr><td>Alert Sound</td><td>Default sound for HA alert alarms</td></tr>
@@ -790,7 +790,7 @@ topic read homeassistant/status</pre>
         </div>
         <pre>service: media_player.play_media
 target:
-  entity_id: media_player.hawake_iphone
+  entity_id: media_player.allarise_iphone
 data:
   media_content_id: media-source://tts/cloud?message=Good+morning
   media_content_type: music</pre>
@@ -803,7 +803,7 @@ data:
           <span>Send a full-screen alert</span>
           <button class="copy-btn" onclick="copyCode(this)">Copy</button>
         </div>
-        <pre>service: notify.hawake_iphone
+        <pre>service: notify.allarise_iphone
 data:
   title: "Door Alert"
   message: "Front door opened"
@@ -824,14 +824,14 @@ data:
     </div>
     <div class="ref-body">
 
-      <h3>hawake.update_alarm</h3>
+      <h3>allarise.update_alarm</h3>
       <p>Modify an alarm by index or name. All fields except <code>device_name</code> are optional — only the fields you include will be changed.</p>
       <div class="code-wrap">
         <div class="code-label">
-          <span>hawake.update_alarm</span>
+          <span>allarise.update_alarm</span>
           <button class="copy-btn" onclick="copyCode(this)">Copy</button>
         </div>
-        <pre>service: hawake.update_alarm
+        <pre>service: allarise.update_alarm
 data:
   device_name: iPhone        # optional if only one device
   name: "Work Alarm"         # target by name (or use index)
@@ -846,14 +846,14 @@ data:
   morning_weather: true      # show Morning Weather card after dismissing</pre>
       </div>
 
-      <h3>hawake.trigger_alert</h3>
+      <h3>allarise.trigger_alert</h3>
       <p>Show a full-screen alert alarm on the phone.</p>
       <div class="code-wrap">
         <div class="code-label">
-          <span>hawake.trigger_alert</span>
+          <span>allarise.trigger_alert</span>
           <button class="copy-btn" onclick="copyCode(this)">Copy</button>
         </div>
-        <pre>service: hawake.trigger_alert
+        <pre>service: allarise.trigger_alert
 data:
   device_name: iPhone
   title: "Motion Detected"
@@ -863,38 +863,38 @@ data:
   media_url: "http://ha.local:8123/local/alert.mp3"</pre>
       </div>
 
-      <h3>hawake.dismiss</h3>
+      <h3>allarise.dismiss</h3>
       <p>Dismiss the currently ringing or snoozed alarm.</p>
       <div class="code-wrap">
         <div class="code-label">
-          <span>hawake.dismiss</span>
+          <span>allarise.dismiss</span>
           <button class="copy-btn" onclick="copyCode(this)">Copy</button>
         </div>
-        <pre>service: hawake.dismiss
+        <pre>service: allarise.dismiss
 data:
   device_name: iPhone</pre>
       </div>
 
-      <h3>hawake.snooze</h3>
+      <h3>allarise.snooze</h3>
       <p>Snooze the currently ringing alarm.</p>
       <div class="code-wrap">
         <div class="code-label">
-          <span>hawake.snooze</span>
+          <span>allarise.snooze</span>
           <button class="copy-btn" onclick="copyCode(this)">Copy</button>
         </div>
-        <pre>service: hawake.snooze
+        <pre>service: allarise.snooze
 data:
   device_name: iPhone</pre>
       </div>
 
-      <h3>hawake.skip</h3>
+      <h3>allarise.skip</h3>
       <p>Skip the next fire of the next upcoming alarm.</p>
       <div class="code-wrap">
         <div class="code-label">
-          <span>hawake.skip</span>
+          <span>allarise.skip</span>
           <button class="copy-btn" onclick="copyCode(this)">Copy</button>
         </div>
-        <pre>service: hawake.skip
+        <pre>service: allarise.skip
 data:
   device_name: iPhone</pre>
       </div>
@@ -925,7 +925,7 @@ data:
     - condition: time
       weekday: [sun]
   action:
-    - service: hawake.update_alarm
+    - service: allarise.update_alarm
       data:
         name: "Work Alarm"
         enabled: true</pre>
@@ -948,7 +948,7 @@ data:
       after: "22:00:00"
       before: "06:00:00"
   action:
-    - service: hawake.trigger_alert
+    - service: allarise.trigger_alert
       data:
         title: "Front Door"
         message: "Front door opened"
@@ -966,14 +966,14 @@ data:
   alias: "Auto snooze when leaving bedroom"
   trigger:
     - platform: state
-      entity_id: sensor.hawake_iphone_alarm_state
+      entity_id: sensor.allarise_iphone_alarm_state
       to: "ringing"
   action:
     - delay: "00:00:30"
     - condition: state
       entity_id: binary_sensor.bedroom_presence
       state: "off"
-    - service: hawake.snooze
+    - service: allarise.snooze
       data:
         device_name: iPhone</pre>
       </div>
@@ -988,20 +988,20 @@ data:
       <h2>MQTT topic structure</h2>
     </div>
     <div class="ref-body">
-      <p>All topics follow the pattern <code>{prefix}/{device}/…</code>. With default settings, <code>prefix</code> is <code>hawake</code> and <code>device</code> is <code>iphone</code>.</p>
+      <p>All topics follow the pattern <code>{prefix}/{device}/…</code>. With default settings, <code>prefix</code> is <code>allarise</code> and <code>device</code> is <code>iphone</code>.</p>
 
       <table class="data-table">
         <thead>
           <tr><th>Direction</th><th>Topic pattern</th><th>Description</th></tr>
         </thead>
         <tbody>
-          <tr><td>App → HA</td><td><code>hawake/iphone/sensor/{key}</code></td><td>Dashboard sensor values</td></tr>
-          <tr><td>App → HA</td><td><code>hawake/iphone/alarm/{n}/{key}</code></td><td>Per-alarm sensor values</td></tr>
-          <tr><td>App → HA</td><td><code>hawake/iphone/availability</code></td><td>App online/offline</td></tr>
-          <tr><td>App → HA</td><td><code>hawake/iphone/arm/state</code></td><td>Arm state</td></tr>
-          <tr><td>HA → App</td><td><code>hawake/iphone/command/{cmd}</code></td><td>Dashboard commands</td></tr>
-          <tr><td>HA → App</td><td><code>hawake/iphone/alarm/{n}/command/{cmd}</code></td><td>Per-alarm commands</td></tr>
-          <tr><td>HA → App</td><td><code>hawake/iphone/arm/command</code></td><td>Arm command</td></tr>
+          <tr><td>App → HA</td><td><code>allarise/iphone/sensor/{key}</code></td><td>Dashboard sensor values</td></tr>
+          <tr><td>App → HA</td><td><code>allarise/iphone/alarm/{n}/{key}</code></td><td>Per-alarm sensor values</td></tr>
+          <tr><td>App → HA</td><td><code>allarise/iphone/availability</code></td><td>App online/offline</td></tr>
+          <tr><td>App → HA</td><td><code>allarise/iphone/arm/state</code></td><td>Arm state</td></tr>
+          <tr><td>HA → App</td><td><code>allarise/iphone/command/{cmd}</code></td><td>Dashboard commands</td></tr>
+          <tr><td>HA → App</td><td><code>allarise/iphone/alarm/{n}/command/{cmd}</code></td><td>Per-alarm commands</td></tr>
+          <tr><td>HA → App</td><td><code>allarise/iphone/arm/command</code></td><td>Arm command</td></tr>
         </tbody>
       </table>
 
@@ -1022,9 +1022,9 @@ data:
     <a href="mqtt-builder.html">MQTT Builder</a>
     <a href="faq.html">FAQ</a>
     <a href="privacy.html">Privacy</a>
-    <a href="https://github.com/domoretechnet/hawake-hacs/issues" target="_blank">Report an Issue</a>
+    <a href="https://github.com/domoretechnet/allarise-hacs/issues" target="_blank">Report an Issue</a>
   </div>
-  <div>© 2026 HaWake Alarm · <a href="privacy.html">Privacy Policy</a></div>
+  <div>© 2026 Allarise · <a href="privacy.html">Privacy Policy</a></div>
 </footer>
 
 <script>

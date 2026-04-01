@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/png" href="app-icon.png">
 <link rel="apple-touch-icon" href="app-icon.png">
-<title>HaWake MQTT Payload Builder</title>
+<title>Allarise MQTT Payload Builder</title>
 <style>
   :root {
     --bg: #ffffff;
@@ -172,8 +172,8 @@
 
 <div class="topnav">
   <a href="index.html" class="nav-home">
-    <img src="app-icon.png" alt="HaWake" />
-    <span>HaWake</span>
+    <img src="app-icon.png" alt="Allarise" />
+    <span>Allarise</span>
   </a>
   <a href="index.html">About</a>
   <a href="home-assistant.html">Home Assistant</a>
@@ -186,7 +186,7 @@
 
 <!-- Sidebar -->
 <nav class="sidebar">
-  <div class="sidebar-title">HaWake MQTT</div>
+  <div class="sidebar-title">Allarise MQTT</div>
 
   <div class="nav-group-label">Alarm Management</div>
   <button class="nav-item active" onclick="showPage('create-alarm', this)">Create Alarm</button>
@@ -214,7 +214,7 @@
   <div class="config-bar">
     <div class="field">
       <label>Topic Prefix</label>
-      <input type="text" id="cfg-prefix" value="hawake" oninput="updateAll()">
+      <input type="text" id="cfg-prefix" value="allarise" oninput="updateAll()">
     </div>
     <div class="field">
       <label>Device Name</label>
@@ -222,7 +222,7 @@
     </div>
     <div class="topic-preview">
       <label>Current Topic</label>
-      <code id="cfg-topic-display">hawake/iphone/command/create_alarm</code>
+      <code id="cfg-topic-display">allarise/iphone/command/create_alarm</code>
     </div>
   </div>
 
@@ -232,7 +232,7 @@
   <div id="page-create-alarm" class="page active">
     <div class="page-header">
       <h1>Create Alarm</h1>
-      <p>Publishes to <code style="color:var(--green)">hawake/{device}/command/create_alarm</code>. Only <code>time</code> is required — all other fields use the app defaults if omitted.</p>
+      <p>Publishes to <code style="color:var(--green)">allarise/{device}/command/create_alarm</code>. Only <code>time</code> is required — all other fields use the app defaults if omitted.</p>
     </div>
 
     <div class="two-col">
@@ -517,7 +517,7 @@
   <div id="page-update-alarm" class="page">
     <div class="page-header">
       <h1>Update Alarm</h1>
-      <p>Partial update — only fields you provide are changed. Publishes to <code style="color:var(--green)">hawake/{device}/command/update_alarm</code>.</p>
+      <p>Partial update — only fields you provide are changed. Publishes to <code style="color:var(--green)">allarise/{device}/command/update_alarm</code>.</p>
     </div>
 
     <div class="tab-bar">
@@ -534,7 +534,7 @@
             <div class="field-group">
               <label>Alarm Index <span>*</span></label>
               <input type="number" id="ua-index" placeholder="e.g. 1" min="1" oninput="updateUpdateAlarm()">
-              <div class="field-hint">Found in sensor: hawake_{device}_alarm_{N}_name</div>
+              <div class="field-hint">Found in sensor: allarise_{device}_alarm_{N}_name</div>
             </div>
           </div>
 
@@ -1086,7 +1086,7 @@
   <div id="page-delete-alarm" class="page">
     <div class="page-header">
       <h1>Delete Alarm</h1>
-      <p>Permanently removes an alarm by index <em>or</em> display name. Publishes to <code style="color:var(--green)">hawake/{device}/command/delete_alarm</code>.</p>
+      <p>Permanently removes an alarm by index <em>or</em> display name. Publishes to <code style="color:var(--green)">allarise/{device}/command/delete_alarm</code>.</p>
     </div>
     <div class="two-col">
       <div>
@@ -1095,7 +1095,7 @@
           <div class="field-group">
             <label>Alarm Index</label>
             <input type="number" id="da-index" placeholder="e.g. 3" min="1" oninput="updateDeleteAlarm()">
-            <div class="field-hint">From <code>sensor.hawake_{device}_alarm_{N}_name</code> or the Alarm ID sensor</div>
+            <div class="field-hint">From <code>sensor.allarise_{device}_alarm_{N}_name</code> or the Alarm ID sensor</div>
           </div>
           <div style="text-align:center;color:var(--text3);font-size:12px;margin:4px 0">— or —</div>
           <div class="field-group">
@@ -1134,7 +1134,7 @@
   <div id="page-create-command" class="page">
     <div class="page-header">
       <h1>Create / Update Command</h1>
-      <p>Creates a new MQTT command button visible in the app. If a command with the same name already exists it is updated in-place. Publishes to <code style="color:var(--green)">hawake/{device}/command/create_command</code>.</p>
+      <p>Creates a new MQTT command button visible in the app. If a command with the same name already exists it is updated in-place. Publishes to <code style="color:var(--green)">allarise/{device}/command/create_command</code>.</p>
     </div>
     <div class="two-col">
       <div>
@@ -1247,7 +1247,7 @@
   <div id="page-delete-command" class="page">
     <div class="page-header">
       <h1>Delete Command</h1>
-      <p>Removes an MQTT command by name. Publishes to <code style="color:var(--green)">hawake/{device}/command/delete_command</code>.</p>
+      <p>Removes an MQTT command by name. Publishes to <code style="color:var(--green)">allarise/{device}/command/delete_command</code>.</p>
     </div>
     <div class="warn-box">
       <strong>What this does:</strong> Deleting a command removes it from the app's command list permanently. Any alarms that reference it by name (alarm screen buttons, swipe gestures) will lose that association. The corresponding HACS button entity for this command will also disappear — any HA automations triggering that entity will break. Use with care; there is no undo.
@@ -1286,7 +1286,7 @@
   <div id="page-alert" class="page">
     <div class="page-header">
       <h1>Trigger Alert</h1>
-      <p>Fires a full-screen alert on the device. Use the <code>hawake.trigger_alert</code> HA service OR raw MQTT below. Publishes to <code style="color:var(--green)">hawake/{device}/command/alert</code>.</p>
+      <p>Fires a full-screen alert on the device. Use the <code>allarise.trigger_alert</code> HA service OR raw MQTT below. Publishes to <code style="color:var(--green)">allarise/{device}/command/alert</code>.</p>
     </div>
     <div class="two-col">
       <div>
@@ -1321,7 +1321,7 @@
             </div>
           </div>
           <div class="info-box" style="margin-top:4px">
-            <strong>Authenticated media?</strong> Use the <code>hawake.notify</code> HA service or a TTS action instead — those run inside Home Assistant and can fetch authenticated URLs before sending. Raw MQTT payloads cannot include HA auth tokens.
+            <strong>Authenticated media?</strong> Use the <code>allarise.notify</code> HA service or a TTS action instead — those run inside Home Assistant and can fetch authenticated URLs before sending. Raw MQTT payloads cannot include HA auth tokens.
           </div>
           <div class="field-group">
             <label>Video URL</label>
@@ -1368,11 +1368,11 @@
   <div id="page-dashboard" class="page">
     <div class="page-header">
       <h1>Dashboard Actions</h1>
-      <p>No-payload commands published to <code style="color:var(--green)">hawake/{device}/command/{cmd}</code>. These target the actively ringing alarm or next upcoming alarm globally.</p>
+      <p>No-payload commands published to <code style="color:var(--green)">allarise/{device}/command/{cmd}</code>. These target the actively ringing alarm or next upcoming alarm globally.</p>
     </div>
 
     <div class="info-box">
-      <strong>Tip:</strong> These actions are also available as button entities in the HaWake HACS integration
+      <strong>Tip:</strong> These actions are also available as button entities in the Allarise HACS integration
       (Dismiss Alarm, Snooze Alarm, Skip Alarm, etc.) which expose real-time availability. Use raw MQTT
       for automations where the button entity availability isn't guaranteed.
     </div>
@@ -1386,7 +1386,7 @@
   <div id="page-per-alarm" class="page">
     <div class="page-header">
       <h1>Per-Alarm Actions</h1>
-      <p>Commands scoped to a specific alarm by index. Publishes to <code style="color:var(--green)">hawake/{device}/alarm/{index}/command/{cmd}</code>. These mirror the per-alarm button entities exposed by the HACS integration.</p>
+      <p>Commands scoped to a specific alarm by index. Publishes to <code style="color:var(--green)">allarise/{device}/alarm/{index}/command/{cmd}</code>. These mirror the per-alarm button entities exposed by the HACS integration.</p>
     </div>
 
     <div class="info-box">
@@ -1399,7 +1399,7 @@
         <input type="number" id="pa-index" value="1" min="1" oninput="buildPerAlarmCards()">
       </div>
       <div style="color:var(--text2);font-size:13px;align-self:flex-end;padding-bottom:2px">
-        Find the index from <code>sensor.hawake_{device}_alarm_{N}_name</code> or the Alarm ID sensor.
+        Find the index from <code>sensor.allarise_{device}_alarm_{N}_name</code> or the Alarm ID sensor.
       </div>
     </div>
 
@@ -1410,7 +1410,7 @@
   <div id="page-sleep-sounds" class="page">
     <div class="page-header">
       <h1>Sleep Sounds</h1>
-      <p>Control ambient sleep audio on the HaWake device over MQTT.</p>
+      <p>Control ambient sleep audio on the Allarise device over MQTT.</p>
     </div>
 
     <div class="tab-bar" style="display:flex;gap:4px;margin-bottom:20px">
@@ -1576,7 +1576,7 @@
 
 <script>
 // ─── Global helpers ──────────────────────────────────────
-function getPrefix() { return document.getElementById('cfg-prefix').value.trim() || 'hawake'; }
+function getPrefix() { return document.getElementById('cfg-prefix').value.trim() || 'allarise'; }
 function getDevice() { return document.getElementById('cfg-device').value.trim() || 'iphone'; }
 
 function topic(cmd) { return `${getPrefix()}/${getDevice()}/command/${cmd}`; }
