@@ -272,8 +272,8 @@
   </div>
   <h1>Wake up smarter.</h1>
   <p class="tagline">
-    Tired of hitting snooze? Allarise makes sleeping in a choice, not an accident — and brings your whole smart home along for the ride.<br><br>
-    Solve a math problem or shake your phone to dismiss — no more dismissing your alarm while you sleep. Deep Home Assistant integration means your lights, routines, and automations can respond to every alarm event on your phone. One fair price — no subscription required.
+    Tired of accidentally hitting snooze? Allarise makes sleeping in a choice, not an accident — and it'll bring your whole smart home along for the ride.<br><br>
+    Solve a math problem or shake your phone to dismiss alarms. Specifically designed to keep you from falling back asleep. Deep Home Assistant integration means your lights, routines, and automations can respond to every alarm you set on your phone.
   </p>
   <div class="cta-group">
     <a href="#" class="btn btn-primary">
@@ -284,23 +284,44 @@
   </div>
 </section>
 
+<!-- Pricing -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-label">Pricing</div>
+    <h2>Support Allarise.</h2>
+    <p class="lead">Subscribe monthly or purchase outright — no forced subscription required.</p>
+    <div class="features" style="max-width:560px;">
+      <div class="feature-card">
+        <span class="f-icon">📅</span>
+        <h3>Monthly — $0.99 / mo</h3>
+        <p>Includes a 7-day free trial. Cancel any time from the App Store.</p>
+      </div>
+      <div class="feature-card">
+        <span class="f-icon">♾️</span>
+        <h3>Lifetime — $6.99</h3>
+        <p>One-time purchase. Pay once, own it forever.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- Features -->
 <section class="section alt-bg">
   <div class="section-inner">
     <div class="section-label">Features</div>
     <h2>Everything your alarm should be.</h2>
-    <p class="lead">Built for people who are serious about waking up — and smart home enthusiasts who want their alarm integrated with everything else.</p>
+    <p class="lead">Built from the ground up for people who are serious about waking up. Perfect for smart home users who want their alarm connected to everything.</p>
 
     <div class="features">
       <div class="feature-card">
         <span class="f-icon">⏰</span>
         <h3>Alarm Engine</h3>
-        <p>Alarms that mean business. Allarise's alarm engine plays at the volume you set, independent of your ringer and mute switch — so a low ringer volume won't ruin your morning. A system-level backup is also registered automatically as a failsafe if the app is ever closed, though it uses iOS ringer volume.</p>
+        <p>Alarms that mean business. Allarise's alarm engine plays at the volume you set, independent of your ringer and mute switch — so a low ringer volume won't ruin your morning. A system-level backup is also registered automatically as a failsafe if the app is ever closed, though it uses iOS AlarmKit alarms at ringer volume.</p>
       </div>
       <div class="feature-card">
         <span class="f-icon">🏠</span>
         <h3>Home Assistant Integration</h3>
-        <p>Connect via MQTT to your Home Assistant instance. Trigger automations when your alarm fires, snoozes, or is dismissed — and send commands back.</p>
+        <p>Connect via MQTT to your Home Assistant instance. Trigger automations before your alarm goes off, when it fires, when it's snoozed, and when it's dismissed. Two-way commands let you send custom sensors and actions back to Home Assistant directly from the app. This level of alarm integration is virtually unheard of on iOS. Allarise turns your alarm into the central trigger for your entire smart home.</p>
       </div>
       <div class="feature-card">
         <span class="f-icon">🌙</span>
@@ -310,7 +331,7 @@
       <div class="feature-card">
         <span class="f-icon">🧩</span>
         <h3>Wake-Up Missions</h3>
-        <p>Dismiss your alarm by solving a math problem, shaking your phone, or triggering a Home Assistant action — no more oversleeping.</p>
+        <p>Dismiss your alarm by solving a math problem, shaking your phone, or triggering a Home Assistant action. Built for people who actually need to wake up.</p>
       </div>
       <div class="feature-card">
         <span class="f-icon">🎨</span>
@@ -320,7 +341,7 @@
       <div class="feature-card">
         <span class="f-icon">🌤</span>
         <h3>Morning Weather</h3>
-        <p>See today's weather overview on your last alarm screen — get an at-a-glance forecast the moment you wake up, powered by Apple WeatherKit.</p>
+        <p>See today's weather on your final alarm screen for an at-a-glance forecast the moment you wake up, powered by Apple WeatherKit. Weather can be enabled on up to two alarms.</p>
       </div>
       <div class="feature-card">
         <span class="f-icon">🔒</span>
@@ -339,12 +360,6 @@
     <p class="lead">Documentation, tools, and policies for Allarise.</p>
 
     <div class="pages-grid">
-      <a href="privacy.html" class="page-card">
-        <div class="pc-icon">🔒</div>
-        <h3>Privacy Policy</h3>
-        <p>Full details on what data the app accesses, how it's used, and what we never collect.</p>
-        <span class="pc-link">Read policy →</span>
-      </a>
       <a href="mqtt-builder.html" class="page-card">
         <div class="pc-icon">🛠</div>
         <h3>MQTT Payload Builder</h3>
@@ -356,7 +371,8 @@
     <div class="privacy-strip">
       <span class="ps-icon">✅</span>
       <div class="ps-body">
-        <strong>No data collected.</strong> Allarise is a local-first app. Your alarms, settings, and sleep data never leave your device. The only external communication is with Apple's native services (WeatherKit, the App Store) and — if you configure it — your own self-hosted Home Assistant MQTT broker.
+        <strong>No data collected.</strong> Allarise is built local-first. Your alarms, settings, and sleep data never leave your device. The app only communicates with Apple's native services such as WeatherKit and the App Store, and with your own self-hosted Home Assistant MQTT broker if you enable integration.<br><br>
+        If you choose to contact support, you may optionally share a debug log directly from the app. Logs are generated locally, are not encrypted, and can be fully reviewed by you before sending.
         <a href="privacy.html">Read the full privacy policy →</a>
       </div>
     </div>
