@@ -203,6 +203,18 @@
       margin-top: 12px;
     }
     .step-body strong { font-weight: 600; }
+    .step-body h4 {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--secondary);
+      margin-top: 28px;
+      margin-bottom: 10px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+    .step-body h4:first-of-type { margin-top: 20px; padding-top: 0; border-top: none; }
 
     /* ── Reference sections ── */
     .ref-sections { max-width: 760px; margin: 0 auto; padding: 0 24px 80px; }
@@ -535,85 +547,65 @@ customize:
       <h2>Connect the Allarise app</h2>
     </div>
     <div class="step-body">
-      <p>In the Allarise iOS app, go to <strong>Settings → MQTT Settings</strong>. The app separates broker configuration into two sections — one for when you're on your home network, and one for when you're away. You only need to fill in the ones you plan to use.</p>
+      <p>In the Allarise iOS app, go to <strong>Settings → MQTT Settings</strong>. The app separates broker configuration into two sections — one for when you're on your home network, and one for when you're away.</p>
 
-      <!-- MQTT Identity -->
-      <p style="margin-top:20px;"><strong>MQTT Identity</strong></p>
+      <h4>MQTT Identity</h4>
       <table class="data-table">
-        <thead>
-          <tr><th>Field</th><th>Value</th></tr>
-        </thead>
         <tbody>
           <tr><td>Topic Prefix</td><td><code>allarise</code> (default) — must match what you enter in the HA integration in Step 4</td></tr>
-          <tr><td>Device Name</td><td><code>iPhone</code> (default) — change this to identify multiple phones. Must also match Step 4.</td></tr>
+          <tr><td>Device Name</td><td><code>iPhone</code> (default) — change this to identify multiple phones; must also match Step 4</td></tr>
           <tr><td>Allow Inbound Commands</td><td>Enable to let Home Assistant create alarms, trigger alerts, and dismiss alarms from automations</td></tr>
         </tbody>
       </table>
 
-      <!-- Internal Broker -->
-      <p style="margin-top:20px;"><strong>Internal Broker</strong> — used on home WiFi</p>
-      <p style="font-size:14px;color:var(--secondary);">This is your Mosquitto broker running locally on your Home Assistant. Connections here are plain (no TLS) since traffic stays on your LAN.</p>
+      <h4>Internal Broker — used on home WiFi</h4>
+      <p>Your Mosquitto broker running locally on Home Assistant. Plain connection, no TLS, traffic stays on your LAN.</p>
       <table class="data-table">
-        <thead>
-          <tr><th>Field</th><th>Value</th></tr>
-        </thead>
         <tbody>
-          <tr><td>Host</td><td>Your Home Assistant's local IP address (e.g. <code>192.168.1.100</code>) or local hostname (e.g. <code>homeassistant.local</code>)</td></tr>
-          <tr><td>Port</td><td><code>1883</code> (default plain MQTT port)</td></tr>
+          <tr><td>Host</td><td>Your HA local IP (e.g. <code>192.168.1.100</code>) or hostname (e.g. <code>homeassistant.local</code>)</td></tr>
+          <tr><td>Port</td><td><code>1883</code></td></tr>
         </tbody>
       </table>
 
-      <!-- External Broker -->
-      <p style="margin-top:20px;"><strong>External Broker</strong> — used away from home</p>
-      <p style="font-size:14px;color:var(--secondary);">Used when you're not on a home WiFi network. External connections always use TLS — the app enforces this automatically. You'll need your broker accessible from the internet, either via Nabu Casa or your own reverse proxy / port-forwarding setup.</p>
+      <h4>External Broker — used away from home</h4>
+      <p>Used when not on a home WiFi network. The app always enforces TLS for external connections. You'll need your broker reachable from the internet via a reverse proxy, port forwarding, or Nabu Casa.</p>
       <table class="data-table">
-        <thead>
-          <tr><th>Field</th><th>Value</th></tr>
-        </thead>
         <tbody>
-          <tr><td>Host</td><td>Your external hostname or IP (e.g. <code>mqtt.yourdomain.com</code>). Must have a valid TLS certificate matching the hostname.</td></tr>
-          <tr><td>Port</td><td><code>8883</code> (default TLS MQTT port)</td></tr>
-          <tr><td>Always Use External</td><td>Optional toggle — bypasses home network detection and always connects to the external broker</td></tr>
+          <tr><td>Host</td><td>Your external hostname (e.g. <code>mqtt.yourdomain.com</code>) — must have a valid TLS certificate</td></tr>
+          <tr><td>Port</td><td><code>8883</code></td></tr>
+          <tr><td>Always Use External</td><td>Optional — bypasses home network detection and always connects to the external broker</td></tr>
         </tbody>
       </table>
-
-      <div class="callout callout-note" style="margin-top:16px;">
+      <div class="callout callout-note" style="margin-top:12px;">
         <span class="callout-icon">ℹ️</span>
-        <span>If you only use Allarise at home and don't need remote access, you can leave the External Broker fields blank and skip the Always Use External toggle entirely.</span>
+        <span>If you only use Allarise at home, you can leave the External Broker fields blank entirely.</span>
       </div>
 
-      <!-- Authentication -->
-      <p style="margin-top:20px;"><strong>Authentication</strong></p>
-      <p style="font-size:14px;color:var(--secondary);">The same username and password are used for both brokers.</p>
+      <h4>Authentication</h4>
+      <p>The same username and password are used for both brokers.</p>
       <table class="data-table">
-        <thead>
-          <tr><th>Field</th><th>Value</th></tr>
-        </thead>
         <tbody>
           <tr><td>Username</td><td>The MQTT username you created in Step 2a (e.g. <code>allarise</code>)</td></tr>
           <tr><td>Password</td><td>The password you set in Step 2a</td></tr>
         </tbody>
       </table>
 
-      <!-- Home WiFi Networks -->
-      <p style="margin-top:20px;"><strong>Home WiFi Networks</strong></p>
-      <p style="font-size:14px;color:var(--secondary);">Add the name (SSID) of your home WiFi network so the app knows when to use the Internal Broker vs. the External Broker. The app switches automatically when you leave or return home.</p>
-      <ol style="margin-top:8px;font-size:15px;line-height:1.7;">
+      <h4>Home WiFi Networks</h4>
+      <p>Add your home WiFi network name(s) so the app knows when to use the internal broker instead of the external one. It switches automatically when you leave or return home.</p>
+      <ol>
         <li>Tap <strong>Add Network</strong></li>
-        <li>Type your WiFi network name exactly as it appears in iOS Settings, or tap <strong>Use Current Network</strong> to fill it in automatically</li>
-        <li>Repeat for any additional home networks (e.g. a 5 GHz and 2.4 GHz band with different names)</li>
+        <li>Type your network name exactly, or tap <strong>Use Current Network</strong> to fill it in automatically</li>
+        <li>Repeat for any additional home networks (e.g. separate 5 GHz and 2.4 GHz SSIDs)</li>
       </ol>
-
-      <div class="callout callout-tip" style="margin-top:16px;">
+      <div class="callout callout-tip" style="margin-top:12px;">
         <span class="callout-icon">📍</span>
-        <span>WiFi name detection on iOS requires Location permission. If you see a warning, tap <strong>Open Settings</strong> and grant location access. This permission is only used for network name lookup — the app does not track your location.</span>
+        <span>WiFi name detection requires Location permission on iOS. This is only used to read the network name — the app does not track your location.</span>
       </div>
 
-      <!-- Test Connection -->
-      <p style="margin-top:20px;"><strong>Test your connection</strong></p>
-      <p>Once all fields are filled in, tap <strong>Test Connection</strong> at the bottom of the Authentication section. A green "Connected!" result confirms the app can reach your broker with the credentials provided.</p>
+      <h4>Test your connection</h4>
+      <p>Once all fields are filled in, tap <strong>Test Connection</strong> in the Authentication section. A green "Connected!" confirms the app can reach your broker.</p>
 
-      <div class="callout callout-tip" style="margin-top:16px;">
+      <div class="callout callout-tip" style="margin-top:12px;">
         <span class="callout-icon">🛠</span>
         <span>Use the <a href="mqtt-builder.html">MQTT Payload Builder</a> to generate and test payloads for any command before wiring up automations.</span>
       </div>
