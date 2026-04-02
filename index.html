@@ -175,15 +175,18 @@
       align-items: center;
     }
     .nav-dot {
-      width: 6px;
-      height: 6px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
       background: var(--border);
       transition: background 0.2s, transform 0.2s;
+      cursor: pointer;
     }
+    .nav-dot:hover { background: var(--secondary); }
     .nav-dot.active {
       background: var(--accent);
       transform: scale(1.3);
+      cursor: default;
     }
 
     /* ── Scroll-snap panels ── */
@@ -560,7 +563,24 @@
 
   document.querySelectorAll('.feature-card').forEach(c => cardObserver.observe(c));
 
-  // Update label and dots when swipe settles
+  function goTo(index) {
+    if (index < 0 || index >= panelIds.length) return;
+    current = index;
+    viewport.scrollTo({ left: index * viewport.clientWidth, behavior: 'smooth' });
+    labelEl.textContent = panelNames[current];
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+  }
+
+  // Clickable dots
+  dots.forEach((dot, i) => dot.addEventListener('click', () => goTo(i)));
+
+  // Keyboard arrow navigation when hovering over the section
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') goTo(current + 1);
+    if (e.key === 'ArrowLeft')  goTo(current - 1);
+  });
+
+  // Sync dots after touch/trackpad swipe settles
   let snapTimer;
   viewport.addEventListener('scroll', () => {
     clearTimeout(snapTimer);
