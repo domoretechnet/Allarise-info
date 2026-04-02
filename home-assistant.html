@@ -568,7 +568,7 @@ customize:
       </table>
 
       <h4>External Broker — used away from home</h4>
-      <p>Used when not on a home WiFi network. The app always enforces TLS for external connections. To reach your broker remotely you'll need either <strong>port forwarding</strong> (expose port <code>8883</code> on your router) or a <strong>VPN</strong> such as Tailscale or WireGuard — in which case you can use your internal broker address and leave this section blank.</p>
+      <p>Used when not on a home WiFi network. The app always enforces TLS for external connections. You'll need port <code>8883</code> forwarded on your router and pointing to your Home Assistant machine.</p>
       <table class="data-table">
         <tbody>
           <tr><td>Host</td><td>Your external hostname (e.g. <code>mqtt.yourdomain.com</code>) — must have a valid TLS certificate</td></tr>
