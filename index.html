@@ -151,32 +151,54 @@
     }
     .alt-bg { background: var(--surface); }
 
-    /* ── Tab switcher ── */
-    .tab-bar {
+    /* ── Panel navigator ── */
+    .panel-nav {
       display: flex;
-      background: var(--border);
-      border-radius: 980px;
-      padding: 3px;
-      width: fit-content;
-      margin-bottom: 36px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 32px;
     }
-    .tab-btn {
-      border: none;
-      background: transparent;
-      padding: 8px 20px;
-      border-radius: 980px;
+    .panel-nav-label {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+    }
+    .panel-nav-label span {
       font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
+      font-weight: 400;
       color: var(--secondary);
-      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-      font-family: inherit;
+      margin-left: 10px;
     }
-    .tab-btn.active {
+    .panel-nav-arrows {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-counter {
+      font-size: 13px;
+      color: var(--secondary);
+      font-weight: 500;
+      min-width: 32px;
+      text-align: center;
+    }
+    .nav-arrow {
+      border: 1px solid var(--border);
       background: var(--bg);
+      border-radius: 50%;
+      width: 34px;
+      height: 34px;
+      font-size: 17px;
+      cursor: pointer;
       color: var(--text);
-      box-shadow: 0 1px 6px rgba(0,0,0,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.15s, color 0.15s;
+      font-family: inherit;
+      line-height: 1;
     }
+    .nav-arrow:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+    .nav-arrow:disabled { opacity: 0.3; cursor: default; }
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
     .tab-footer { margin-top: 28px; }
@@ -359,9 +381,13 @@
     <h2>Everything your alarm should be.</h2>
     <p class="lead">Built for people who are serious about waking up — and for smart home users who want their alarm wired into everything.</p>
 
-    <div class="tab-bar" role="tablist">
-      <button class="tab-btn active" role="tab" aria-selected="true" data-tab="app">App Features</button>
-      <button class="tab-btn" role="tab" aria-selected="false" data-tab="ha">Home Assistant</button>
+    <div class="panel-nav">
+      <div class="panel-nav-label" id="panel-nav-label">App Features <span>Next: Home Assistant</span></div>
+      <div class="panel-nav-arrows">
+        <button class="nav-arrow" id="nav-prev" disabled aria-label="Previous">&#8249;</button>
+        <span class="nav-counter" id="nav-counter">1 / 2</span>
+        <button class="nav-arrow" id="nav-next" aria-label="Next">&#8250;</button>
+      </div>
     </div>
 
     <!-- App Features panel -->
@@ -502,13 +528,21 @@
 </footer>
 
 <script>
+  const panels = ['panel-app', 'panel-ha'];
+  const panelNames = ['App Features', 'Home Assistant'];
+  let current = 0;
+
+  const labelEl   = document.getElementById('panel-nav-label');
+  const counterEl = document.getElementById('nav-counter');
+  const prevBtn   = document.getElementById('nav-prev');
+  const nextBtn   = document.getElementById('nav-next');
+
   function revealCards(panel) {
     const cards = panel.querySelectorAll('.feature-card');
-    cards.forEach((card, i) => {
+    cards.forEach(card => {
       card.classList.remove('revealed');
       card.style.transitionDelay = '0ms';
     });
-    // Force reflow so the reset registers before we re-add
     panel.offsetHeight;
     cards.forEach((card, i) => {
       card.style.transitionDelay = (i * 55) + 'ms';
@@ -516,27 +550,27 @@
     });
   }
 
-  // Reveal initial panel on page load
-  const initialPanel = document.querySelector('.tab-panel.active');
-  if (initialPanel) revealCards(initialPanel);
+  function goTo(index) {
+    document.getElementById(panels[current]).classList.remove('active');
+    current = index;
+    const activePanel = document.getElementById(panels[current]);
+    activePanel.classList.add('active');
+    revealCards(activePanel);
 
-  // Tab switching
-  document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const target = btn.dataset.tab;
+    const nextName = panelNames[current + 1];
+    const prevName = panelNames[current - 1];
+    const subtitle = nextName ? 'Next: ' + nextName : (prevName ? 'Back: ' + prevName : '');
+    labelEl.innerHTML = panelNames[current] + (subtitle ? ' <span>' + subtitle + '</span>' : '');
+    counterEl.textContent = (current + 1) + ' / ' + panels.length;
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === panels.length - 1;
+  }
 
-      document.querySelectorAll('.tab-btn').forEach(b => {
-        b.classList.toggle('active', b === btn);
-        b.setAttribute('aria-selected', b === btn ? 'true' : 'false');
-      });
+  prevBtn.addEventListener('click', () => { if (current > 0) goTo(current - 1); });
+  nextBtn.addEventListener('click', () => { if (current < panels.length - 1) goTo(current + 1); });
 
-      document.querySelectorAll('.tab-panel').forEach(panel => {
-        const isTarget = panel.id === 'panel-' + target;
-        panel.classList.toggle('active', isTarget);
-        if (isTarget) revealCards(panel);
-      });
-    });
-  });
+  // Reveal initial panel
+  revealCards(document.getElementById(panels[current]));
 </script>
 
 </body>
