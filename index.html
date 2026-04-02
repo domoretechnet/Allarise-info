@@ -162,6 +162,16 @@
       border: 1px solid var(--border);
       border-radius: 16px;
       padding: 24px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.45s ease, transform 0.45s ease;
+    }
+    .feature-card.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .feature-card { opacity: 1; transform: none; transition: none; }
     }
     .alt-bg .feature-card { background: var(--bg); }
     .feature-card .f-icon {
@@ -458,6 +468,26 @@
   </div>
   <p>Allarise &copy; 2026 Domore Technology. All rights reserved.</p>
 </footer>
+
+<script>
+  // Stagger each card's delay by its position within its parent grid
+  document.querySelectorAll('.features').forEach(grid => {
+    grid.querySelectorAll('.feature-card').forEach((card, i) => {
+      card.style.transitionDelay = (i * 60) + 'ms';
+    });
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.feature-card').forEach(card => observer.observe(card));
+</script>
 
 </body>
 </html>
