@@ -169,11 +169,6 @@
       color: var(--secondary);
       margin-left: 10px;
     }
-    .panel-nav-arrows {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
     .nav-dots {
       display: flex;
       gap: 6px;
@@ -190,24 +185,6 @@
       background: var(--accent);
       transform: scale(1.3);
     }
-    .nav-arrow {
-      border: 1px solid var(--border);
-      background: var(--bg);
-      border-radius: 50%;
-      width: 34px;
-      height: 34px;
-      font-size: 17px;
-      cursor: pointer;
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: border-color 0.15s, color 0.15s;
-      font-family: inherit;
-      line-height: 1;
-    }
-    .nav-arrow:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
-    .nav-arrow:disabled { opacity: 0.3; cursor: default; }
 
     /* ── Scroll-snap panels ── */
     .panels-viewport {
@@ -409,14 +386,10 @@
     <p class="lead">Built for people who are serious about waking up — and for smart home users who want their alarm wired into everything.</p>
 
     <div class="panel-nav">
-      <div class="panel-nav-label" id="panel-nav-label">App Features <span>Swipe or use arrows for Home Assistant</span></div>
-      <div class="panel-nav-arrows">
-        <button class="nav-arrow" id="nav-prev" disabled aria-label="Previous">&#8249;</button>
-        <div class="nav-dots" id="nav-dots">
-          <div class="nav-dot active"></div>
-          <div class="nav-dot"></div>
-        </div>
-        <button class="nav-arrow" id="nav-next" aria-label="Next">&#8250;</button>
+      <div class="panel-nav-label" id="panel-nav-label">App Features</div>
+      <div class="nav-dots" id="nav-dots">
+        <div class="nav-dot active"></div>
+        <div class="nav-dot"></div>
       </div>
     </div>
 
@@ -570,12 +543,9 @@
 
   const viewport = document.getElementById('panels-viewport');
   const labelEl  = document.getElementById('panel-nav-label');
-  const dotsEl   = document.getElementById('nav-dots');
-  const prevBtn  = document.getElementById('nav-prev');
-  const nextBtn  = document.getElementById('nav-next');
-  const dots     = dotsEl.querySelectorAll('.nav-dot');
+  const dots     = document.querySelectorAll('#nav-dots .nav-dot');
 
-  // IntersectionObserver: cards animate in as they scroll into view
+  // Cards animate in as they scroll into view
   const cardObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -590,34 +560,19 @@
 
   document.querySelectorAll('.feature-card').forEach(c => cardObserver.observe(c));
 
-  function updateNav(index) {
-    current = index;
-    const subtitle = panelNames[current + 1]
-      ? 'Swipe or use arrows for ' + panelNames[current + 1]
-      : 'Swipe back for ' + panelNames[current - 1];
-    labelEl.innerHTML = panelNames[current] + ' <span>' + subtitle + '</span>';
-    dots.forEach((d, i) => d.classList.toggle('active', i === current));
-    prevBtn.disabled = current === 0;
-    nextBtn.disabled = current === panelIds.length - 1;
-  }
-
-  function goTo(index) {
-    viewport.scrollTo({ left: index * viewport.clientWidth, behavior: 'smooth' });
-    updateNav(index);
-  }
-
-  // Detect swipe snap settling
+  // Update label and dots when swipe settles
   let snapTimer;
   viewport.addEventListener('scroll', () => {
     clearTimeout(snapTimer);
     snapTimer = setTimeout(() => {
       const snapped = Math.round(viewport.scrollLeft / viewport.clientWidth);
-      if (snapped !== current) updateNav(snapped);
+      if (snapped !== current) {
+        current = snapped;
+        labelEl.textContent = panelNames[current];
+        dots.forEach((d, i) => d.classList.toggle('active', i === current));
+      }
     }, 80);
   });
-
-  prevBtn.addEventListener('click', () => { if (current > 0) goTo(current - 1); });
-  nextBtn.addEventListener('click', () => { if (current < panelIds.length - 1) goTo(current + 1); });
 </script>
 
 </body>
