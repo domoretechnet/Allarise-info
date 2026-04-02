@@ -335,7 +335,9 @@
     @media (max-width: 600px) {
       .hero h1 { font-size: 32px; }
       .hero .tagline { font-size: 16px; }
-      .site-nav { padding: 0 16px; gap: 16px; }
+      .site-nav { padding: 0 16px; gap: 16px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      .site-nav a { white-space: nowrap; flex-shrink: 0; }
+      .site-nav .nav-home { flex-shrink: 0; }
     }
   </style>
 </head>

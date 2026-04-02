@@ -157,15 +157,32 @@
     position: sticky; top: 0; z-index: 100;
     background: var(--bg); border-bottom: 1px solid var(--border);
     display: flex; align-items: center; padding: 0 32px; gap: 24px;
-    height: 52px;
+    height: 52px; overflow-x: auto; -webkit-overflow-scrolling: touch;
   }
-  .topnav a { color: var(--text2); text-decoration: none; font-size: 14px; }
+  .topnav a { color: var(--text2); text-decoration: none; font-size: 14px; white-space: nowrap; flex-shrink: 0; }
   .topnav a:hover { color: var(--accent); }
-  .topnav .nav-home { display: flex; align-items: center; gap: 8px; margin-right: auto; }
+  .topnav .nav-home { display: flex; align-items: center; gap: 8px; margin-right: auto; flex-shrink: 0; }
   .topnav .nav-home img { width: 28px; height: 28px; border-radius: 6px; }
   .topnav .nav-home span { font-size: 16px; font-weight: 700; color: var(--text); }
   .topnav .nav-active { color: var(--accent) !important; font-weight: 600; }
   .app { height: calc(100vh - 52px); }
+
+  /* ─── Mobile sidebar replacement ─── */
+  .mobile-nav { display: none; padding: 12px 16px; border-bottom: 1px solid var(--border); background: var(--surface); }
+  .mobile-nav select { width: 100%; background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; color: var(--text); font-size: 15px; font-family: inherit; cursor: pointer; }
+  .mobile-nav select:focus { outline: none; border-color: var(--accent); }
+
+  @media (max-width: 768px) {
+    .app { flex-direction: column; height: auto; min-height: calc(100vh - 52px); }
+    .sidebar { display: none; }
+    .mobile-nav { display: block; }
+    .main { overflow: visible; }
+    .content { padding: 16px; overflow-y: visible; }
+    .row-2, .row-3 { grid-template-columns: 1fr !important; }
+    .topnav { padding: 0 16px; gap: 16px; }
+    .config-bar { padding: 14px 16px; }
+    .two-col { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
@@ -208,6 +225,30 @@
 
 <!-- Main -->
 <div class="main">
+
+<!-- Mobile nav (replaces sidebar on small screens) -->
+<div class="mobile-nav">
+  <select id="mobile-page-select" onchange="showPageFromSelect(this)">
+    <optgroup label="Alarm Management">
+      <option value="create-alarm">Create Alarm</option>
+      <option value="update-alarm">Update Alarm</option>
+      <option value="delete-alarm">Delete Alarm</option>
+    </optgroup>
+    <optgroup label="Commands">
+      <option value="create-command">Create Command</option>
+      <option value="delete-command">Delete Command</option>
+    </optgroup>
+    <optgroup label="Dashboard">
+      <option value="alert">Trigger Alert</option>
+      <option value="dashboard">Dashboard Actions</option>
+      <option value="per-alarm">Per-Alarm Actions</option>
+    </optgroup>
+    <optgroup label="Ambient">
+      <option value="sleep-sounds">Sleep Sounds</option>
+    </optgroup>
+  </select>
+</div>
+
 <div class="content">
 
   <!-- Global config -->
@@ -1595,8 +1636,16 @@ function showPage(id, btn) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
   document.getElementById('page-' + id).classList.add('active');
-  btn.classList.add('active');
+  if (btn) btn.classList.add('active');
   document.getElementById('cfg-topic-display').textContent = topic(pageToCmd(id));
+  const sel = document.getElementById('mobile-page-select');
+  if (sel) sel.value = id;
+}
+
+function showPageFromSelect(sel) {
+  const id = sel.value;
+  const btn = document.querySelector(`.nav-item[onclick*="'${id}'"]`);
+  showPage(id, btn);
 }
 
 function pageToCmd(id) {

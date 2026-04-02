@@ -169,7 +169,9 @@
     .contact-strip a:hover { text-decoration: underline; }
 
     @media (max-width: 600px) {
-      .site-nav { padding: 0 16px; gap: 16px; }
+      .site-nav { padding: 0 16px; gap: 16px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      .site-nav a { white-space: nowrap; flex-shrink: 0; }
+      .site-nav .nav-home { flex-shrink: 0; }
       .wrapper { padding: 40px 16px 72px; }
       .hero h1 { font-size: 26px; }
     }

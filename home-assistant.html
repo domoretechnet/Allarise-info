@@ -425,7 +425,9 @@
     @media (max-width: 600px) {
       .page-header h1 { font-size: 28px; }
       .page-header p { font-size: 16px; }
-      .site-nav { padding: 0 16px; gap: 16px; }
+      .site-nav { padding: 0 16px; gap: 16px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      .site-nav a { white-space: nowrap; flex-shrink: 0; }
+      .site-nav .nav-home { flex-shrink: 0; }
       .step-body { padding: 20px; }
       .ref-body { padding: 20px; }
     }
