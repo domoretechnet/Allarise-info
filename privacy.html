@@ -226,13 +226,33 @@
 
     hr { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
 
+    /* ── Hamburger nav ── */
+    .nav-menu-btn {
+      display: none; background: none; border: none; cursor: pointer;
+      color: var(--text); font-size: 22px; padding: 4px 8px;
+      border-radius: 6px; line-height: 1; margin-left: auto;
+    }
+    .nav-dropdown {
+      display: none; position: fixed; top: 52px; left: 0; right: 0;
+      background: var(--bg); border-bottom: 1px solid var(--border);
+      z-index: 200; box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    .nav-dropdown a {
+      display: block; padding: 14px 24px; font-size: 16px;
+      color: var(--text); text-decoration: none;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-dropdown a:last-child { border-bottom: none; }
+    .nav-dropdown a.nav-active { color: var(--accent); font-weight: 600; }
+    .nav-dropdown.open { display: block; }
+
     @media (max-width: 600px) {
       .hero h1 { font-size: 26px; }
       .data-table { font-size: 13px; }
       .data-table th, .data-table td { padding: 8px 10px; }
-      .site-nav { overflow-x: auto; -webkit-overflow-scrolling: touch; gap: 16px; padding: 0 16px; }
-      .site-nav a { white-space: nowrap; flex-shrink: 0; }
-      .site-nav .nav-home { flex-shrink: 0; }
+      .site-nav { padding: 0 16px; }
+      .site-nav a:not(.nav-home) { display: none; }
+      .nav-menu-btn { display: block; }
     }
   </style>
 </head>
@@ -248,7 +268,15 @@
   <a href="mqtt-builder.html">MQTT Builder</a>
   <a href="faq.html">FAQ</a>
   <a href="privacy.html" class="nav-active">Privacy</a>
+  <button class="nav-menu-btn" id="nav-menu-btn" onclick="toggleNav()">☰</button>
 </nav>
+<div class="nav-dropdown" id="nav-dropdown">
+  <a href="index.html">About</a>
+  <a href="home-assistant.html">Home Assistant</a>
+  <a href="mqtt-builder.html">MQTT Builder</a>
+  <a href="faq.html">FAQ</a>
+  <a href="privacy.html" class="nav-active">Privacy</a>
+</div>
 
 <div class="wrapper">
 
@@ -541,5 +569,25 @@
   </p>
 
 </div>
+
+<script>
+  function toggleNav() {
+    var d = document.getElementById('nav-dropdown');
+    var b = document.getElementById('nav-menu-btn');
+    var isOpen = d.classList.toggle('open');
+    b.textContent = isOpen ? '✕' : '☰';
+  }
+  document.addEventListener('click', function(e) {
+    var d = document.getElementById('nav-dropdown');
+    var b = document.getElementById('nav-menu-btn');
+    if (d && d.classList.contains('open')) {
+      if (!d.contains(e.target) && e.target !== b && !b.contains(e.target)) {
+        d.classList.remove('open');
+        b.textContent = '☰';
+      }
+    }
+  });
+</script>
+
 </body>
 </html>
