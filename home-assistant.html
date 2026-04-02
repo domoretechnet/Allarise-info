@@ -525,66 +525,6 @@ customize:
 
       <p style="margin-top:4px; font-size:14px; color:var(--secondary);">Save and <strong style="color:var(--text)">restart the Mosquitto add-on</strong> after making this change.</p>
 
-      <p style="margin-top:20px;"><strong>Step 2b — Create the ACL files</strong></p>
-      <p>With <code>customize.active: true</code> set above, Mosquitto loads <code>.conf</code> files from <code>/share/mosquitto/</code>. You need two files. Create them using the File Editor add-on or SSH:</p>
-
-      <p style="margin-top:12px;"><strong>File 1</strong> — tells Mosquitto where the ACL list lives:</p>
-      <div class="code-wrap">
-        <div class="code-label">
-          <span>/share/mosquitto/acl.conf</span>
-          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-        </div>
-        <pre>acl_file /share/mosquitto/accesscontrollist</pre>
-      </div>
-
-      <p style="margin-top:12px;"><strong>File 2</strong> — the actual access control list. Home Assistant requires the <code>addons</code> and <code>homeassistant</code> users to have unrestricted access, or the broker will malfunction. Replace <code>YOUR_MQTT_USER</code> with the username you created in Step 2a:</p>
-      <div class="code-wrap">
-        <div class="code-label">
-          <span>/share/mosquitto/accesscontrollist</span>
-          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
-        </div>
-        <pre>user addons
-topic readwrite #
-
-user homeassistant
-topic readwrite #
-
-user YOUR_MQTT_USER
-topic readwrite allarise/#
-topic read homeassistant/status</pre>
-      </div>
-
-      <p style="margin-top:12px; font-size:14px; color:var(--secondary);">The <code>addons</code> and <code>homeassistant</code> entries are required by Home Assistant — omitting them breaks the broker and prevents the dashboard from updating. Replace <code>YOUR_MQTT_USER</code> with the exact username you set in the Mosquitto <code>logins</code> config and in the Allarise app settings. The username is case-sensitive. <strong style="color:var(--text)">Restart the Mosquitto add-on</strong> to apply the ACL.</p>
-      <p style="margin-top:8px; font-size:14px; color:var(--secondary);">The <code>/share</code> folder is accessible via SMB or on the host filesystem at <code>/usr/share/hassio/share</code>.</p>
-
-      <table class="data-table" style="margin-top:20px;">
-        <thead>
-          <tr>
-            <th>Direction</th>
-            <th>Topics covered</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>App → Broker (publish)</td>
-            <td><code>allarise/{device}/sensor/…</code> · <code>allarise/{device}/alarm/…</code> · <code>allarise/{device}/availability</code> · <code>allarise/{device}/arm/state</code></td>
-          </tr>
-          <tr>
-            <td>App ← Broker (subscribe)</td>
-            <td><code>allarise/{device}/command/…</code> · <code>allarise/{device}/alarm/…/command/…</code> · <code>allarise/{device}/arm/command</code></td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div class="callout callout-tip">
-        <span class="callout-icon">💡</span>
-        <span><strong>Custom prefix?</strong> If you use a different topic prefix in the app (e.g. <code>myhome</code>), replace <code>allarise/#</code> with <code>myhome/#</code> in the ACL file.</span>
-      </div>
-
-      <div class="callout callout-note">
-        <span class="callout-icon">ℹ️</span>
-        <span>The HA MQTT integration uses a separate system account with broader broker access. You only need to configure credentials for the iOS app user.</span>
-      </div>
     </div>
   </div>
 
