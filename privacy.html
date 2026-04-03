@@ -228,8 +228,9 @@
     hr { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
 
     /* ── Hamburger nav ── */
+    .site-nav a:not(.nav-home) { display: none; }
     .nav-menu-btn {
-      display: none; background: none; border: none; cursor: pointer;
+      display: block; background: none; border: none; cursor: pointer;
       color: var(--text); font-size: 22px; padding: 4px 8px;
       border-radius: 6px; line-height: 1; margin-left: auto;
     }
@@ -252,8 +253,6 @@
       .data-table { font-size: 13px; }
       .data-table th, .data-table td { padding: 8px 10px; }
       .site-nav { padding: 0 16px; }
-      .site-nav a:not(.nav-home) { display: none; }
-      .nav-menu-btn { display: block; }
     }
   </style>
 </head>

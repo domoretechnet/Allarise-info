@@ -424,8 +424,9 @@
     footer .footer-links { display: flex; gap: 20px; justify-content: center; margin-bottom: 12px; flex-wrap: wrap; }
 
     /* ── Hamburger nav ── */
+    .site-nav a:not(.nav-home) { display: none; }
     .nav-menu-btn {
-      display: none; background: none; border: none; cursor: pointer;
+      display: block; background: none; border: none; cursor: pointer;
       color: var(--text); font-size: 22px; padding: 4px 8px;
       border-radius: 6px; line-height: 1; margin-left: auto;
     }
@@ -447,8 +448,6 @@
       .page-header h1 { font-size: 28px; }
       .page-header p { font-size: 16px; }
       .site-nav { padding: 0 16px; }
-      .site-nav a:not(.nav-home) { display: none; }
-      .nav-menu-btn { display: block; }
       .step-body { padding: 20px; }
       .ref-body { padding: 20px; }
     }

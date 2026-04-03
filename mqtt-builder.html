@@ -168,8 +168,9 @@
   .app { height: calc(100vh - 52px); }
 
   /* ── Hamburger nav ── */
+  .topnav a:not(.nav-home) { display: none; }
   .nav-menu-btn {
-    display: none; background: none; border: none; cursor: pointer;
+    display: block; background: none; border: none; cursor: pointer;
     color: var(--text); font-size: 22px; padding: 4px 8px;
     border-radius: 6px; line-height: 1; margin-left: auto;
   }
@@ -200,8 +201,6 @@
     .content { padding: 16px; overflow-y: visible; }
     .row-2, .row-3 { grid-template-columns: 1fr !important; }
     .topnav { padding: 0 16px; gap: 16px; }
-    .topnav a:not(.nav-home) { display: none; }
-    .nav-menu-btn { display: block; }
     .config-bar { padding: 14px 16px; }
     .two-col { grid-template-columns: 1fr; }
   }
