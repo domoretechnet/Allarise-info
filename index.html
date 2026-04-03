@@ -322,10 +322,11 @@
     footer a { color: var(--accent); text-decoration: none; }
     footer .footer-links { display: flex; gap: 20px; justify-content: center; margin-bottom: 12px; flex-wrap: wrap; }
 
+    html { overflow-x: hidden; }
+
     /* ── Hamburger nav ── */
-    .site-nav a:not(.nav-home) { display: none; }
     .nav-menu-btn {
-      display: block; background: none; border: none; cursor: pointer;
+      display: none; background: none; border: none; cursor: pointer;
       color: var(--text); font-size: 22px; padding: 4px 8px;
       border-radius: 6px; line-height: 1; margin-left: auto;
     }
@@ -347,6 +348,8 @@
       .hero h1 { font-size: 32px; }
       .hero .tagline { font-size: 16px; }
       .site-nav { padding: 0 16px; }
+      .site-nav a:not(.nav-home) { display: none; }
+      .nav-menu-btn { display: block; }
     }
   </style>
 </head>
@@ -359,6 +362,11 @@
     <img src="app-icon-dark.png" class="icon-dark" alt="Allarise" />
     <span>Allarise</span>
   </a>
+  <a href="index.html" class="nav-active">About</a>
+  <a href="home-assistant.html">Home Assistant</a>
+  <a href="mqtt-builder.html">MQTT Builder</a>
+  <a href="faq.html">FAQ</a>
+  <a href="privacy.html">Privacy</a>
   <button class="nav-menu-btn" id="nav-menu-btn" onclick="toggleNav()">☰</button>
 </nav>
 <div class="nav-dropdown" id="nav-dropdown">

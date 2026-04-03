@@ -424,9 +424,8 @@
     footer .footer-links { display: flex; gap: 20px; justify-content: center; margin-bottom: 12px; flex-wrap: wrap; }
 
     /* ── Hamburger nav ── */
-    .site-nav a:not(.nav-home) { display: none; }
     .nav-menu-btn {
-      display: block; background: none; border: none; cursor: pointer;
+      display: none; background: none; border: none; cursor: pointer;
       color: var(--text); font-size: 22px; padding: 4px 8px;
       border-radius: 6px; line-height: 1; margin-left: auto;
     }
@@ -462,6 +461,11 @@
     <img src="app-icon-dark.png" class="icon-dark" alt="Allarise" />
     <span>Allarise</span>
   </a>
+  <a href="index.html">About</a>
+  <a href="home-assistant.html" class="nav-active">Home Assistant</a>
+  <a href="mqtt-builder.html">MQTT Builder</a>
+  <a href="faq.html">FAQ</a>
+  <a href="privacy.html">Privacy</a>
   <button class="nav-menu-btn" id="nav-menu-btn" onclick="toggleNav()">☰</button>
 </nav>
 <div class="nav-dropdown" id="nav-dropdown">

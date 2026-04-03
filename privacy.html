@@ -228,9 +228,8 @@
     hr { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
 
     /* ── Hamburger nav ── */
-    .site-nav a:not(.nav-home) { display: none; }
     .nav-menu-btn {
-      display: block; background: none; border: none; cursor: pointer;
+      display: none; background: none; border: none; cursor: pointer;
       color: var(--text); font-size: 22px; padding: 4px 8px;
       border-radius: 6px; line-height: 1; margin-left: auto;
     }
@@ -263,6 +262,11 @@
     <img src="app-icon.png" alt="Allarise" />
     <span>Allarise</span>
   </a>
+  <a href="index.html">About</a>
+  <a href="home-assistant.html">Home Assistant</a>
+  <a href="mqtt-builder.html">MQTT Builder</a>
+  <a href="faq.html">FAQ</a>
+  <a href="privacy.html" class="nav-active">Privacy</a>
   <button class="nav-menu-btn" id="nav-menu-btn" onclick="toggleNav()">☰</button>
 </nav>
 <div class="nav-dropdown" id="nav-dropdown">
