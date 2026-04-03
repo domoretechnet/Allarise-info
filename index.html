@@ -348,8 +348,8 @@
       .hero h1 { font-size: 32px; }
       .hero .tagline { font-size: 16px; }
       .site-nav { padding: 0 16px; }
-      .site-nav a:not(.nav-home) { display: none; }
-      .nav-menu-btn { display: block; }
+      .site-nav a:not(.nav-home) { display: none !important; }
+      .nav-menu-btn { display: block !important; }
     }
   </style>
 </head>
@@ -377,31 +377,26 @@
   <a href="privacy.html">Privacy</a>
 </div>
 <script>
+  var _navOpen = false;
   function toggleNav() {
     var d = document.getElementById('nav-dropdown');
     var b = document.getElementById('nav-menu-btn');
-    var isOpen = d.classList.toggle('open');
-    b.textContent = isOpen ? '✕' : '☰';
+    _navOpen = !_navOpen;
+    d.style.display = _navOpen ? 'block' : 'none';
+    b.textContent = _navOpen ? '✕' : '☰';
   }
   document.addEventListener('click', function(e) {
+    if (!_navOpen) return;
     var d = document.getElementById('nav-dropdown');
     var b = document.getElementById('nav-menu-btn');
-    if (d && d.classList.contains('open')) {
-      if (!d.contains(e.target) && e.target !== b && !b.contains(e.target)) {
-        d.classList.remove('open');
-        b.textContent = '☰';
-      }
+    if (!d.contains(e.target) && e.target !== b && !b.contains(e.target)) {
+      _navOpen = false;
+      d.style.display = 'none';
+      b.textContent = '☰';
     }
   });
-  function syncNav() {
-    var links = document.querySelectorAll('.site-nav a:not(.nav-home)');
-    var btn = document.getElementById('nav-menu-btn');
-    var mobile = window.innerWidth <= 600;
-    links.forEach(function(l) { l.style.display = mobile ? 'none' : ''; });
-    if (btn) btn.style.display = mobile ? 'block' : 'none';
-  }
-  syncNav();
-  window.addEventListener('resize', syncNav);
+  // Force-hide dropdown on load (overrides any cached state)
+  document.getElementById('nav-dropdown').style.display = 'none';
 </script>
 
 <!-- Hero -->
