@@ -1647,22 +1647,25 @@
 
 <script>
 // ─── Hamburger nav ───────────────────────────────────────
+var _navOpen = false;
 function toggleNav() {
   var d = document.getElementById('nav-dropdown');
   var b = document.getElementById('nav-menu-btn');
-  var isOpen = d.classList.toggle('open');
-  b.textContent = isOpen ? '✕' : '☰';
+  _navOpen = !_navOpen;
+  d.style.display = _navOpen ? 'block' : 'none';
+  b.textContent = _navOpen ? '✕' : '☰';
 }
 document.addEventListener('click', function(e) {
+  if (!_navOpen) return;
   var d = document.getElementById('nav-dropdown');
   var b = document.getElementById('nav-menu-btn');
-  if (d && d.classList.contains('open')) {
-    if (!d.contains(e.target) && e.target !== b && !b.contains(e.target)) {
-      d.classList.remove('open');
-      b.textContent = '☰';
-    }
+  if (!d.contains(e.target) && e.target !== b && !b.contains(e.target)) {
+    _navOpen = false;
+    d.style.display = 'none';
+    b.textContent = '☰';
   }
 });
+document.getElementById('nav-dropdown').style.display = 'none';
 
 // ─── Global helpers ──────────────────────────────────────
 function getPrefix() { return document.getElementById('cfg-prefix').value.trim() || 'allarise'; }
