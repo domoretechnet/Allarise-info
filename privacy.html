@@ -269,6 +269,7 @@
   <a href="mqtt-builder.html">MQTT Builder</a>
   <a href="faq.html">FAQ</a>
   <a href="privacy.html" class="nav-active">Privacy</a>
+  <a href="terms.html">Terms</a>
   <button class="nav-menu-btn" id="nav-menu-btn" onclick="toggleNav()">☰</button>
 </nav>
 <div class="nav-dropdown" id="nav-dropdown">
@@ -277,6 +278,7 @@
   <a href="mqtt-builder.html">MQTT Builder</a>
   <a href="faq.html">FAQ</a>
   <a href="privacy.html" class="nav-active">Privacy</a>
+  <a href="terms.html">Terms</a>
 </div>
 
 <div class="wrapper">
@@ -298,8 +300,8 @@
     <div class="body">
       <strong>The short version:</strong> Allarise is a local-first app. Your data stays on your device.
       We collect no analytics, no crash reports are sent to us, there are no ads, and we do not sell or share
-      your data with anyone. The only external communication is with Apple's native services (WeatherKit,
-      the App Store) and — if <em>you</em> configure it — your own self-hosted Home Assistant / MQTT broker.
+      your data with anyone. External communication is limited to Apple services used by app features
+      (such as WeatherKit and the App Store) and — if <em>you</em> configure it — your own self-hosted Home Assistant / MQTT broker.
     </div>
   </div>
 
@@ -353,7 +355,7 @@
   <h3>2.2 Alarm &amp; App Settings</h3>
   <p>
     All your alarms, schedules, sounds, theme preferences, and app settings are stored
-    <strong>only on your device</strong> using iOS's standard UserDefaults and Core Data.
+    <strong>only on your device</strong> using Apple system storage APIs.
     This data is not synced to iCloud and is never transmitted to our servers.
     Sensitive credentials (MQTT username &amp; password) are stored in the iOS
     <strong>Keychain</strong>, which is hardware-encrypted on modern devices.
@@ -566,7 +568,7 @@
 
   <hr />
   <p style="font-size:13px; color: var(--secondary); text-align:center;">
-    Allarise &copy; 2026 Domore Technology. All rights reserved.
+    Allarise &copy; 2026 Domore Technology. <a href="terms.html">Terms of Use</a> · All rights reserved.
   </p>
 
 </div>

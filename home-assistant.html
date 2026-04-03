@@ -468,6 +468,7 @@
   <a href="mqtt-builder.html">MQTT Builder</a>
   <a href="faq.html">FAQ</a>
   <a href="privacy.html">Privacy</a>
+  <a href="terms.html">Terms</a>
   <button class="nav-menu-btn" id="nav-menu-btn" onclick="toggleNav()">☰</button>
 </nav>
 <div class="nav-dropdown" id="nav-dropdown">
@@ -476,13 +477,14 @@
   <a href="mqtt-builder.html">MQTT Builder</a>
   <a href="faq.html">FAQ</a>
   <a href="privacy.html">Privacy</a>
+  <a href="terms.html">Terms</a>
 </div>
 
 <!-- Page header -->
 <div class="page-header">
   <div class="ph-label">Home Assistant Integration</div>
   <h1>Connect Allarise to Home Assistant.</h1>
-  <p>Control and monitor your alarms from Home Assistant — dismiss, snooze, trigger full-screen alerts, and automate your morning routine. All over MQTT.</p>
+  <p>Control and monitor supported alarm actions from Home Assistant, exchange alarm state over MQTT, and automate your morning routine when app and iOS background conditions allow.</p>
 </div>
 
 <!-- TOC -->
@@ -585,7 +587,7 @@ customize:
         <tbody>
           <tr><td>Topic Prefix</td><td><code>allarise</code> (default) — must match what you enter in the HA integration in Step 4</td></tr>
           <tr><td>Device Name</td><td><code>iPhone</code> (default) — change this to identify multiple phones; must also match Step 4</td></tr>
-          <tr><td>Allow Inbound Commands</td><td>Enable to let Home Assistant create alarms, trigger alerts, and dismiss alarms from automations</td></tr>
+          <tr><td>Allow Inbound Commands</td><td>Enable to allow supported Home Assistant automations to create alarms, request alerts, and send alarm actions when app and iOS conditions allow</td></tr>
         </tbody>
       </table>
 
@@ -622,7 +624,7 @@ customize:
       </table>
 
       <h4>Home WiFi Networks</h4>
-      <p>Add your home WiFi network name(s) so the app knows when to use the internal broker instead of the external one. It switches automatically when you leave or return home.</p>
+      <p>Add your home WiFi network name(s) so the app can decide when to use the internal broker instead of the external one. Broker selection is designed to switch automatically when you leave or return home, based on the network information available to iOS.</p>
       <ol>
         <li>Tap <strong>Add Network</strong></li>
         <li>Type your network name exactly, or tap <strong>Use Current Network</strong> to fill it in automatically</li>
@@ -634,7 +636,7 @@ customize:
       </div>
 
       <h4>Test your connection</h4>
-      <p>Once all fields are filled in, tap <strong>Test Connection</strong> in the Authentication section. A green "Connected!" confirms the app can reach your broker.</p>
+      <p>Once all fields are filled in, tap <strong>Test Connection</strong> in the Authentication section. A green "Connected!" indicates the app was able to reach your broker at the time of the test.</p>
 
       <div class="callout callout-tip" style="margin-top:12px;">
         <span class="callout-icon">🛠</span>
@@ -670,7 +672,7 @@ customize:
       <h2>What you get</h2>
     </div>
     <div class="step-body">
-      <p>Once connected, the integration creates a main dashboard device and one sub-device per alarm — each packed with entities you can use in automations, dashboards, and scripts.</p>
+      <p>Once connected, the integration is designed to create a main dashboard device and one sub-device per alarm, with entities you can use in automations, dashboards, and scripts.</p>
 
       <div class="wyg-grid">
         <div class="wyg-card">
@@ -696,27 +698,27 @@ customize:
         <div class="wyg-card">
           <span class="wyg-icon">🚨</span>
           <h3>Notify</h3>
-          <p>Send a full-screen alert to the phone from any HA automation using the notify service.</p>
+          <p>Send an alert to the phone from supported HA automations using the notify service.</p>
         </div>
         <div class="wyg-card">
           <span class="wyg-icon">⏰</span>
           <h3>Per-Alarm Devices</h3>
-          <p>Each alarm gets its own HA device with full control — time, days, sound, snooze, and more.</p>
+          <p>Each alarm can appear in Home Assistant with its own related entities and supported controls for time, days, sound, snooze, and more.</p>
         </div>
         <div class="wyg-card">
           <span class="wyg-icon">🌙</span>
           <h3>Sleep Sounds</h3>
-          <p>Start, stop, pause, or change white noise and ambient sounds on the phone remotely from any automation.</p>
+          <p>Start, stop, pause, or change white noise and ambient sounds on the phone from supported automations when app and iOS conditions allow.</p>
         </div>
         <div class="wyg-card">
           <span class="wyg-icon">🔐</span>
           <h3>Arm Widget</h3>
-          <p>A switch entity that syncs with the app's arm toggle — use it to tell Home Assistant when your home security is armed.</p>
+          <p>A switch entity that is designed to reflect the app's arm toggle, so Home Assistant can react to that state.</p>
         </div>
         <div class="wyg-card">
           <span class="wyg-icon">⚡</span>
           <h3>Commands</h3>
-          <p>Fire named commands from the app's alarm screen to trigger HA automations — dismiss, snooze, swipe actions, and custom widget buttons.</p>
+          <p>Fire named commands from the app's alarm screen to trigger supported HA automations, including dismiss, snooze, swipe actions, and custom widget buttons.</p>
         </div>
       </div>
 
@@ -795,7 +797,7 @@ customize:
       </p>
 
       <h3>Buttons</h3>
-      <p><strong>Dashboard buttons</strong> act on the currently active alarm:</p>
+      <p><strong>Dashboard buttons</strong> are intended to act on the currently active alarm:</p>
       <table class="data-table">
         <thead><tr><th>Button</th><th>Action</th></tr></thead>
         <tbody>
@@ -857,7 +859,7 @@ target:
       </div>
 
       <h3>Notify</h3>
-      <p>Send a full-screen alert to the phone using the standard HA notify service:</p>
+      <p>Send an alert to the phone using the standard HA notify service:</p>
       <div class="code-wrap">
         <div class="code-label">
           <span>Send a full-screen alert</span>
@@ -884,7 +886,7 @@ data:
     </div>
     <div class="ref-body">
 
-      <p>Sleep sounds (white noise, rain, fan, etc.) can be started, stopped, paused, resumed, and adjusted remotely from any Home Assistant automation or script. The current sound name and volume are published as sensors on the dashboard device and are also surfaced in the HA Dashboard so you can see what's playing at a glance.</p>
+      <p>Sleep sounds (white noise, rain, fan, etc.) can be started, stopped, paused, resumed, and adjusted remotely from supported Home Assistant automations or scripts when app and iOS conditions allow. The current sound name and volume are published as sensors on the dashboard device and can also be surfaced in Home Assistant dashboards.</p>
 
       <h3>Dashboard sensors</h3>
       <table class="data-table">
@@ -961,7 +963,7 @@ payload: {}</pre>
 
       <div class="callout callout-tip" style="margin-top:16px;">
         <span class="callout-icon">💡</span>
-        <span>Use <code>until_next_alarm: true</code> in <code>sleep_sound_start</code> to automatically stop white noise the moment the morning alarm fires — no separate automation needed.</span>
+        <span>Use <code>until_next_alarm: true</code> in <code>sleep_sound_start</code> to have the app attempt to stop white noise when the next alarm fires, without requiring a separate automation.</span>
       </div>
 
     </div>
@@ -998,7 +1000,7 @@ data:
       </div>
 
       <h3>allarise.trigger_alert</h3>
-      <p>Show a full-screen alert alarm on the phone.</p>
+      <p>Request an alert alarm on the phone when app and iOS conditions permit.</p>
       <div class="code-wrap">
         <div class="code-label">
           <span>allarise.trigger_alert</span>
@@ -1173,9 +1175,10 @@ data:
     <a href="mqtt-builder.html">MQTT Builder</a>
     <a href="faq.html">FAQ</a>
     <a href="privacy.html">Privacy</a>
+    <a href="terms.html">Terms</a>
     <a href="https://github.com/domoretechnet/allarise-hacs/issues" target="_blank">Report an Issue</a>
   </div>
-  <div>© 2026 Allarise · <a href="privacy.html">Privacy Policy</a></div>
+  <div>© 2026 Allarise · <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms of Use</a></div>
 </footer>
 
 <script>
