@@ -393,6 +393,15 @@
       }
     }
   });
+  function syncNav() {
+    var links = document.querySelectorAll('.site-nav a:not(.nav-home)');
+    var btn = document.getElementById('nav-menu-btn');
+    var mobile = window.innerWidth <= 600;
+    links.forEach(function(l) { l.style.display = mobile ? 'none' : ''; });
+    if (btn) btn.style.display = mobile ? 'block' : 'none';
+  }
+  syncNav();
+  window.addEventListener('resize', syncNav);
 </script>
 
 <!-- Hero -->
