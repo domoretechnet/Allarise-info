@@ -185,6 +185,7 @@
   }
   .nav-dropdown a:last-child { border-bottom: none; }
   .nav-dropdown a.nav-active { color: var(--accent); font-weight: 600; }
+  .nav-dropdown.open { display: block; }
 
   /* ─── Mobile sidebar replacement ─── */
   .mobile-nav { display: none; padding: 12px 16px; border-bottom: 1px solid var(--border); background: var(--surface); }
@@ -220,7 +221,7 @@
   <a href="privacy.html">Privacy</a>
   <button class="nav-menu-btn" id="nav-menu-btn" onclick="toggleNav()">☰</button>
 </div>
-<div class="nav-dropdown" id="nav-dropdown" style="display:none">
+<div class="nav-dropdown" id="nav-dropdown">
   <a href="index.html">About</a>
   <a href="home-assistant.html">Home Assistant</a>
   <a href="mqtt-builder.html" class="nav-active">MQTT Builder</a>
@@ -1649,16 +1650,15 @@
 function toggleNav() {
   var d = document.getElementById('nav-dropdown');
   var b = document.getElementById('nav-menu-btn');
-  var opening = d.style.display !== 'block';
-  d.style.display = opening ? 'block' : 'none';
-  b.textContent = opening ? '✕' : '☰';
+  var isOpen = d.classList.toggle('open');
+  b.textContent = isOpen ? '✕' : '☰';
 }
 document.addEventListener('click', function(e) {
   var d = document.getElementById('nav-dropdown');
   var b = document.getElementById('nav-menu-btn');
-  if (d && d.style.display === 'block') {
+  if (d && d.classList.contains('open')) {
     if (!d.contains(e.target) && e.target !== b && !b.contains(e.target)) {
-      d.style.display = 'none';
+      d.classList.remove('open');
       b.textContent = '☰';
     }
   }
