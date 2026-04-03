@@ -339,7 +339,6 @@
     }
     .nav-dropdown a:last-child { border-bottom: none; }
     .nav-dropdown a.nav-active { color: var(--accent); font-weight: 600; }
-    .nav-dropdown.open { display: block; }
 
     @media (max-width: 600px) {
       .hero h1 { font-size: 32px; }
@@ -366,7 +365,7 @@
   <a href="privacy.html">Privacy</a>
   <button class="nav-menu-btn" id="nav-menu-btn" onclick="toggleNav()">☰</button>
 </nav>
-<div class="nav-dropdown" id="nav-dropdown">
+<div class="nav-dropdown" id="nav-dropdown" style="display:none">
   <a href="index.html" class="nav-active">About</a>
   <a href="home-assistant.html">Home Assistant</a>
   <a href="mqtt-builder.html">MQTT Builder</a>
@@ -554,15 +553,16 @@
   function toggleNav() {
     var d = document.getElementById('nav-dropdown');
     var b = document.getElementById('nav-menu-btn');
-    var isOpen = d.classList.toggle('open');
-    b.textContent = isOpen ? '✕' : '☰';
+    var opening = d.style.display !== 'block';
+    d.style.display = opening ? 'block' : 'none';
+    b.textContent = opening ? '✕' : '☰';
   }
   document.addEventListener('click', function(e) {
     var d = document.getElementById('nav-dropdown');
     var b = document.getElementById('nav-menu-btn');
-    if (d && d.classList.contains('open')) {
+    if (d && d.style.display === 'block') {
       if (!d.contains(e.target) && e.target !== b && !b.contains(e.target)) {
-        d.classList.remove('open');
+        d.style.display = 'none';
         b.textContent = '☰';
       }
     }
