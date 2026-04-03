@@ -188,7 +188,6 @@
       overflow-x: scroll;
       scroll-snap-type: x mandatory;
       scroll-behavior: smooth;
-      -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
       /* slight negative margin to let cards breathe to page edge */
     }
@@ -328,7 +327,7 @@
       border-radius: 6px; line-height: 1; margin-left: auto;
     }
     .nav-dropdown {
-      display: none; position: absolute; top: 52px; left: 0; right: 0;
+      display: none; position: fixed; top: 52px; left: 0; right: 0;
       background: var(--bg); border-bottom: 1px solid var(--border);
       z-index: 200; box-shadow: 0 4px 20px rgba(0,0,0,0.1);
     }
@@ -365,14 +364,14 @@
   <a href="faq.html">FAQ</a>
   <a href="privacy.html">Privacy</a>
   <button class="nav-menu-btn" id="nav-menu-btn" onclick="toggleNav()">☰</button>
-  <div class="nav-dropdown" id="nav-dropdown">
-    <a href="index.html" class="nav-active">About</a>
-    <a href="home-assistant.html">Home Assistant</a>
-    <a href="mqtt-builder.html">MQTT Builder</a>
-    <a href="faq.html">FAQ</a>
-    <a href="privacy.html">Privacy</a>
-  </div>
 </nav>
+<div class="nav-dropdown" id="nav-dropdown">
+  <a href="index.html" class="nav-active">About</a>
+  <a href="home-assistant.html">Home Assistant</a>
+  <a href="mqtt-builder.html">MQTT Builder</a>
+  <a href="faq.html">FAQ</a>
+  <a href="privacy.html">Privacy</a>
+</div>
 <script>
   function toggleNav() {
     var d = document.getElementById('nav-dropdown');
