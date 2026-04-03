@@ -247,6 +247,10 @@
     .nav-dropdown a.nav-active { color: var(--accent); font-weight: 600; }
     .nav-dropdown.open { display: block; }
 
+    footer { border-top: 1px solid var(--border); padding: 32px 24px; text-align: center; font-size: 13px; color: var(--secondary); }
+    footer a { color: var(--accent); text-decoration: none; }
+    footer .footer-links { display: flex; gap: 20px; justify-content: center; margin-bottom: 12px; flex-wrap: wrap; }
+
     @media (max-width: 600px) {
       .hero h1 { font-size: 26px; }
       .data-table { font-size: 13px; }
@@ -403,7 +407,7 @@
     Internal (LAN) connections may optionally skip TLS depending on your configuration.
   </p>
 
-  <div class="callout yellow">
+  <div class="callout green">
     <span class="icon">⚠️</span>
     <div class="body">
       Your MQTT broker is a <strong>third-party service you control</strong>. Please review the privacy
@@ -566,12 +570,21 @@
     </p>
   </div>
 
-  <hr />
-  <p style="font-size:13px; color: var(--secondary); text-align:center;">
-    Allarise &copy; 2026 Domore Technology. <a href="terms.html">Terms of Use</a> · All rights reserved.
-  </p>
 
 </div>
+
+<footer>
+  <div class="footer-links">
+    <a href="index.html">About</a>
+    <a href="home-assistant.html">Home Assistant</a>
+    <a href="mqtt-builder.html">MQTT Builder</a>
+    <a href="faq.html">FAQ</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Use</a>
+    <a href="mailto:privacy@domoretech.net">Contact</a>
+  </div>
+  <p>Allarise &copy; 2026 Domore Technology. All rights reserved.</p>
+</footer>
 
 <script>
   var _navOpen = false;

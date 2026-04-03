@@ -170,6 +170,9 @@
       margin-top: 32px;
     }
     .contact-box h3 { margin-top: 0; }
+    footer { border-top: 1px solid var(--border); padding: 32px 24px; text-align: center; font-size: 13px; color: var(--secondary); }
+    footer a { color: var(--accent); text-decoration: none; }
+    footer .footer-links { display: flex; gap: 20px; justify-content: center; margin-bottom: 12px; flex-wrap: wrap; }
     .nav-menu-btn {
       display: none; background: none; border: none; cursor: pointer;
       color: var(--text); font-size: 22px; padding: 4px 8px;
@@ -240,7 +243,7 @@
     </div>
   </div>
 
-  <div class="callout yellow">
+  <div class="callout green">
     <span class="icon">⏰</span>
     <div class="body">
       <strong>Important:</strong> Allarise is not a life-safety, medical, or emergency alert system. You remain responsible for maintaining backup wake-up or reminder methods for important events.
@@ -397,12 +400,21 @@
     </p>
   </div>
 
-  <hr />
-  <p style="font-size:13px; color: var(--secondary); text-align:center;">
-    Allarise &copy; 2026 Domore Technology. <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms of Use</a>
-  </p>
 
 </div>
+
+<footer>
+  <div class="footer-links">
+    <a href="index.html">About</a>
+    <a href="home-assistant.html">Home Assistant</a>
+    <a href="mqtt-builder.html">MQTT Builder</a>
+    <a href="faq.html">FAQ</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Use</a>
+    <a href="mailto:support@domoretech.net">Contact</a>
+  </div>
+  <p>Allarise &copy; 2026 Domore Technology. All rights reserved.</p>
+</footer>
 
 <script>
   var _navOpen = false;
