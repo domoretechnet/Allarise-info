@@ -215,17 +215,6 @@
       border: 1px solid var(--border);
       border-radius: 16px;
       padding: 24px;
-      opacity: 0;
-      transform: translateY(16px);
-      transition: opacity 0.35s ease, transform 0.35s ease;
-    }
-    .feature-card.revealed {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .feature-card { opacity: 1; transform: none; transition: none; }
-    }
     .alt-bg .feature-card { background: var(--bg); }
     .feature-card .f-icon {
       font-size: 28px;
@@ -586,21 +575,6 @@
   const viewport = document.getElementById('panels-viewport');
   const labelEl  = document.getElementById('panel-nav-label');
   const dots     = document.querySelectorAll('#nav-dots .nav-dot');
-
-  // Cards animate in as they scroll into view
-  const cardObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const siblings = [...entry.target.parentElement.children];
-        const i = siblings.indexOf(entry.target);
-        entry.target.style.transitionDelay = (i * 55) + 'ms';
-        entry.target.classList.add('revealed');
-        cardObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
-
-  document.querySelectorAll('.feature-card').forEach(c => cardObserver.observe(c));
 
   function goTo(index) {
     if (index < 0 || index >= panelIds.length) return;
