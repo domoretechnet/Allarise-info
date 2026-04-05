@@ -489,11 +489,11 @@
     <div class="toc-group">
       <p>Setup</p>
       <ol>
-        <li><a href="#step-install"><span class="step-num">1</span> Install the HACS integration</a></li>
-        <li><a href="#step-mqtt"><span class="step-num">2</span> Set up your MQTT broker</a></li>
-        <li><a href="#step-connect"><span class="step-num">3</span> Connect the Allarise app</a></li>
-        <li><a href="#step-configure"><span class="step-num">4</span> Add the integration in Home Assistant</a></li>
-        <li><a href="#step-entities"><span class="step-num">5</span> What you get</a></li>
+        <li><a href="#step-entities"><span class="step-num">1</span> What you get</a></li>
+        <li><a href="#step-install"><span class="step-num">2</span> Install the HACS integration</a></li>
+        <li><a href="#step-mqtt"><span class="step-num">3</span> Set up your MQTT broker</a></li>
+        <li><a href="#step-connect"><span class="step-num">4</span> Connect the Allarise app</a></li>
+        <li><a href="#step-configure"><span class="step-num">5</span> Add the integration in Home Assistant</a></li>
       </ol>
     </div>
     <div class="toc-group">
@@ -512,9 +512,73 @@
 <div class="steps">
 
   <!-- Step 1 -->
-  <div class="step-block" id="step-install">
+  <div class="step-block" id="step-entities">
     <div class="step-header">
       <div class="step-badge">1</div>
+      <h2>What you get</h2>
+    </div>
+    <div class="step-body">
+      <p>Once connected, the integration is designed to create a main dashboard device and one sub-device per alarm, with entities you can use in automations, dashboards, and scripts.</p>
+
+      <div class="wyg-grid">
+        <div class="wyg-card">
+          <span class="wyg-icon">📊</span>
+          <h3>Sensors</h3>
+          <p>Alarm state, name, fire time, snooze count, app version, sleep sound volume, and more.</p>
+        </div>
+        <div class="wyg-card">
+          <span class="wyg-icon">🔘</span>
+          <h3>Buttons</h3>
+          <p>Dismiss, snooze, skip, unskip, and kill snoozed — available on the dashboard device and each per-alarm device.</p>
+        </div>
+        <div class="wyg-card">
+          <span class="wyg-icon">🔁</span>
+          <h3>Switches</h3>
+          <p>Master arm toggle, per-alarm enable/disable, alert vibrate, and alert media loop.</p>
+        </div>
+        <div class="wyg-card">
+          <span class="wyg-icon">🔊</span>
+          <h3>Media Player</h3>
+          <p>Play audio or TTS directly to the phone via <code>play_media</code> and <code>media_announce</code>.</p>
+        </div>
+        <div class="wyg-card">
+          <span class="wyg-icon">🚨</span>
+          <h3>Notify</h3>
+          <p>Send an alert to the phone from supported HA automations using the notify service.</p>
+        </div>
+        <div class="wyg-card">
+          <span class="wyg-icon">⏰</span>
+          <h3>Per-Alarm Devices</h3>
+          <p>Each alarm can appear in Home Assistant with its own related entities and supported controls for time, days, sound, snooze, and more.</p>
+        </div>
+        <div class="wyg-card">
+          <span class="wyg-icon">🌙</span>
+          <h3>Sleep Sounds</h3>
+          <p>Start, stop, pause, or change white noise and ambient sounds on the phone from supported automations when app and iOS conditions allow.</p>
+        </div>
+        <div class="wyg-card">
+          <span class="wyg-icon">🔐</span>
+          <h3>Arm Widget</h3>
+          <p>A switch entity that is designed to reflect the app's arm toggle, so Home Assistant can react to that state.</p>
+        </div>
+        <div class="wyg-card">
+          <span class="wyg-icon">⚡</span>
+          <h3>Commands</h3>
+          <p>Fire named commands from the app's alarm screen to trigger supported HA automations, including dismiss, snooze, swipe actions, and custom widget buttons.</p>
+        </div>
+      </div>
+
+      <div class="callout callout-tip" style="margin-top:24px;">
+        <span class="callout-icon">📖</span>
+        <span>See the reference sections below for the full entity list, services, example automations, and MQTT topic details.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 2 -->
+  <div class="step-block" id="step-install">
+    <div class="step-header">
+      <div class="step-badge">2</div>
       <h2>Install the HACS integration</h2>
     </div>
     <div class="step-body">
@@ -539,10 +603,10 @@
     </div>
   </div>
 
-  <!-- Step 2 -->
+  <!-- Step 3 -->
   <div class="step-block" id="step-mqtt">
     <div class="step-header">
-      <div class="step-badge">2</div>
+      <div class="step-badge">3</div>
       <h2>Set up your MQTT broker</h2>
     </div>
     <div class="step-body">
@@ -569,10 +633,10 @@ customize:
     </div>
   </div>
 
-  <!-- Step 3 -->
+  <!-- Step 4 -->
   <div class="step-block" id="step-connect">
     <div class="step-header">
-      <div class="step-badge">3</div>
+      <div class="step-badge">4</div>
       <h2>Connect the Allarise app</h2>
     </div>
     <div class="step-body">
@@ -641,10 +705,10 @@ customize:
     </div>
   </div>
 
-  <!-- Step 4 -->
+  <!-- Step 5 -->
   <div class="step-block" id="step-configure">
     <div class="step-header">
-      <div class="step-badge">4</div>
+      <div class="step-badge">5</div>
       <h2>Add the integration in Home Assistant</h2>
     </div>
     <div class="step-body">
@@ -661,69 +725,6 @@ customize:
     </div>
   </div>
 
-  <!-- Step 5 -->
-  <div class="step-block" id="step-entities">
-    <div class="step-header">
-      <div class="step-badge">5</div>
-      <h2>What you get</h2>
-    </div>
-    <div class="step-body">
-      <p>Once connected, the integration is designed to create a main dashboard device and one sub-device per alarm, with entities you can use in automations, dashboards, and scripts.</p>
-
-      <div class="wyg-grid">
-        <div class="wyg-card">
-          <span class="wyg-icon">📊</span>
-          <h3>Sensors</h3>
-          <p>Alarm state, name, fire time, snooze count, app version, sleep sound volume, and more.</p>
-        </div>
-        <div class="wyg-card">
-          <span class="wyg-icon">🔘</span>
-          <h3>Buttons</h3>
-          <p>Dismiss, snooze, skip, unskip, and kill snoozed — available on the dashboard device and each per-alarm device.</p>
-        </div>
-        <div class="wyg-card">
-          <span class="wyg-icon">🔁</span>
-          <h3>Switches</h3>
-          <p>Master arm toggle, per-alarm enable/disable, alert vibrate, and alert media loop.</p>
-        </div>
-        <div class="wyg-card">
-          <span class="wyg-icon">🔊</span>
-          <h3>Media Player</h3>
-          <p>Play audio or TTS directly to the phone via <code>play_media</code> and <code>media_announce</code>.</p>
-        </div>
-        <div class="wyg-card">
-          <span class="wyg-icon">🚨</span>
-          <h3>Notify</h3>
-          <p>Send an alert to the phone from supported HA automations using the notify service.</p>
-        </div>
-        <div class="wyg-card">
-          <span class="wyg-icon">⏰</span>
-          <h3>Per-Alarm Devices</h3>
-          <p>Each alarm can appear in Home Assistant with its own related entities and supported controls for time, days, sound, snooze, and more.</p>
-        </div>
-        <div class="wyg-card">
-          <span class="wyg-icon">🌙</span>
-          <h3>Sleep Sounds</h3>
-          <p>Start, stop, pause, or change white noise and ambient sounds on the phone from supported automations when app and iOS conditions allow.</p>
-        </div>
-        <div class="wyg-card">
-          <span class="wyg-icon">🔐</span>
-          <h3>Arm Widget</h3>
-          <p>A switch entity that is designed to reflect the app's arm toggle, so Home Assistant can react to that state.</p>
-        </div>
-        <div class="wyg-card">
-          <span class="wyg-icon">⚡</span>
-          <h3>Commands</h3>
-          <p>Fire named commands from the app's alarm screen to trigger supported HA automations, including dismiss, snooze, swipe actions, and custom widget buttons.</p>
-        </div>
-      </div>
-
-      <div class="callout callout-tip" style="margin-top:24px;">
-        <span class="callout-icon">📖</span>
-        <span>See the reference sections below for the full entity list, services, example automations, and MQTT topic details.</span>
-      </div>
-    </div>
-  </div>
 
 </div>
 
