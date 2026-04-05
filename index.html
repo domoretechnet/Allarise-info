@@ -422,123 +422,50 @@
   </div>
 </section>
 
-<!-- Features + Home Assistant (tabbed) -->
+<!-- App Features -->
 <section class="section alt-bg">
   <div class="section-inner">
-    <div class="panel-nav">
-      <div class="panel-nav-label" id="panel-nav-label">App Features</div>
-      <div class="nav-dots" id="nav-dots">
-        <div class="nav-dot active"></div>
-        <div class="nav-dot"></div>
+    <div class="features">
+      <div class="feature-card">
+        <span class="f-icon">⏰</span>
+        <h3>Alarm Engine <span class="pro-badge">Pro</span></h3>
+        <p>Alarms that mean business. Allarise plays at the volume you set, independent of your ringer and mute switch.</p>
+        <p style="font-size:12px; color:var(--secondary); margin-top:8px;">Free includes 2 alarms. Pro unlocks unlimited.</p>
+      </div>
+      <div class="feature-card">
+        <span class="f-icon">🏠</span>
+        <h3>Home Assistant Integration</h3>
+        <p>Connect via MQTT to your Home Assistant instance. Trigger automations from supported alarm events, and let Home Assistant exchange alarm state and supported commands with the app.</p>
+      </div>
+      <div class="feature-card">
+        <span class="f-icon">🌙</span>
+        <h3>Sleep Sounds <span class="pro-badge">Pro</span></h3>
+        <p>Fall asleep to rain, ocean waves, white noise, and more. Lock screen controls, sleep timers, and controllable remotely from Home Assistant.</p>
+      </div>
+      <div class="feature-card">
+        <span class="f-icon">🧩</span>
+        <h3>Wake-Up Missions</h3>
+        <p>Dismiss your alarm by solving a math problem, shaking your phone, or triggering a Home Assistant action. Built for people who actually need to wake up.</p>
+      </div>
+      <div class="feature-card">
+        <span class="f-icon">🎨</span>
+        <h3>Wallpaper Packs <span class="pro-badge">Pro</span></h3>
+        <p>Curated wallpaper packs that transform your home and alarm screens. Each pack includes light and dark variants designed to look great out of the box.</p>
+      </div>
+      <div class="feature-card">
+        <span class="f-icon">🌤</span>
+        <h3>Morning Weather</h3>
+        <p>See today's forecast the moment you wake up, powered by Apple WeatherKit. Weather can be enabled on up to two alarms.</p>
+      </div>
+      <div class="feature-card">
+        <span class="f-icon">🔒</span>
+        <h3>Privacy First</h3>
+        <p>No analytics, no ads, no account required. All data stays on your device. MQTT credentials are stored in the iOS Keychain.</p>
       </div>
     </div>
-
-    <div class="panels-viewport" id="panels-viewport">
-    <div class="panels-track">
-
-    <!-- App Features panel -->
-    <div class="tab-panel" id="panel-app">
-      <div class="features">
-        <div class="feature-card">
-          <span class="f-icon">⏰</span>
-          <h3>Alarm Engine <span class="pro-badge">Pro</span></h3>
-          <p>Alarms that mean business. Allarise plays at the volume you set, independent of your ringer and mute switch.</p>
-          <p style="font-size:12px; color:var(--secondary); margin-top:8px;">Free includes 2 alarms. Pro unlocks unlimited.</p>
-        </div>
-        <div class="feature-card">
-          <span class="f-icon">🏠</span>
-          <h3>Home Assistant Integration</h3>
-          <p>Connect via MQTT to your Home Assistant instance. Trigger automations from supported alarm events, and let Home Assistant exchange alarm state and supported commands with the app.</p>
-        </div>
-        <div class="feature-card">
-          <span class="f-icon">🌙</span>
-          <h3>Sleep Sounds <span class="pro-badge">Pro</span></h3>
-          <p>Fall asleep to rain, ocean waves, white noise, and more. Lock screen controls, sleep timers, and controllable remotely from Home Assistant.</p>
-        </div>
-        <div class="feature-card">
-          <span class="f-icon">🧩</span>
-          <h3>Wake-Up Missions</h3>
-          <p>Dismiss your alarm by solving a math problem, shaking your phone, or triggering a Home Assistant action. Built for people who actually need to wake up.</p>
-        </div>
-        <div class="feature-card">
-          <span class="f-icon">🎨</span>
-          <h3>Wallpaper Packs <span class="pro-badge">Pro</span></h3>
-          <p>Curated wallpaper packs that transform your home and alarm screens. Each pack includes light and dark variants designed to look great out of the box.</p>
-        </div>
-        <div class="feature-card">
-          <span class="f-icon">🌤</span>
-          <h3>Morning Weather</h3>
-          <p>See today's forecast the moment you wake up, powered by Apple WeatherKit. Weather can be enabled on up to two alarms.</p>
-        </div>
-        <div class="feature-card">
-          <span class="f-icon">🔒</span>
-          <h3>Privacy First</h3>
-          <p>No analytics, no ads, no account required. All data stays on your device. MQTT credentials are stored in the iOS Keychain.</p>
-        </div>
-      </div>
-      <div class="tab-footer">
-        <button onclick="goTo(1)" class="btn btn-secondary" style="display:inline-flex;cursor:pointer;font-family:inherit;">Home Assistant features →</button>
-      </div>
+    <div class="tab-footer">
+      <a href="home-assistant.html" class="btn btn-secondary" style="display:inline-flex;">Home Assistant features →</a>
     </div>
-
-    <!-- Home Assistant panel -->
-    <div class="tab-panel" id="panel-ha">
-      <div class="features">
-        <div class="feature-card">
-          <span class="f-icon">📊</span>
-          <h3>Sensors</h3>
-          <p>Alarm state, name, fire time, snooze count, app version, sleep sound volume, and more.</p>
-        </div>
-        <div class="feature-card">
-          <span class="f-icon">🔘</span>
-          <h3>Buttons</h3>
-          <p>Dismiss, snooze, skip, unskip, and kill snoozed — available on the dashboard device and each per-alarm device.</p>
-        </div>
-        <div class="feature-card">
-          <span class="f-icon">🔁</span>
-          <h3>Switches</h3>
-          <p>Master arm toggle, per-alarm enable/disable, alert vibrate, and alert media loop.</p>
-        </div>
-        <div class="feature-card">
-          <span class="f-icon">🔊</span>
-          <h3>Media Player</h3>
-          <p>Play audio or TTS directly to the phone via <code style="font-size:12px;background:var(--border);padding:1px 5px;border-radius:4px;">play_media</code> and <code style="font-size:12px;background:var(--border);padding:1px 5px;border-radius:4px;">media_announce</code>.</p>
-        </div>
-        <div class="feature-card">
-          <span class="f-icon">🚨</span>
-          <h3>Notify</h3>
-          <p>Send an alert to the phone from supported HA automations using the notify service.</p>
-        </div>
-        <div class="feature-card">
-          <span class="f-icon">⏰</span>
-          <h3>Per-Alarm Devices</h3>
-          <p>Each alarm can appear in Home Assistant with its own related entities and supported controls for time, days, sound, snooze, and more.</p>
-        </div>
-        <div class="feature-card">
-          <span class="f-icon">🌙</span>
-          <h3>Sleep Sounds</h3>
-          <p>Start, stop, pause, or change white noise and ambient sounds on the phone remotely from any automation.</p>
-        </div>
-        <div class="feature-card">
-          <span class="f-icon">🔐</span>
-          <h3>Alarm Widget</h3>
-          <p> Your secuirty alarm, your home, one tap. When you arm a zone in Allarise, Home Assistant knows about it instantly — triggering automations, locking doors, or whatever you've set up. And since zones sync across all your household's phones, everyone stays on the same page.
- </p>
-        </div>
-        <div class="feature-card">
-          <span class="f-icon">⚡</span>
-          <h3>Commands</h3>
-          <p>Fire named commands from the app's alarm screen to trigger HA automations — dismiss, snooze, swipe actions, and custom widget buttons.</p>
-        </div>
-      </div>
-      <div class="tab-footer">
-        <a href="home-assistant.html" class="btn btn-secondary" style="display:inline-flex;">Full setup guide →</a>
-      </div>
-    </div>
-
-    </div><!-- /panels-track -->
-    </div><!-- /panels-viewport -->
-
   </div>
 </section>
 
@@ -578,46 +505,6 @@
   <div>© 2026 Allarise · <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms of Use</a></div>
 </footer>
 
-<script>
-  const panelIds   = ['panel-app', 'panel-ha'];
-  const panelNames = ['App Features', 'Home Assistant'];
-  let current = 0;
-
-  const viewport = document.getElementById('panels-viewport');
-  const labelEl  = document.getElementById('panel-nav-label');
-  const dots     = document.querySelectorAll('#nav-dots .nav-dot');
-
-  function goTo(index) {
-    if (index < 0 || index >= panelIds.length) return;
-    current = index;
-    viewport.scrollTo({ left: index * viewport.clientWidth, behavior: 'smooth' });
-    labelEl.textContent = panelNames[current];
-    dots.forEach((d, i) => d.classList.toggle('active', i === current));
-  }
-
-  // Clickable dots
-  dots.forEach((dot, i) => dot.addEventListener('click', () => goTo(i)));
-
-  // Keyboard arrow navigation when hovering over the section
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight') goTo(current + 1);
-    if (e.key === 'ArrowLeft')  goTo(current - 1);
-  });
-
-  // Sync dots after touch/trackpad swipe settles
-  let snapTimer;
-  viewport.addEventListener('scroll', () => {
-    clearTimeout(snapTimer);
-    snapTimer = setTimeout(() => {
-      const snapped = Math.round(viewport.scrollLeft / viewport.clientWidth);
-      if (snapped !== current) {
-        current = snapped;
-        labelEl.textContent = panelNames[current];
-        dots.forEach((d, i) => d.classList.toggle('active', i === current));
-      }
-    }, 80);
-  });
-</script>
 
 </body>
 </html>
