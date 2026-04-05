@@ -152,19 +152,25 @@
   /* ─── Field rows ─── */
   .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
-  /* ─── Top nav bar ─── */
-  .topnav {
+  /* ── Top nav bar ── */
+  .site-nav {
     position: sticky; top: 0; z-index: 100;
     background: var(--bg); border-bottom: 1px solid var(--border);
     display: flex; align-items: center; padding: 0 32px; gap: 24px;
     height: 52px;
   }
-  .topnav a { color: var(--text2); text-decoration: none; font-size: 14px; white-space: nowrap; flex-shrink: 0; }
-  .topnav a:hover { color: var(--accent); }
-  .topnav .nav-home { display: flex; align-items: center; gap: 8px; margin-right: auto; flex-shrink: 0; }
-  .topnav .nav-home img { width: 28px; height: 28px; border-radius: 6px; }
-  .topnav .nav-home span { font-size: 16px; font-weight: 700; color: var(--text); }
-  .topnav .nav-active { color: var(--accent) !important; font-weight: 600; }
+  .site-nav a { color: var(--text2); text-decoration: none; font-size: 14px; white-space: nowrap; flex-shrink: 0; }
+  .site-nav a:hover { color: var(--accent); }
+  .site-nav .nav-home { display: flex; align-items: center; gap: 8px; margin-right: auto; flex-shrink: 0; }
+  .site-nav .nav-home img { width: 28px; height: 28px; border-radius: 6px; }
+  .site-nav .nav-home .icon-light { display: block; }
+  .site-nav .nav-home .icon-dark  { display: none;  }
+  @media (prefers-color-scheme: dark) {
+    .site-nav .nav-home .icon-light { display: none;  }
+    .site-nav .nav-home .icon-dark  { display: block; }
+  }
+  .site-nav .nav-home span { font-size: 16px; font-weight: 700; color: var(--text); }
+  .site-nav .nav-active { color: var(--accent) !important; font-weight: 600; }
   .app { height: calc(100vh - 52px); }
 
   footer { border-top: 1px solid var(--border); padding: 32px 24px; text-align: center; font-size: 13px; color: var(--secondary); }
@@ -203,36 +209,33 @@
     .main { overflow: visible; }
     .content { padding: 16px; overflow-y: visible; }
     .row-2, .row-3 { grid-template-columns: 1fr !important; }
-    .topnav { padding: 0 16px; gap: 16px; }
+    .site-nav { padding: 0 16px; gap: 16px; }
     .config-bar { padding: 14px 16px; }
     .two-col { grid-template-columns: 1fr; }
-    .topnav a:not(.nav-home) { display: none !important; }
+    .site-nav a:not(.nav-home) { display: none !important; }
     .nav-menu-btn { display: block !important; }
   }
 </style>
 </head>
 <body>
 
-<div class="topnav">
+<nav class="site-nav">
   <a href="index.html" class="nav-home">
-    <img src="app-icon.png" alt="Allarise" />
+    <img src="app-icon.png" class="icon-light" alt="Allarise" />
+    <img src="app-icon-dark.png" class="icon-dark" alt="Allarise" />
     <span>Allarise</span>
   </a>
   <a href="index.html">About</a>
   <a href="home-assistant.html">Home Assistant</a>
   <a href="mqtt-builder.html" class="nav-active">MQTT Builder</a>
   <a href="faq.html">FAQ</a>
-  <a href="privacy.html">Privacy</a>
-  <a href="terms.html">Terms</a>
   <button class="nav-menu-btn" id="nav-menu-btn" onclick="toggleNav()">☰</button>
-</div>
+</nav>
 <div class="nav-dropdown" id="nav-dropdown">
   <a href="index.html">About</a>
   <a href="home-assistant.html">Home Assistant</a>
   <a href="mqtt-builder.html" class="nav-active">MQTT Builder</a>
   <a href="faq.html">FAQ</a>
-  <a href="privacy.html">Privacy</a>
-  <a href="terms.html">Terms</a>
 </div>
 
 <div class="app">
