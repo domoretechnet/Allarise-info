@@ -103,6 +103,12 @@
       height: 28px;
       border-radius: 6px;
     }
+    .site-nav .nav-home .icon-light { display: block; }
+    .site-nav .nav-home .icon-dark  { display: none; }
+    @media (prefers-color-scheme: dark) {
+      .site-nav .nav-home .icon-light { display: none; }
+      .site-nav .nav-home .icon-dark  { display: block; }
+    }
     .site-nav .nav-home span {
       font-size: 16px;
       font-weight: 700;
