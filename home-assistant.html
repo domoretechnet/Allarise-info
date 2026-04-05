@@ -553,7 +553,6 @@
 <div class="page-header">
   <div class="ph-label">Home Assistant Integration</div>
   <h1>Connect Allarise to Home Assistant.</h1>
-  <p>Control and monitor supported alarm actions from Home Assistant, exchange alarm state over MQTT, and automate your morning routine when app and iOS background conditions allow.</p>
 </div>
 
 <!-- TOC -->
@@ -655,9 +654,16 @@ customize:
         <tbody>
           <tr><td>Topic Prefix</td><td><code>allarise</code> (default) — must match what you enter in the HA integration in Step 4</td></tr>
           <tr><td>Device Name</td><td><code>iPhone</code> (default) — change this to identify multiple phones; must also match Step 4</td></tr>
-          <tr><td>Allow Inbound Commands</td><td>Enable to allow supported Home Assistant automations to create alarms, request alerts, and send alarm actions when app and iOS conditions allow</td></tr>
         </tbody>
       </table>
+
+      <div class="callout callout-warn" style="margin-top: 16px; font-size: 15px;">
+        <span class="callout-icon">⚡</span>
+        <div>
+          <strong>Turn on Allow Inbound Commands.</strong> This is what makes the integration two-way. Without it, Allarise will publish state to Home Assistant but won't accept any commands back — no alarm creation, no alerts, no remote actions. Make sure this is enabled or you'll only get half the integration.<br><br>
+          This also unlocks sleep sound control. With inbound commands on, Home Assistant can start, stop, pause, or change the white noise and ambient sounds playing on your phone — directly from any automation.
+        </div>
+      </div>
 
       <h4>Internal Broker — used on home WiFi</h4>
       <p>Your Mosquitto broker running locally on Home Assistant. Plain connection, no TLS, traffic stays on your LAN.</p>
@@ -733,7 +739,18 @@ customize:
     </div>
   </div>
 
+</div>
 
+<!-- MQTT Builder CTA -->
+<div style="max-width: 760px; margin: 0 auto; padding: 32px 24px 48px;">
+  <a href="mqtt-builder.html" style="display: flex; align-items: center; gap: 20px; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 24px 28px; text-decoration: none; color: var(--text); transition: border-color 0.15s, box-shadow 0.15s;" onmouseover="this.style.borderColor='var(--accent)';this.style.boxShadow='0 4px 20px rgba(0,113,227,0.1)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
+    <span style="font-size: 36px; flex-shrink: 0;">🛠</span>
+    <div>
+      <div style="font-size: 17px; font-weight: 700; margin-bottom: 4px;">Ready to build payloads?</div>
+      <div style="font-size: 14px; color: var(--secondary); line-height: 1.5;">Use the MQTT Payload Builder to generate and test commands before wiring up your automations. Covers every supported topic and action.</div>
+      <div style="font-size: 13px; font-weight: 600; color: var(--accent); margin-top: 8px;">Open MQTT Builder →</div>
+    </div>
+  </a>
 </div>
 
 <!-- Reference section divider -->
