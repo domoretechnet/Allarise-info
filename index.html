@@ -379,7 +379,6 @@
       width: auto;
       border-radius: 24px;
       box-shadow: 0 12px 40px rgba(0,0,0,0.15);
-      transform: rotate(3deg) translateX(-24px);
       position: relative;
       z-index: 1;
     }
@@ -388,14 +387,15 @@
       width: auto;
       border-radius: 24px;
       box-shadow: 0 20px 60px rgba(0,0,0,0.25);
-      transform: rotate(-2deg) translateX(24px);
       position: relative;
       z-index: 2;
+      margin-left: -40px;
     }
     @media (max-device-width: 600px) {
       .ss-scroll-row img { height: 340px; }
       .ss-pair-wrap .ss-back,
-      .ss-pair-wrap .ss-front { height: 280px; }
+      .ss-pair-wrap .ss-front { height: 200px; }
+      .ss-pair-wrap .ss-front { margin-left: -24px; }
     }
 
     /* ── Hamburger nav ── */
