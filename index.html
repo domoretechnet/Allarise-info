@@ -349,9 +349,9 @@
     /* Single row of 4 screenshots, horizontally scrollable */
     .ss-scroll-row {
       display: flex;
+      justify-content: center;
       gap: 16px;
       overflow-x: auto;
-      scroll-snap-type: x mandatory;
       scroll-behavior: smooth;
       scrollbar-width: none;
       padding: 0 24px 16px;
@@ -495,11 +495,6 @@
 
 <!-- Screenshots -->
 <section class="screenshots-section">
-  <div class="section-inner">
-    <div class="section-label">App Screenshots</div>
-    <h2>See it in action.</h2>
-    <p class="lead">Everything you need to wake up, stay accountable, and automate your morning.</p>
-  </div>
   <div class="ss-scroll-row">
     <img src="screenshots/preview-2.png" alt="Liquid Glass alarm list" />
     <img src="screenshots/preview-1.png" alt="Shake to dismiss alarm" />
