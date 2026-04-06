@@ -325,6 +325,79 @@
 
     html { overflow-x: hidden; }
 
+    /* ── Screenshots ── */
+    .screenshots-section {
+      padding: 64px 0 48px;
+      overflow: hidden;
+    }
+    .screenshots-section .section-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .screenshots-section h2 {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+    .screenshots-section .lead {
+      font-size: 17px;
+      color: var(--secondary);
+      margin-bottom: 40px;
+    }
+    /* Single row of 4 screenshots, horizontally scrollable */
+    .ss-scroll-row {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      padding: 0 24px 16px;
+    }
+    .ss-scroll-row::-webkit-scrollbar { display: none; }
+    .ss-scroll-row img {
+      flex-shrink: 0;
+      height: 480px;
+      width: auto;
+      border-radius: 24px;
+      scroll-snap-align: start;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.18);
+    }
+    /* Paired screenshots: 5 in front of 6, side-by-side */
+    .ss-pair-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0;
+      margin-top: 48px;
+      position: relative;
+    }
+    .ss-pair-wrap .ss-back {
+      height: 420px;
+      width: auto;
+      border-radius: 24px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+      transform: rotate(3deg) translateX(-24px);
+      position: relative;
+      z-index: 1;
+    }
+    .ss-pair-wrap .ss-front {
+      height: 420px;
+      width: auto;
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+      transform: rotate(-2deg) translateX(24px);
+      position: relative;
+      z-index: 2;
+    }
+    @media (max-device-width: 600px) {
+      .ss-scroll-row img { height: 340px; }
+      .ss-pair-wrap .ss-back,
+      .ss-pair-wrap .ss-front { height: 280px; }
+    }
+
     /* ── Hamburger nav ── */
     .nav-menu-btn {
       display: none; background: none; border: none; cursor: pointer;
@@ -419,6 +492,27 @@
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.925-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>
       Download on the App Store
     </a>
+  </div>
+</section>
+
+<!-- Screenshots -->
+<section class="screenshots-section">
+  <div class="section-inner">
+    <div class="section-label">App Screenshots</div>
+    <h2>See it in action.</h2>
+    <p class="lead">Everything you need to wake up, stay accountable, and automate your morning.</p>
+  </div>
+  <div class="ss-scroll-row">
+    <img src="screenshots/preview-2.png" alt="Liquid Glass alarm list" />
+    <img src="screenshots/preview-1.png" alt="Shake to dismiss alarm" />
+    <img src="screenshots/preview-3.png" alt="Solve to dismiss math mission" />
+    <img src="screenshots/preview-4.png" alt="Alarms that mean business" />
+  </div>
+  <div class="section-inner">
+    <div class="ss-pair-wrap">
+      <img src="screenshots/preview-6.png" class="ss-back" alt="Deep Home Assistant Integration" />
+      <img src="screenshots/preview-5.png" class="ss-front" alt="Do More with home automations" />
+    </div>
   </div>
 </section>
 
