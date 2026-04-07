@@ -1525,15 +1525,15 @@
             </div>
 
             <div class="field-group">
-              <label>Sleep Sound Volume (0–100)</label>
+              <label>Volume (0–100)</label>
               <input type="number" id="ss-volume" min="0" max="100" placeholder="50" oninput="updateSleepSoundStart()">
-              <div class="field-hint">Controls only the sleep sound level within the app — unaffected by the mute switch.</div>
+              <div class="field-hint">Accepts 0–100 integers or 0.0–1.0 floats.</div>
             </div>
 
             <div class="field-group">
               <label>System Volume (0–100) <span style="font-weight:400;color:var(--text2);font-size:11px">optional</span></label>
               <input type="number" id="ss-system-volume" min="0" max="100" placeholder="leave blank to keep current" oninput="updateSleepSoundStart()">
-              <div class="field-hint">Sets the iOS device media volume (shared with music, podcasts, etc.). Independent of sleep sound volume. <a href="#" onclick="showPage('system-volume',document.querySelector('[onclick*=system-volume]'));return false" style="color:var(--accent)">See System Volume page →</a></div>
+              <div class="field-hint">Sets the device's hardware media volume (volume buttons / Control Center). Independent of the sleep sound volume above.</div>
             </div>
           </div>
 
