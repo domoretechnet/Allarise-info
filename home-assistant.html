@@ -946,10 +946,14 @@ payload: |
       <p style="font-size:13px; color:var(--secondary); margin-top:8px; margin-bottom:16px;">
         Payload keys (all optional except the command itself):<br>
         <code>sound</code> — sound name (defaults to first available if omitted)<br>
-        <code>volume</code> — 0–100 (defaults to 50)<br>
+        <code>volume</code> — 0–100 sleep sound playback level (defaults to 50); unaffected by mute switch<br>
+        <code>system_volume</code> — 0–100 iOS media volume (optional); sets hardware volume independently of <code>volume</code><br>
         <code>duration_minutes</code> — play for N minutes, max 720; omit for indefinite<br>
         <code>until_next_alarm</code> — <code>true</code> to stop automatically when the next alarm fires<br>
         <code>fade_out_minutes</code> / <code>fade_out_seconds</code> — fade-out duration before stopping
+      </p>
+      <p style="font-size:12px; color:var(--secondary); margin-top:-8px; margin-bottom:16px;">
+        <strong>volume vs system_volume:</strong> <code>volume</code> controls how loud the sleep sound plays within the app and is not affected by the ringer/mute switch. <code>system_volume</code> sets the device's hardware media volume (the same level shown in Control Center and adjusted by the volume buttons) — it affects all audio on the device, not just the sleep sound. Use both together if you want to, for example, start rain sounds at 60% app volume while also setting the phone to 40% system volume so other audio (like podcasts) doesn't blare at full volume.
       </p>
 
       <div class="code-wrap">
