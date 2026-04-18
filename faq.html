@@ -260,7 +260,7 @@
       </svg>
     </button>
     <div class="faq-answer">
-      <p>Pro unlocks unlimited alarms and wallpaper presets. Trial availability is shown in the App Store before purchase.</p>
+      <p>Pro unlocks unlimited alarms, themes and custom alarm & sleep sounds.</p>
     </div>
   </div>
 
@@ -291,18 +291,43 @@
   <!-- Alarms -->
   <p class="category-label">Alarms</p>
 
-  <div class="faq-item">
-    <button class="faq-question" onclick="toggle(this)">
-      Will the alarm fire if my phone is on silent / Do Not Not Disturb?
-      <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="6 9 12 15 18 9"/>
-      </svg>
-    </button>
-    <div class="faq-answer">
-      <p>Usually, yes. Allarise is designed to play audio through the iOS media/playback channel, which is separate from the ringer switch. Actual behavior can still depend on your iPhone's Focus, notification, audio, and system settings.</p>
-      <p>Note: iOS Focus modes (e.g. Do Not Disturb with "Allow from nobody") can still suppress notifications. We recommend allowing Allarise as a notification exception in any Focus modes you use overnight.</p>
-    </div>
+<div class="faq-item">
+  <button class="faq-question" onclick="toggle(this)">
+    Will the alarm fire if my phone is on silent?
+    <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="6 9 12 15 18 9"/>
+    </svg>
+  </button>
+  <div class="faq-answer">
+    <p>Yes — Allarise is designed to play audio through the iOS media/playback channel, which is separate from the ringer switch. This means your alarm can still sound even if your phone is set to silent.</p>
+    <p>Actual behavior can still vary depending on your device’s audio settings.</p>
   </div>
+</div>
+
+<div class="faq-item">
+  <button class="faq-question" onclick="toggle(this)">
+    Will the alarm fire during Do Not Disturb or Focus modes?
+    <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="6 9 12 15 18 9"/>
+    </svg>
+  </button>
+  <div class="faq-answer">
+    <p>Focus modes (like Do Not Disturb) can silence notifications depending on how they’re configured. In some cases, this may prevent alarms from triggering reliably.</p>
+
+    <p><strong>To ensure your alarms always fire, add Allarise as an allowed app in your Focus settings:</strong></p>
+
+    <ol>
+      <li>Open <strong>Settings</strong> on your iPhone</li>
+      <li>Tap <strong>Focus</strong></li>
+      <li>Select the Focus mode you use overnight (e.g. Do Not Disturb or Sleep)</li>
+      <li>Tap <strong>Apps</strong> under “Allowed Notifications”</li>
+      <li>Tap <strong>Add App</strong></li>
+      <li>Select <strong>Allarise</strong></li>
+    </ol>
+
+    <p>This ensures your alarms are allowed to alert you even when Focus is active.</p>
+  </div>
+</div>
 
   <div class="faq-item">
     <button class="faq-question" onclick="toggle(this)">
