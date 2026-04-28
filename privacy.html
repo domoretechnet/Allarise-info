@@ -297,7 +297,7 @@
     </div>
     <h1>Allarise</h1>
     <p class="subtitle">Privacy Policy</p>
-    <span class="updated">Last updated: March 2026</span>
+    <span class="updated">Last updated: April 2026</span>
   </div>
 
   <!-- Summary callout -->
@@ -307,7 +307,8 @@
       <strong>The short version:</strong> Allarise is a local-first app. Your data stays on your device.
       We collect no analytics, no crash reports are sent to us, there are no ads, and we do not sell or share
       your data with anyone. External communication is limited to Apple services used by app features
-      (such as WeatherKit and the App Store) and — if <em>you</em> configure it — your own self-hosted Home Assistant / MQTT broker.
+      (such as WeatherKit and the App Store), — if <em>you</em> configure it — your own self-hosted Home Assistant / MQTT broker,
+      and — if you enable NWS weather alerts — the National Weather Service API (<code>api.weather.gov</code>), a US government service, which receives your approximate location to return local alert data.
     </div>
   </div>
 
@@ -330,6 +331,13 @@
     see them. Location is not stored on disk and is never sent to our servers.
   </p>
   <p>
+    If you enable <strong>NWS (National Weather Service) weather alerts</strong>, your approximate location
+    (coordinates or city/region) is sent to the National Weather Service public API
+    (<code>api.weather.gov</code>) to retrieve weather alerts relevant to your area. The NWS is a US
+    government agency; no account is required, and we do not receive or store any data from this exchange.
+    This feature is opt-in and can be disabled at any time in Settings.
+  </p>
+  <p>
     WiFi SSID detection (used to identify your home network for MQTT routing) also requires location
     permission on iOS. The SSID is stored locally on your device only and is never transmitted to us.
   </p>
@@ -349,6 +357,12 @@
       <td>Display in weather widget</td>
       <td><span class="badge local">Memory only</span></td>
       <td><span class="badge apple">Apple MapKit (reverse geocode)</span></td>
+    </tr>
+    <tr>
+      <td>GPS coordinates / city</td>
+      <td>Fetch NWS weather alerts (if enabled)</td>
+      <td><span class="badge local">Memory only</span></td>
+      <td><span class="badge opt-in">NWS api.weather.gov (opt-in)</span></td>
     </tr>
     <tr>
       <td>WiFi SSID</td>
@@ -451,7 +465,7 @@
 
   <!-- 4. Third-party services -->
   <h2>4. Third-Party Services We Use</h2>
-  <p>The only third-party services the app communicates with are Apple's own native frameworks:</p>
+  <p>The app communicates with the following external services, all opt-in where noted:</p>
 
   <table class="data-table">
     <tr>
@@ -481,6 +495,12 @@
       <td>Alarm state events, snooze counts (user-configured)</td>
       <td>N/A — you control this</td>
     </tr>
+    <tr>
+      <td>NWS Alerts API <span class="badge opt-in">Opt-in</span></td>
+      <td>National Weather Service (US Gov)</td>
+      <td>Approximate location (coordinates or bounding box) to fetch weather alerts</td>
+      <td><a href="https://www.weather.gov/privacy" target="_blank">weather.gov/privacy</a></td>
+    </tr>
   </table>
 
   <p>There are no advertising networks, analytics SDKs, or crash reporting services integrated into the app.</p>
@@ -494,8 +514,8 @@
     </tr>
     <tr>
       <td>Location (When In Use)</td>
-      <td>First time you enable weather or MQTT network detection</td>
-      <td>Weather display; WiFi SSID detection for MQTT routing</td>
+      <td>First time you enable weather, NWS alerts, or MQTT network detection</td>
+      <td>Weather display (WeatherKit); NWS weather alert fetching; WiFi SSID detection for MQTT routing</td>
       <td><span class="badge opt-in">Optional</span></td>
     </tr>
     <tr>
