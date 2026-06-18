@@ -1,5 +1,5 @@
 {
   "activationDate": "2026-06-07T00:00:00Z",
-  "grantEpoch": 1,
-  "earlyAdopterEnabled": true
+  "grantEpoch": 2,
+  "earlyAdopterEnabled": false
 }
